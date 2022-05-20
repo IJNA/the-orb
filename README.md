@@ -5,9 +5,9 @@ In the project directory, you will see two folders.
 
 ## public folder
 This is where all our front end code will go
-1. HTML
-2. CSS
-3. Front end Javascript
+1. HTML (pages folder)
+2. CSS (css folder)
+3. Front end Javascript (js folder)
 
 ## routes folder
 Our api layer where we will make requests to external apis
