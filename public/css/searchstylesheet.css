@@ -1,13 +1,6 @@
 body {
     font-family: 'Roboto', Arial, sans-serif;
   }
-  
-  /* .wrapper {
-    width: 100%;
-    max-width: 31.25rem;
-    margin: 6rem auto;
-    position: relative;
-  } */
 
   .container {
     display: flex;
@@ -18,8 +11,6 @@ body {
   .searchBar {
     width: 90%;
     max-width: 600px;
-    /* display: flex;
-    flex-direction: row; */
     align-items: center;
     margin-top: 32px;
   }
