@@ -1,0 +1,30 @@
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .searchBar {
+    width: 90%;
+    max-width: 600px;
+    align-items: center;
+    margin-top: 32px;
+  }
+
+  .fav-icon{
+    pointer-events: all;
+    cursor: pointer;
+  }
+
+  .anchorClass{
+    text-decoration: none;
+    color: #363636;
+  }
+
+  p {
+    color: gray;
+  }
