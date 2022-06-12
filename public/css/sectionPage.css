@@ -1,0 +1,67 @@
+html,
+body {
+    height: 100%;
+}
+
+.container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.space {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.navbar {
+    border-bottom: 1px solid #DBDBDB;
+}
+
+.navbar-brand {
+    align-items: center;
+}
+
+.buttonContainer {
+    max-width: 600px;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-top: 42px;
+    padding-bottom: 16px;
+    align-self: center;
+}
+
+.title {
+    text-align: center;
+    margin-top: 32px;
+    font-weight: 800;
+}
+
+.quotedText {
+    font-size: 20px;
+    width: 326px;
+    text-align: center;
+}
+
+.imgContainer,
+.quotedTextContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+img {
+    margin-top: 32px;
+}
+
+.quotedText {
+    margin-top: 32px;
+}
+
+.subtitle, is-4 {
+    margin-left: 8px;
+}
+
+.fa, fa-arrow-left {
+    margin-left: 16px;
+}
