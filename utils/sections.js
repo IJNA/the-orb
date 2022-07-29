@@ -2,7 +2,8 @@ const SECTIONS = {
     THE_LAW: {
         BOOKS: {
             GENESIS: {
-                CHAPTER_COUNT: 51
+                CHAPTER_COUNT: 51,
+                API_NAME: 'GEN',
             },
             EXODUS: {
                 CHAPTER_COUNT: 41
