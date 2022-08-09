@@ -1,10 +1,10 @@
-body {
-  padding: 0 25px 0 25px;
+.homePageContainer {
+    padding: 0 25px 0 25px;
 }
+
 .container {
     width: 312px;
     margin-top: 64px;
-    
 }
 
 #title {
@@ -13,11 +13,10 @@ body {
     left: 74px;
     margin-left: auto;
     margin-right: auto;
-    font-weight: 800;
 }
 
-.search{
-    margin:auto;
+.searchContainer {
+    margin: auto;
     max-width: 600px;
     margin-top: 100px;
     text-align: center;
@@ -28,13 +27,11 @@ body {
     margin-top: 48px;
     max-width: 600px;
 }
-    
 
-.button {
+.homePageButton {
     margin-bottom: 16px;
-
 }
-.is-text {
+.smallLinksText {
     margin-bottom: 24px;
 }
 .smallLinks {

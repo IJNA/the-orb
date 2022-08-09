@@ -3,7 +3,7 @@ body {
     height: 100%;
 }
 
-.container {
+.theLawContainer {
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -14,11 +14,11 @@ body {
     margin-bottom: 8px;
 }
 
-.navbar {
+.navbarContainer {
     border-bottom: 1px solid #DBDBDB;
 }
 
-.navbar-brand {
+.navbarBrandContainer {
     align-items: center;
 }
 
@@ -31,7 +31,7 @@ body {
     align-self: center;
 }
 
-.title {
+.theLawHeader {
     text-align: center;
     margin-top: 32px;
     font-weight: 800;
@@ -50,7 +50,7 @@ body {
     align-items: center;
 }
 
-img {
+.sectionEllipse {
     margin-top: 32px;
 }
 
@@ -58,10 +58,15 @@ img {
     margin-top: 32px;
 }
 
-.subtitle, is-4 {
+.backText {
     margin-left: 8px;
 }
 
-.fa, fa-arrow-left {
+.backIcon {
     margin-left: 16px;
+}
+
+.backLink {
+    color: black;
+    display: flex;
 }
