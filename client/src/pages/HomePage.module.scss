@@ -2,15 +2,15 @@
     padding: 0 25px 0 25px;
 }
 
-.container {
-    width: 312px;
+.ellipseContainer {
+    display: flex;
+    justify-content: center;
     margin-top: 64px;
 }
 
 #title {
     position: absolute;
     top: 74px;
-    left: 74px;
     margin-left: auto;
     margin-right: auto;
 }
