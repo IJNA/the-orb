@@ -1,39 +1,31 @@
 .navbar {
     border-bottom: 1px solid #dbdbdb;
-   }
-   .navbarBrandContainer {
-       align-items: center;
-   }
-   h2 {
-       margin-top: 32px;
-       text-align: left;
-   }
-   
-   header {
-       padding-left: auto;
-   }
-   .text {
-    display: flex;
-    
-   font-size: 20px;
-    // margin-left: auto;
-    // margin-right: auto;
-    width: 100%;
-    // max-width: 800px;
-    
-   }
-   
-   button {
+}
+.navbarBrandContainer {
+    align-items: center;
+}
+h2 {
+    margin-top: 32px;
+    text-align: left;
+}
+
+header {
+    padding-left: auto;
+}
+.text {
+    font-size: 20px;
+}
+
+button {
     margin-top: 64px;
     width: 150px;
-
-
-   }
-  .center {
+}
+.center {
     text-align: center;
-  }
+}
 
-  .book {
-   margin-top: 32px;
-   
-  }
+.book {
+    margin-top: 32px;
+    padding: 0 32px 0 32px;
+    max-width: 800px;
+}

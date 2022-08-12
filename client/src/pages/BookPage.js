@@ -19,7 +19,7 @@ function BookPage() {
           <p className="subtitle is-4">Back</p>
         </div>
       </nav>
-      <div className={`is-flex-direction-column is-align-items-center ${styles.text}`}>
+      <div className={`is-flex is-flex-direction-column is-align-items-center ${styles.text}`}>
         <h2 className="title is-2">Bookpage</h2>
         <p className={styles.book}>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum maiores
