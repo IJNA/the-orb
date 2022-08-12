@@ -13,20 +13,27 @@
        padding-left: auto;
    }
    .text {
-       font-size: 20px;
-       text-align: left;
-       width: 90% vw;
-       max-width: 800px;
-       margin-left: auto;
-       margin-right: auto
+    display: flex;
+    
+   font-size: 20px;
+    // margin-left: auto;
+    // margin-right: auto;
+    width: 100%;
+    // max-width: 800px;
+    
+   }
+   
+   button {
+    margin-top: 64px;
+    width: 150px;
+
 
    }
-   button {
-       margin-top: 64px;
-   }
   .center {
-      text-align: center;
+    text-align: center;
   }
+
   .book {
    margin-top: 32px;
+   
   }
