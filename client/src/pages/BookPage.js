@@ -1,10 +1,34 @@
+import React, { useEffect, useState } from "react";
 import 'bulma/css/bulma.min.css';
 import styles from "./BookPage.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons"
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import parse from "html-react-parser";
 
 function BookPage() {
+    let params = useParams();
+    const [content, setContent] = useState("retrieving content...");
+
+    useEffect(() => {
+        console.log('params: ', params.book);
+        fetch(`/api/bookPage/${params.book}`)
+            .then((response) => {
+                return response.json(); // parses response to only give use the data we want
+            })
+            .then((data) => {
+                // console.log(data);
+                let content = '';
+                data.forEach(book => {
+                    content += book.data.content
+                });
+                // console.log('content: ', content);
+                setContent(content);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    })
 
     return (
         <>
@@ -20,7 +44,7 @@ function BookPage() {
             <div className={styles.text}>
                 <h2 className="title is-2">Bookpage</h2>
                 <div className={styles.book}>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum maiores laudantium minima doloribus! Recusandae vero voluptas libero impedit tenetur ducimus eveniet totam deserunt inventore maxime, minus laudantium magnam, praesentium sint!
+                    {parse(content)}
                 </div>
             </div>
             <div className={styles.center}>

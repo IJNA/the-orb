@@ -21,18 +21,28 @@ function TheLaw() {
             <div className={`container ${styles.theLawContainer}`}>
                 <h2 className={`title is-2 ${styles.theLawHeader}`}>The Law (Torah)</h2>
                 <div className={styles.imgContainer}>
-                    <img className={styles.sectionEllipse} src={Ellipse} />
+                    <img className={styles.sectionEllipse} src={Ellipse} alt='theLawEllispeImg'/>
                 </div>
                 <div className={styles.quotedTextContainer}>
                     <p className={styles.quotedText}>Hear, O Israel: The LORD our God, the LORD is one.</p>
                 </div>
 
                 <div className={styles.buttonContainer}>
-                    <button id="genButton" className={`button input ${styles.space} is-large`} onclick="getBook('GEN')">Genesis</button>
-                    <button className={`button input ${styles.space} is-large`} onclick="handleSectionClick('Exodus')">Exodus</button>
-                    <button className={`button input ${styles.space} is-large`} onclick="handleSectionClick('Leviticus')">Leviticus</button>
-                    <button className={`button input ${styles.space} is-large`} onclick="handleSectionClick('Numbers')">Numbers</button>
-                    <button className={`button input ${styles.space} is-large`} onclick="handleSectionClick('Deuteronomy')">Deuteronomy</button>
+                    <Link to='/bookPage/GEN'>
+                        <button className={`button input ${styles.space} is-large`}>Genesis</button>
+                    </Link>
+                    <Link to='/bookPage/EXO'>
+                        <button className={`button input ${styles.space} is-large`}>Exodus</button>
+                    </Link>
+                    <Link to='/bookPage/LEV'>
+                        <button className={`button input ${styles.space} is-large`}>Leviticus</button>
+                    </Link>
+                    <Link to='/bookPage/NUM'>
+                        <button className={`button input ${styles.space} is-large`}>Numbers</button>
+                    </Link>
+                    <Link to='/bookPage/DEU'>
+                        <button className={`button input ${styles.space} is-large`}>Deuteronomy</button>
+                    </Link>
                 </div>
             </div>
         </>

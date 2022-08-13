@@ -15,7 +15,7 @@ function HomePage() {
                 <h1 id={styles.title} className="title is-1">Online<br />Reader's<br />Bible</h1>
             </div>
             <div className={`search field ${styles.searchContainer}`}>
-                <di className="control has-icons-left">
+                <div className="control has-icons-left">
                     {/* <a href="../pages/searchPage.html"> */}
                     <Link to="searchPage">
                         <button className="input is-large is-rounded">Search </button>
@@ -23,7 +23,7 @@ function HomePage() {
                             <FontAwesomeIcon className={styles.searchIcon} icon={faMagnifyingGlass} />
                         </span>
                     </Link>
-                </di>
+                </div>
             </div>
             <div className={styles.sections}>
 

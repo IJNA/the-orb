@@ -12,8 +12,9 @@ router.get("/", (req, res) => {
 router.get("/api/bookpage/:book", async (req, res) => {
   let chapters = 0;
   // let book = req.params.book;
-  let book = 'GEN';
+  let book = req.params.book;
   console.log(book);
+  console.log('req.params: ', req.params);
   fetch(
     `https://api.scripture.api.bible/v1/bibles/9879dbb7cfe39e4d-04/books/${book}/chapters`,
     {
@@ -41,7 +42,7 @@ router.get("/api/bookpage/:book", async (req, res) => {
         ).then(d => d.json()))
       }
       const result = await Promise.all(promises)
-      // console.log(result);
+      console.log('RESULT: ', result);
       res.json(result);
     })
     .catch((err) => {
