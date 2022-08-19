@@ -18,10 +18,11 @@ function HomePage() {
                 <di className="control has-icons-left">
                     {/* <a href="../pages/searchPage.html"> */}
                     <Link to="searchPage">
-                        <button className="input is-large is-rounded">Search </button>
+                        <button className="input is-large is-rounded">Search 
                         <span className="icon is-left">
                             <FontAwesomeIcon className={styles.searchIcon} icon={faMagnifyingGlass} />
                         </span>
+                        </button>
                     </Link>
                 </di>
             </div>
