@@ -21,7 +21,10 @@ router.get("/api/bookpage/:book", async (req, res) => {
       {
         headers: { 'api-key': process.env.API_KEY },
       }
-    ).then(d => d.json()))
+    ).then(d => d.json())
+      .catch((err) => {
+        console.log(err);
+      }));
   }
   const result = await Promise.all(promises)
   res.json(result);
