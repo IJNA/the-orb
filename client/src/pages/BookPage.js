@@ -37,7 +37,7 @@ function BookPage() {
                     <span className="icon is-medium">
                         <FontAwesomeIcon className={styles.arrowIcon} icon={faArrowLeft} />
                     </span>
-                    <p className="subtitle is-4">Back</p>
+                    <div className="subtitle is-4">Back</div>
                 </div>
             </nav>
 
@@ -48,14 +48,14 @@ function BookPage() {
                 </div>
             </div>
             <div className={styles.center}>
-                <p className="control has-icons-right">
+                <div className="control has-icons-right">
                     <Link to="">
                         <button className={`button is-large ${styles.center, styles.nextBookButton}`}>next book</button>
                         <span className="icon is-right">
                             <FontAwesomeIcon className={styles.arrowIcon} icon={faArrowRight} />
                         </span>
                     </Link>
-                </p>
+                </div>
             </div>
         </>
     );

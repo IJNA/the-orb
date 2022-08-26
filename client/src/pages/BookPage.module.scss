@@ -1,9 +1,11 @@
 .navbar {
     border-bottom: 1px solid #dbdbdb;
 }
+
 .navbarBrandContainer {
     align-items: center;
 }
+
 h2 {
     margin-top: 32px;
 }
@@ -11,6 +13,7 @@ h2 {
 header {
     padding-left: auto;
 }
+
 .text {
     font-size: 20px;
     text-align: left;
@@ -25,6 +28,11 @@ header {
 .center {
     text-align: center;
 }
+
 .book {
     margin-top: 32px;
+}
+
+p { //! may cause styling issues on other pages
+    margin-bottom: 32px;
 }
