@@ -3,7 +3,12 @@ body {
     height: 100%;
 }
 
-.theLawContainer {
+.theLawContainer,
+.theProphetsContainer,
+.theWritingsContainer,
+.theRevelationContainer,
+.theLettersContainer,
+.theGospelsAndActsContainer {
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -31,10 +36,16 @@ body {
     align-self: center;
 }
 
-.theLawHeader {
-    text-align: center;
-    margin-top: 32px;
-    font-weight: 800;
+.theLawHeader,
+.theProphetsHeader,
+.theWritingsHeader,
+.theRevelatioinHeader,
+.theLettersHeader,
+.theGospelsAndActsHeader,
+{
+text-align: center;
+margin-top: 32px;
+font-weight: 800;
 }
 
 .quotedText {
