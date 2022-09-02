@@ -3,7 +3,6 @@ module.exports = {
         THE_LAW: {
             GEN: {
                 CHAPTER_COUNT: 51,
-                API_NAME: 'GEN',
                 NEXT: 'EXO',
             },
             EXO: {
@@ -228,7 +227,6 @@ module.exports = {
     BOOKS: {
         GEN: {
             CHAPTER_COUNT: 51,
-            API_NAME: 'GEN',
             NEXT: 'EXO',
         },
         EXO: {
@@ -257,176 +255,193 @@ module.exports = {
         },
         FSA: {
             CHAPTER_COUNT: 32,
+            API_NAME: '1SA',
             NEXT: 'SSA',
         },
-        SECOND_SAMUEL: {
+        SSA: {
             CHAPTER_COUNT: 25,
+            API_NAME: '2SA',
             NEXT: 'FKI',
         },
-        FIRST_KINGS: {
+        FKI: {
             CHAPTER_COUNT: 23,
+            API_NAME: '1KI',
             NEXT: 'SKI',
         },
-        SECOND_KINGS: {
-            CHAPTER_COUNT: 26
+        SKI: {
+            CHAPTER_COUNT: 26,
+            API_NAME: '2KI',
         },
-        ISAIAH: {
+        ISA: {
             CHAPTER_COUNT: 67
         },
-        EZEKIEL: {
+        EZK: {
             CHAPTER_COUNT: 49
         },
-        HOSEA: {
+        HOS: {
             CHAPTER_COUNT: 15
         },
-        JOEL: {
+        JOL: {
             CHAPTER_COUNT: 4
         },
-        AMOS: {
+        AMO: {
             CHAPTER_COUNT: 10
         },
-        OBADIAH: {
+        OBA: {
             CHAPTER_COUNT: 2
         },
-        JONAH: {
+        JON: {
             CHAPTER_COUNT: 5
         },
-        MICAH: {
+        MIC: {
             CHAPTER_COUNT: 8
         },
-        NAHUM: {
+        NAM: {
             CHAPTER_COUNT: 4
         },
-        HABAKKUK: {
+        HAB: {
             CHAPTER_COUNT: 4
         },
-        ZEPHANIAH: {
+        ZEP: {
             CHAPTER_COUNT: 4
         },
-        HAGGAI: {
+        HAG: {
             CHAPTER_COUNT: 3
         },
-        ZECHARIAH: {
+        ZEC: {
             CHAPTER_COUNT: 15
         },
-        MALACHI: {
+        MAL: {
             CHAPTER_COUNT: 5
         },
-        PSALMS: {
+        PSA: {
             CHAPTER_COUNT: 151
         },
-        PROVERBS: {
+        PRO: {
             CHAPTER_COUNT: 32
         },
         JOB: {
             CHAPTER_COUNT: 43
         },
-        SONG_OF_SOLOMON: {
+        SNG: {
             CHAPTER_COUNT: 9
         },
-        RUTH: {
+        RUT: {
             CHAPTER_COUNT: 5
         },
-        LAMENTATIONS: {
+        LAM: {
             CHAPTER_COUNT: 6
         },
-        ECCLESIASTES: {
+        ECC: {
             CHAPTER_COUNT: 13
         },
-        ESTHER: {
+        EST: {
             CHAPTER_COUNT: 11
         },
-        DANIEL: {
+        DAN: {
             CHAPTER_COUNT: 13
         },
-        EZRA: {
+        EZR: {
             CHAPTER_COUNT: 35
         },
-        NEHEMIAH: {
+        NEH: {
             CHAPTER_COUNT: 14
         },
-        FIRST_CHRONICLES: {
-            CHAPTER_COUNT: 30
+        FCH: {
+            CHAPTER_COUNT: 30,
+            API_NAME: '1CH',
         },
-        SECOND_CHRONICLES: {
-            CHAPTER_COUNT: 37
+        SCH: {
+            CHAPTER_COUNT: 37,
+            API_NAME: '2CH',
         },
-        MATTHEW: {
+        MAT: {
             CHAPTER_COUNT: 29
         },
-        MARK: {
+        MRK: {
             CHAPTER_COUNT: 17
         },
-        JOHN: {
+        JHN: {
             CHAPTER_COUNT: 22
         },
-        LUKE: {
+        LUK: {
             CHAPTER_COUNT: 25
         },
-        ACTS: {
+        ACT: {
             CHAPTER_COUNT: 29
         },
-        ROMANS: {
+        ROM: {
             CHAPTER_COUNT: 17
         },
-        FIRST_CORINTHIANS: {
-            CHAPTER_COUNT: 17
+        FCO: {
+            CHAPTER_COUNT: 17,
+            API_NAME: '1CO',
         },
-        SECOND_CORINTHIANS: {
-            CHAPTER_COUNT: 14
+        SCO: {
+            CHAPTER_COUNT: 14,
+            API_NAME: '2CO',
         },
-        EPHESIANS: {
+        EPH: {
             CHAPTER_COUNT: 7
         },
-        PHILIPPIANS: {
+        PHP: {
             CHAPTER_COUNT: 5
         },
-        COLOSSIANS: {
+        COL: {
             CHAPTER_COUNT: 5
         },
-        FIRST_THESSALONIANS: {
-            CHAPTER_COUNT: 6
+        FTH: {
+            CHAPTER_COUNT: 6,
+            API_NAME: '1TH',
         },
-        SECOND_THESSALONIANS: {
+        STH: {
+            CHAPTER_COUNT: 4,
+            API_NAME: '2TH',
+        },
+        FTI: {
+            CHAPTER_COUNT: 7,
+            API_NAME: '1TI',
+        },
+        STI: {
+            CHAPTER_COUNT: 5,
+            API_NAME: '2TI',
+        },
+        TIT: {
             CHAPTER_COUNT: 4
         },
-        FIRST_TIMOTHY: {
-            CHAPTER_COUNT: 7
-        },
-        SECOND_TIMOTHY: {
-            CHAPTER_COUNT: 5
-        },
-        TITUS: {
-            CHAPTER_COUNT: 4
-        },
-        PHILEMON: {
+        PHM: {
             CHAPTER_COUNT: 2
         },
-        HEBREWS: {
+        HEB: {
             CHAPTER_COUNT: 14
         },
-        JAMES: {
+        JAS: {
             CHAPTER_COUNT: 6
         },
-        FIRST_PETER: {
-            CHAPTER_COUNT: 6
+        FPE: {
+            CHAPTER_COUNT: 6,
+            API_NAME: '1PE',
         },
-        SECOND_PETER: {
-            CHAPTER_COUNT: 4
+        SPE: {
+            CHAPTER_COUNT: 4,
+            API_NAME: '2PE',
         },
-        FIRST_JOHN: {
-            CHAPTER_COUNT: 6
+        FJN: {
+            CHAPTER_COUNT: 6,
+            API_NAME: '1JN',
         },
-        SECOND_JOHN: {
+        SJN: {
+            CHAPTER_COUNT: 2,
+            API_NAME: '2JN',
+        },
+        TJN: {
+            CHAPTER_COUNT: 2,
+            API_NAME: '3JN',
+        },
+        JUD: {
             CHAPTER_COUNT: 2
         },
-        THIRD_JOHN: {
-            CHAPTER_COUNT: 2
-        },
-        JUDE: {
-            CHAPTER_COUNT: 2
-        },
-        REVELATION: {
+        REV: {
             CHAPTER_COUNT: 23
         },
     }
