@@ -35,16 +35,16 @@ function BookPage() {
       <div className={styles.center}>
         <p>
           <Link to="">
-            <button className={`button is-large`}>
-              <span className={`icon is-right ${styles.center}`}>
+            <button className={`button is-large ${styles.button}`}>
+              <div className={`${styles.center}`}>
                 next book
                 <FontAwesomeIcon
                   className={styles.arrowIcon}
                   icon={faArrowRight}
                 />
-              </span>
+              </div>
             </button>
-          </Link>
+            </Link>
         </p>
       </div>
     </>

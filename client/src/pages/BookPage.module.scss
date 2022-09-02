@@ -8,12 +8,14 @@
     font-size: 20px;
 }
 
-button {
+.button {
     margin-top: 64px;
-    width: 150px;
+    padding: 0px 24px;
+
 }
 .center {
     text-align: center;
+    
 }
 
 .book {
@@ -23,7 +25,7 @@ button {
 }
 
 .arrowIcon {
-    margin-left: 11px;
+    margin-left: 8px;
 }
 
 .bookPageHeaderContainer {
