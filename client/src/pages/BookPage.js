@@ -42,7 +42,7 @@ function BookPage() {
           <span className="icon is-medium">
             <FontAwesomeIcon className={styles.arrowIcon} icon={faArrowLeft} />
           </span>
-          <p className="subtitle is-4">Back</p>
+          <div className="subtitle is-4">Back</div>
         </div>
       </nav>
       <div className={styles.bookPageHeaderContainer}>
@@ -51,12 +51,12 @@ function BookPage() {
       <div
         className={`is-flex is-flex-direction-column is-align-items-center ${styles.text}`}
       >
-        <p className={styles.book}>
+        <div className={styles.book}>
           {parse(content)}
-        </p>
+        </div>
       </div>
       <div className={styles.center}>
-        <p>
+        <div>
           <Link to="">
             <button className={`button is-large ${styles.button}`}>
               <div className={`${styles.center}`}>
@@ -68,7 +68,7 @@ function BookPage() {
               </div>
             </button>
             </Link>
-        </p>
+        </div>
       </div>
     </>
   );
