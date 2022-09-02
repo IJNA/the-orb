@@ -7,6 +7,7 @@ import { Link, useParams } from 'react-router-dom';
 import parse from "html-react-parser";
 
 function BookPage() {
+
     let params = useParams();
     const [content, setContent] = useState("retrieving content...");
 
@@ -30,35 +31,47 @@ function BookPage() {
             });
     })
 
-    return (
-        <>
-            <nav className={styles.navbar} role="navigation" aria-label="main navigation">
-                <div className={`navbar-brand ${styles.navbarBrandContainer}`}>
-                    <span className="icon is-medium">
-                        <FontAwesomeIcon className={styles.arrowIcon} icon={faArrowLeft} />
-                    </span>
-                    <div className="subtitle is-4">Back</div>
-                </div>
-            </nav>
-
-            <div className={styles.text}>
-                <h2 className="title is-2">Bookpage</h2>
-                <div className={styles.book}>
-                    {parse(content)}
-                </div>
-            </div>
-            <div className={styles.center}>
-                <div className="control has-icons-right">
-                    <Link to="">
-                        <button className={`button is-large ${styles.center, styles.nextBookButton}`}>next book</button>
-                        <span className="icon is-right">
-                            <FontAwesomeIcon className={styles.arrowIcon} icon={faArrowRight} />
-                        </span>
-                    </Link>
-                </div>
-            </div>
-        </>
-    );
+  return (
+    <>
+      <nav
+        className={styles.navbar}
+        role="navigation"
+        aria-label="main navigation"
+      >
+        <div className={`navbar-brand ${styles.navbarBrandContainer}`}>
+          <span className="icon is-medium">
+            <FontAwesomeIcon className={styles.arrowIcon} icon={faArrowLeft} />
+          </span>
+          <p className="subtitle is-4">Back</p>
+        </div>
+      </nav>
+      <div className={styles.bookPageHeaderContainer}>
+        <h2 className="title is-2">Bookpage</h2>
+      </div>
+      <div
+        className={`is-flex is-flex-direction-column is-align-items-center ${styles.text}`}
+      >
+        <p className={styles.book}>
+          {parse(content)}
+        </p>
+      </div>
+      <div className={styles.center}>
+        <p>
+          <Link to="">
+            <button className={`button is-large ${styles.button}`}>
+              <div className={`${styles.center}`}>
+                next book
+                <FontAwesomeIcon
+                  className={styles.arrowIcon}
+                  icon={faArrowRight}
+                />
+              </div>
+            </button>
+            </Link>
+        </p>
+      </div>
+    </>
+  );
 }
 
 export default BookPage;
