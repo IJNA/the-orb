@@ -9,6 +9,7 @@ import parse from "html-react-parser";
 function BookPage() {
     let params = useParams();
     const [content, setContent] = useState("retrieving content...");
+    const [bookName, setBookName] = useState("");
 
     useEffect(() => {
         console.log('params: ', params.book);
@@ -19,7 +20,9 @@ function BookPage() {
             .then((data) => {
                 // console.log(data);
                 let content = '';
-                data.forEach(book => {
+                setBookName(data.bookName)
+                console.log(data);
+                data.result.forEach(book => {
                     content += book.data.content
                 });
                 // console.log('content: ', content);
@@ -42,7 +45,7 @@ function BookPage() {
             </nav>
 
             <div className={styles.text}>
-                <h2 className="title is-2">Bookpage</h2>
+                <h2 className="title is-2">{bookName}</h2>
                 <div className={styles.book}>
                     {parse(content)}
                 </div>
