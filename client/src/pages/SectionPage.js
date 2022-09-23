@@ -1,11 +1,13 @@
-import Ellipse from '../images/imageTheLaw.png';
+import React, { useEffect, useState } from "react";
 import 'bulma/css/bulma.min.css';
+import { SECTIONS } from '../sectionInfo.js';
 import styles from './SectionPage.module.scss';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 import { Link } from 'react-router-dom';
 
-function TheLaw() {
+function SectionPage() {
+    const [pathName, setPathName] = useState(window.location.pathname.slice(1));
     return (
         <>
             <nav className={`navbar ${styles.navbarContainer}`} role="navigation" aria-label="main navigation">
@@ -19,12 +21,12 @@ function TheLaw() {
                 </div>
             </nav>
             <div className={`container ${styles.theLawContainer}`}>
-                <h2 className={`title is-2 ${styles.theLawHeader}`}>The Law (Torah)</h2>
+                <h2 className={`title is-2 ${styles.theLawHeader}`}>{SECTIONS[pathName].SECTION_NAME}</h2>
                 <div className={styles.imgContainer}>
-                    <img className={styles.sectionEllipse} src={Ellipse} alt='theLawEllispeImg'/>
+                    <img className={styles.sectionEllipse} src={SECTIONS[pathName].IMAGE} alt='EllipseImg'/>
                 </div>
                 <div className={styles.quotedTextContainer}>
-                    <p className={styles.quotedText}>Hear, O Israel: The LORD our God, the LORD is one.</p>
+                    <p className={styles.quotedText}>{SECTIONS[pathName].QUOTE}</p>
                 </div>
 
                 <div className={styles.buttonContainer}>
@@ -49,4 +51,4 @@ function TheLaw() {
     );
 }
 
-export default TheLaw;
+export default SectionPage;

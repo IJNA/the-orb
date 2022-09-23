@@ -45,7 +45,7 @@ function HomePage() {
                 <Link to="theLetters">
                     <button className={`button ${styles.homePageButton} input is-large`}>The Letters</button>
                 </Link>
-                <Link to="theRevelation">
+                <Link to="bookPage/REV">
                     <button className={`button ${styles.homePageButton} input is-large`}>The Revelation</button>
                 </Link>
 
