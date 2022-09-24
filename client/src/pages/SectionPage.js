@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import 'bulma/css/bulma.min.css';
-import { SECTIONS } from '../sectionInfo.js';
+import SECTIONS from '../sectionInfo.js';
 import styles from './SectionPage.module.scss';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 
 function SectionPage() {
     const [pathName, setPathName] = useState(window.location.pathname.slice(1));
+    const image = require('../images/' + SECTIONS[pathName].IMAGE + '.png'); // NOTE: ES6 template literals breaks this
     return (
         <>
             <nav className={`navbar ${styles.navbarContainer}`} role="navigation" aria-label="main navigation">
@@ -20,15 +21,16 @@ function SectionPage() {
                     </Link>
                 </div>
             </nav>
-            <div className={`container ${styles.theLawContainer}`}>
-                <h2 className={`title is-2 ${styles.theLawHeader}`}>{SECTIONS[pathName].SECTION_NAME}</h2>
+            <div className={`container ${styles.sectionContainer}`}>
+                <h2 className={`title is-2 ${styles.sectionHeader}`}>{SECTIONS[pathName].SECTION_NAME}</h2>
                 <div className={styles.imgContainer}>
-                    <img className={styles.sectionEllipse} src={SECTIONS[pathName].IMAGE} alt='EllipseImg'/>
+                    <img className={styles.sectionEllipse} src={image} alt='ellipseImg'/>
                 </div>
                 <div className={styles.quotedTextContainer}>
                     <p className={styles.quotedText}>{SECTIONS[pathName].QUOTE}</p>
                 </div>
 
+                {/* Kaitlyn TODO: dynamically generate these buttons */}
                 <div className={styles.buttonContainer}>
                     <Link to='/bookPage/GEN'>
                         <button className={`button input ${styles.space} is-large`}>Genesis</button>
