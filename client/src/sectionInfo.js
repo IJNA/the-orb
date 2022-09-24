@@ -28,9 +28,6 @@ const SECTIONS = {
         QUOTE: 'I do it all for the sake of the gospel, that I may share with them in its blessings.',
         IMAGE: 'imageThe_Letters',
         BOOKS: ['Romans', '1 Corinthians', '2 Corinthians', 'Galatians', 'Ephesians', 'Philippians', 'Colossians', '1 Thessalonians', '2 Thessalonians', '1 Timothy', '2 Timothy', 'Titus', 'Philemon', 'Hebrews', 'James', '1 Peter', '2 Peter', '1 John', '2 John', '3 John', 'Jude'],
-    },
-    images: {
-
     }
 }
 
