@@ -76,6 +76,12 @@ module.exports = {
         ISA: {
             BOOK_NAME: 'Isaiah',
             CHAPTER_COUNT: 67,
+            NEXT_API_NAME:'JER',
+            NEXT: 'Jeremiah',
+        },
+        JER: {
+            BOOK_NAME: 'Jeremiah',
+            CHAPTER_COUNT: 53,
             NEXT_API_NAME: 'EZK',
             NEXT: 'Ezekiel',
         },
@@ -284,6 +290,12 @@ module.exports = {
             BOOK_NAME: '2 Corinthians',
             CHAPTER_COUNT: 14,
             API_NAME: '2CO',
+            NEXT_API_NAME: 'GAL',
+            NEXT: 'Galatians', 
+        },
+        GAL: {
+            BOOK_NAME: 'Galatians',
+            CHAPTER_COUNT: 7,
             NEXT_API_NAME: 'EPH',
             NEXT: 'Ephesians',
         },

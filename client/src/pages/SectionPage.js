@@ -30,23 +30,12 @@ function SectionPage() {
                     <p className={styles.quotedText}>{SECTIONS[pathName].QUOTE}</p>
                 </div>
 
-                {/* Kaitlyn TODO: dynamically generate these buttons */}
                 <div className={styles.buttonContainer}>
-                    <Link to='/bookPage/GEN'>
-                        <button className={`button input ${styles.space} is-large`}>Genesis</button>
+                   {SECTIONS[pathName].BOOKS.map((book, index) => (
+                    <Link key={index} to={`/bookPage/${book[1]}`}>
+                        <button className={`button input ${styles.space} is-large`}>{book[0]}</button>
                     </Link>
-                    <Link to='/bookPage/EXO'>
-                        <button className={`button input ${styles.space} is-large`}>Exodus</button>
-                    </Link>
-                    <Link to='/bookPage/LEV'>
-                        <button className={`button input ${styles.space} is-large`}>Leviticus</button>
-                    </Link>
-                    <Link to='/bookPage/NUM'>
-                        <button className={`button input ${styles.space} is-large`}>Numbers</button>
-                    </Link>
-                    <Link to='/bookPage/DEU'>
-                        <button className={`button input ${styles.space} is-large`}>Deuteronomy</button>
-                    </Link>
+                   ))}
                 </div>
             </div>
         </>
