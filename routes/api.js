@@ -142,6 +142,22 @@ router.get("/api/bookpage/:book", async (req, res) => {
   const result = await Promise.all(promises)
   res.json({result, bookName, nextBook, nextApiName});
 });
+router.get("/api/searchpage/:search", (req, res) => { 
+  let search = req.params.search;
+  fetch(
+    `https://api.scripture.api.bible/v1/bibles/9879dbb7cfe39e4d-04/search?query=${search}`,
+    {
+      headers: { 'api-key': process.env.API_KEY },
+    }
+  ).then(response => {
+    return response.json();
+  }).then(data => {
+    res.json(data);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
+});
 module.exports = router;
 
