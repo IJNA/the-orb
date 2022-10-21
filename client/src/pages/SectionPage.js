@@ -17,7 +17,7 @@ function SectionPage() {
                         <span className="icon is-medium">
                             <FontAwesomeIcon className={styles.backIcon} icon={faArrowLeft} />
                         </span>
-                        <p className={`subtitle is-4 ${styles.backText}`}>Back</p>
+                        <div className={`subtitle is-4 ${styles.backText}`}>Back</div>
                     </Link>
                 </div>
             </nav>
