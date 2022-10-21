@@ -10,20 +10,21 @@ function HomePage() {
     return (
         // react fragment
         <div className={styles.homePageContainer}>
-            <div className={styles.container}>
+            <div className={`container ${styles.ellipseContainer}`}>
                 <img src={Ellipse} className={styles.homePageImg} alt="ellipse" />
                 <h1 id={styles.title} className="title is-1">Online<br />Reader's<br />Bible</h1>
             </div>
             <div className={`search field ${styles.searchContainer}`}>
-                <p className="control has-icons-left">
+                <div className="control has-icons-left">
                     {/* <a href="../pages/searchPage.html"> */}
                     <Link to="searchPage">
-                        <button className="input is-large is-rounded">Search </button>
+                        <button className="input is-large is-rounded">Search 
                         <span className="icon is-left">
                             <FontAwesomeIcon className={styles.searchIcon} icon={faMagnifyingGlass} />
                         </span>
+                        </button>
                     </Link>
-                </p>
+                </div>
             </div>
             <div className={styles.sections}>
 
@@ -44,7 +45,7 @@ function HomePage() {
                 <Link to="theLetters">
                     <button className={`button ${styles.homePageButton} input is-large`}>The Letters</button>
                 </Link>
-                <Link to="theRevelation">
+                <Link to="bookPage/REV">
                     <button className={`button ${styles.homePageButton} input is-large`}>The Revelation</button>
                 </Link>
 
