@@ -31,8 +31,30 @@ function SearchPage() {
                         <br />
                         &nbsp; &nbsp; Ex: John 1:1; Garden
                     </p>
+                </div>  
+                <div className={`${styles.resultsContainer}`}>
+                    <h4 className={`title is-4`}>Books</h4>
+                    <h4 className={`title is-4 ${styles.results}`}>Passages</h4>
                 </div>
+                <div className={`card ${styles.passageCard}`}>
+                <div className='card-content'>
+                    <p className='subtitle'>
+                        verse
+                    </p>
+                    <p className='subtitle'>
+                        "lorem ipsum"
+                    </p>
+                </div>
+                <footer id='cardReadContainer' className='card-footer'>
+                    <p className='card-footer-item' >
+                        <span>
+                            <Link to='#'>Read</Link>
+                        </span>
+                    </p>
+                </footer>
+           </div>
             </div>
+            
         </>
     );
 }

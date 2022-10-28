@@ -28,3 +28,23 @@ body {
 .previewText {
     color: gray;
 }
+
+.resultsContainer {
+    width: 90vw;
+    max-width: 600px;
+    align-items: center;
+}
+
+.results{
+   margin-top: 50px;
+}
+
+
+.passageCard {
+    width: 90vw;
+    max-width: 600px;
+}
+
+.card-footer p {
+    margin-bottom: 0;
+}
