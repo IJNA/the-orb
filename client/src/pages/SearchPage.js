@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import Card from "../components/Card.js";
+import parse from "html-react-parser";
 
 function SearchPage() {
   //   const [reference, setReference] = useState("");
@@ -13,6 +14,7 @@ function SearchPage() {
   const [verses, setVerses] = useState([]);
   const [showPreviewText, setShowPreviewText] = useState(true);
   const [showResults, setShowResults] = useState(false);
+  const [verseSummary, setVerseSummary] = useState('');
   const searchRef = useRef();
 
   const handleSearch = (e) => {
@@ -26,6 +28,21 @@ function SearchPage() {
       })
       .then((data) => {
         console.log(data.data.verses);
+        let summary = [];
+        data.data.verses.forEach((verse)=> {
+          console.log(verse);
+          console.log(verse.text);
+          const regExp = new RegExp(`${e.target.value}`, 'i');
+          console.log(regExp);
+          summary.push({
+            text: verse.text.replace(regExp, `<b><i><u>${e.target.value}</u></i></b>`)
+            // text: verse.text.replace(`(?i)\${e.target.value}\b`, `<b>${e.target.value}</b>`)
+            // text: verse.text.replace(`(?i)/${e.target.value}/b`, `<b>${e.target.value}</b>`)
+          })
+        });
+        setVerseSummary(summary);
+        console.log('summary: ', summary);
+        console.log('verseSummary: ', verseSummary);
         // setReference(data.verses.reference)
         // setText(data.verse.text)
         // setBookId(data.verse.bookid)
@@ -84,7 +101,7 @@ function SearchPage() {
               <Card
                 key={index}
                 reference={verse.reference}
-                text={verse.text}
+                text={parse(verseSummary[index].text)}
                 bookId={verse.bookId}
               />
             ))}
