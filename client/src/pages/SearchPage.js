@@ -17,6 +17,10 @@ function SearchPage() {
   const [verseSummary, setVerseSummary] = useState('');
   const searchRef = useRef();
 
+  useEffect(() => {
+    searchRef.current.focus();
+  }, []);
+
   const handleSearch = (e) => {
     searchRef.current.blur();
     setShowPreviewText(false);
