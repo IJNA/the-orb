@@ -75,11 +75,13 @@ function SearchPage() {
             </p>
           )}
         </div>
+
         {showResults && (
           <div className={`${styles.resultsContainer}`}>
-            <h4 className={`title is-4`}>Books</h4>
-            <h4 className={`title is-4 ${styles.results}`}>Passages</h4>
-
+            {/* <h4 className={`title is-4`}>Books</h4> */}
+            {verses.length > 0 &&
+             <h4 className={`title is-4 ${styles.results}`}>Passages</h4> 
+             }
             {verses.map((verse, index) => (
               <Card
                 key={index}
