@@ -35,6 +35,20 @@ body {
     align-items: center;
 }
 
-.results{
+.results {
    margin-top: 50px;
+}
+
+.buttonContainer {
+    max-width: 600px;
+    margin-left: 25px;
+    margin-right: 25px;
+    // margin-top: 42px;
+    padding-bottom: 56px;
+    align-self: center;
+}
+
+.space {
+    margin-top: 8px;
+    margin-bottom: 8px;
 }

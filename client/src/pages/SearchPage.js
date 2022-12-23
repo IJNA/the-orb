@@ -6,15 +6,17 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import Card from "../components/Card.js";
 import parse from "html-react-parser";
+import BOOKS from '../books';
 
 function SearchPage() {
   //   const [reference, setReference] = useState("");
   //   const [text, setText] = useState("");
   //   const [bookId, setBookId] = useState("");
   const [verses, setVerses] = useState([]);
+  const [books, setBooks] = useState([]);
   const [showPreviewText, setShowPreviewText] = useState(true);
   const [showResults, setShowResults] = useState(false);
-  const [verseSummary, setVerseSummary] = useState('');
+  const [verseSummary, setVerseSummary] = useState([]);
   const searchRef = useRef();
 
   useEffect(() => {
@@ -32,16 +34,23 @@ function SearchPage() {
       })
       .then((data) => {
         console.log(data.data.verses);
+        console.log(typeof (BOOKS));
+        let bookMatches = [];
+        Object.values(BOOKS).forEach(book => {
+          if (book.BOOK_NAME.toLowerCase().includes(e.target.value.toLowerCase())) {
+            bookMatches.push({name: book.BOOK_NAME, apiName: book.API_NAME});
+          }
+        });
+        setBooks(bookMatches);
+
         let summary = [];
-        data.data.verses.forEach((verse)=> {
+        const regExp = new RegExp(`${e.target.value}`, 'i'); //! put outside loop
+        data.data.verses.forEach((verse) => {
           console.log(verse);
           console.log(verse.text);
-          const regExp = new RegExp(`${e.target.value}`, 'i');
           console.log(regExp);
           summary.push({
             text: verse.text.replace(regExp, `<b><i><u>${e.target.value}</u></i></b>`)
-            // text: verse.text.replace(`(?i)\${e.target.value}\b`, `<b>${e.target.value}</b>`)
-            // text: verse.text.replace(`(?i)/${e.target.value}/b`, `<b>${e.target.value}</b>`)
           })
         });
         setVerseSummary(summary);
@@ -98,9 +107,16 @@ function SearchPage() {
         </div>
         {showResults && (
           <div className={`${styles.resultsContainer}`}>
-            <h4 className={`title is-4`}>Books</h4>
-            <h4 className={`title is-4 ${styles.results}`}>Passages</h4>
+            {books.length > 0 && <h4 className={`title is-4`}>Books</h4>}
+            {books.length > 0 && <div className={styles.buttonContainer}>
+              {books.map((book, index) => (
+                <Link key={index} to={`/bookPage/${book.apiName}`}>
+                  <button className={`button input ${styles.space} is-large`}>{book.name}</button>
+                </Link>
+              ))}
+            </div>}
 
+            {verses.length > 0 && <h4 className={`title is-4 ${styles.results}`}>Passages</h4>}
             {verses.map((verse, index) => (
               <Card
                 key={index}
