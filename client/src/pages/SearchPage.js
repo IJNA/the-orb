@@ -7,15 +7,16 @@ import { Link } from "react-router-dom";
 import Card from "../components/Card.js";
 import { text } from "@fortawesome/fontawesome-svg-core";
 import parse from "html-react-parser";
+import TITLES from "../book";
 
 function SearchPage() {
   const [verses, setVerses] = useState([]);
   const [verseText, setVerseText] = useState([]);
   const [showPreviewText, setShowPreviewText] = useState(true);
   const [showResults, setShowResults] = useState(false);
+  const [bookResults, setBookResults] = useState([]);
   const searchRef = useRef();
-  
-  
+
   const handleSearch = (e) => {
     searchRef.current.blur();
     setShowPreviewText(false);
@@ -27,13 +28,28 @@ function SearchPage() {
       })
       .then((data) => {
         console.log(data.data.verses);
-        const re = new RegExp(`${e.target.value}`, 'i');
+        const re = new RegExp(`${e.target.value}`, "i");
         let verseSummary = [];
-        data.data.verses.forEach(verse => {
-          verseSummary.push(verse.text.replace(re,`<b><i><u>${e.target.value}</u></i></b>`))
-        })
-        setVerseText(verseSummary)
+        data.data.verses.forEach((verse) => {
+          verseSummary.push(
+            verse.text.replace(re, (match) => `<b><i>${match}</i></b>`)
+          );
+        });
+        setVerseText(verseSummary);
         setVerses(data.data.verses);
+        let bookMatches = [];
+        Object.values(TITLES).forEach((book) => {
+          if (
+            book.BOOK_NAME.toLowerCase().includes(e.target.value.toLowerCase())
+          ) {
+            bookMatches.push({
+              bookName: book.BOOK_NAME,
+              apiName: book.API_NAME,
+            });
+          }
+        });
+        setBookResults(bookMatches);
+        console.log(bookMatches);
       })
       .catch((err) => {
         console.log(err);
@@ -82,10 +98,17 @@ function SearchPage() {
 
         {showResults && (
           <div className={`${styles.resultsContainer}`}>
-            {/* <h4 className={`title is-4`}>Books</h4> */}
-            {verses.length > 0 &&
-             <h4 className={`title is-4 ${styles.results}`}>Passages</h4> 
-             }
+            {bookResults.length > 0 && <h4 className={`title is-4 ${styles.booksHeader}`}>Books</h4>}
+            {bookResults.length > 0 && bookResults.map((bookResult, index) => (
+              <Link key={index} to={`/bookPage/${bookResult.apiName}`}>
+                <button className={`button input ${styles.space} is-large`}>
+                  {bookResult.bookName}
+                </button>
+              </Link>
+            ))}
+            {verses.length > 0 && (
+              <h4 className={`title is-4 ${styles.results}`}>Passages</h4>
+            )}
             {verses.map((verse, index) => (
               <Card
                 key={index}
