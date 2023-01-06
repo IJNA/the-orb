@@ -17,7 +17,7 @@ function Card(props) {
                 </div>
                 <footer id='cardReadContainer' className='card-footer'>
                     <span className='card-footer-item' >
-                            <Link to='#'>Read</Link>
+                            <Link to={`/bookPage/${props.bookId}`}>Read</Link>
                     </span>
                 </footer>
            </div>

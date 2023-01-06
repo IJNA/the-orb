@@ -117,6 +117,7 @@ function SearchPage() {
                 bookId={verse.bookId}
               />
             ))}
+            {(bookResults.length === 0 && verses.length === 0) && <p className={`is-size-5 ${styles.noResult}`}>No results found.</p>}
           </div>
         )}
       </div>
