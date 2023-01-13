@@ -38,3 +38,8 @@
 p { //! may cause styling issues on other pages
     margin-bottom: 32px;
 }
+
+.backContainer {
+    display: flex;
+    cursor: pointer;
+}
