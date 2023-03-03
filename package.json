@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "lite-server": "lite-server",
+    "install": "cd client && npm install",
     "build": "cd client && npm run build"
   },
   "repository": {
