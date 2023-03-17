@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/bookPage/{book}": {
+      "name": "/bookPage/{book}",
+      "lambdaFunction": "getBook",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

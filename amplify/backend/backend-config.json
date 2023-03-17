@@ -1,0 +1,51 @@
+{
+  "api": {
+    "orbApi": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "getBook"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    }
+  },
+  "function": {
+    "getBook": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_getBook_apiKey": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "getBook"
+        }
+      ]
+    },
+    "AMPLIFY_function_getBook_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "getBook"
+        }
+      ]
+    },
+    "AMPLIFY_function_getBook_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "getBook"
+        }
+      ]
+    }
+  }
+}

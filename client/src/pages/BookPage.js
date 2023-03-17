@@ -20,7 +20,7 @@ function BookPage() {
     if (shouldMount.current) {
       shouldMount.current = false;
       console.log("params: ", params.book);
-      fetch(`/api/bookPage/${params.book}`)
+      fetch(`/bookPage/${params.book}`)
         .then((response) => {
           return response.json(); // parses response to only give use the data we want
         })
