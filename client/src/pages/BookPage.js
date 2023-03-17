@@ -25,12 +25,12 @@ function BookPage() {
           return response.json(); // parses response to only give use the data we want
         })
         .then((data) => {
-          // console.log(data);
+          console.log(data);
           let content = "";
           setBookName(data.bookName);
           setNextBook(data.nextBook);
           setNextApiName(data.nextApiName);
-          console.log(data);
+          // console.log(data);
           data.result.forEach((book) => {
             content += book.data.content;
           });

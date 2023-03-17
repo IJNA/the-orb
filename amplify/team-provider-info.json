@@ -15,7 +15,7 @@
       "function": {
         "getBook": {
           "deploymentBucketName": "amplify-amplify3c62d212b6da4-staging-40311-deployment",
-          "s3Key": "amplify-builds/getBook-67433362316930467832-build.zip",
+          "s3Key": "amplify-builds/getBook-494d456a6b2f50336265-build.zip",
           "apiKey": "4f1593d5bc9114a8deabb683767e7b4f"
         }
       },

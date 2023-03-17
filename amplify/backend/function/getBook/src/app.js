@@ -11,8 +11,9 @@ See the License for the specific language governing permissions and limitations 
 
 const express = require('express')
 const bodyParser = require('body-parser')
+const fetch = require("node-fetch");
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
-const bookInfo = require("../utils/bookInfo");
+const bookInfo = require("./bookInfo");
 
 // declare a new express app
 const app = express()
