@@ -6,33 +6,29 @@ or in the "license" file accompanying this file. This file is distributed on an 
 See the License for the specific language governing permissions and limitations under the License.
 */
 
-
-
-
-const express = require('express')
-const bodyParser = require('body-parser')
+const express = require("express");
+const bodyParser = require("body-parser");
 const fetch = require("node-fetch");
-const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
+const awsServerlessExpressMiddleware = require("aws-serverless-express/middleware");
 const bookInfo = require("./bookInfo");
 
 // declare a new express app
-const app = express()
-app.use(bodyParser.json())
-app.use(awsServerlessExpressMiddleware.eventContext())
+const app = express();
+app.use(bodyParser.json());
+app.use(awsServerlessExpressMiddleware.eventContext());
 
 // Enable CORS for all methods
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*")
-  res.header("Access-Control-Allow-Headers", "*")
-  next()
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "*");
+  next();
 });
-
 
 /**********************
  * Example get method *
  **********************/
 
-app.get('/bookPage/:book', function(req, res) {
+app.get("/bookPage/:book", async (req, res) => {
   let book = req.params.book;
   currentBookInfo = bookInfo.setBookInfo(book);
   let chapters = currentBookInfo.chapters;
@@ -41,23 +37,28 @@ app.get('/bookPage/:book', function(req, res) {
   let nextApiName = currentBookInfo.nextApiName;
   let promises = [];
   for (let i = 1; i < chapters; i++) {
-    promises.push(fetch(
-      `https://api.scripture.api.bible/v1/bibles/9879dbb7cfe39e4d-04/chapters/${book}.${i}?include-verse-numbers=false`,
-      {
-        headers: { 'api-key': process.env.API_KEY },
-      }
-    ).then(d => d.json())
-      .catch((err) => {
-        console.log(err);
-      }));
-}});
+    promises.push(
+      fetch(
+        `https://api.scripture.api.bible/v1/bibles/9879dbb7cfe39e4d-04/chapters/${book}.${i}?include-verse-numbers=false`,
+        {
+          headers: { "api-key": process.env.API_KEY },
+        }
+      )
+        .then((d) => d.json())
+        .catch((err) => {
+          console.log("error from api: ", err);
+        })
+    );
+  }
+  const result = await Promise.all(promises);
+  res.json({ result, bookName, nextBook, nextApiName });
+});
 
-
-app.listen(3000, function() {
-    console.log("App started")
+app.listen(3000, function () {
+  console.log("App started");
 });
 
 // Export the app object. When executing the application local this does nothing. However,
 // to port it to AWS Lambda we will create a wrapper around that will load the app from
 // this file
-module.exports = app
+module.exports = app;

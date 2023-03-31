@@ -15,7 +15,12 @@
       "function": {
         "getBook": {
           "deploymentBucketName": "amplify-amplify3c62d212b6da4-staging-40311-deployment",
-          "s3Key": "amplify-builds/getBook-494d456a6b2f50336265-build.zip",
+          "s3Key": "amplify-builds/getBook-356a3269393536666351-build.zip",
+          "apiKey": "4f1593d5bc9114a8deabb683767e7b4f"
+        },
+        "search": {
+          "deploymentBucketName": "amplify-amplify3c62d212b6da4-staging-40311-deployment",
+          "s3Key": "amplify-builds/search-456856694b7148493062-build.zip",
           "apiKey": "4f1593d5bc9114a8deabb683767e7b4f"
         }
       },

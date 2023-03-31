@@ -20,6 +20,11 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "search": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "parameters": {
@@ -44,6 +49,30 @@
         {
           "category": "function",
           "resourceName": "getBook"
+        }
+      ]
+    },
+    "AMPLIFY_function_search_apiKey": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "search"
+        }
+      ]
+    },
+    "AMPLIFY_function_search_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "search"
+        }
+      ]
+    },
+    "AMPLIFY_function_search_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "search"
         }
       ]
     }

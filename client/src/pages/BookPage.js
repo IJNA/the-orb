@@ -17,9 +17,13 @@ function BookPage() {
   const shouldMount = useRef(true);
 
   useEffect(() => {
+    console.log('useEffect ran')
+    console.log(params)
+    console.log(window.location.href)
     if (shouldMount.current) {
       shouldMount.current = false;
       console.log("params: ", params.book);
+      // issue with ending /
       fetch(`https://jenjaoocpj.execute-api.us-east-1.amazonaws.com/staging/bookPage/${params.book}`)
         .then((response) => {
           return response.json(); // parses response to only give use the data we want
@@ -27,9 +31,11 @@ function BookPage() {
         .then((data) => {
           console.log(data);
           let content = "";
+          shouldMount.current = true;
           setBookName(data.bookName);
           setNextBook(data.nextBook);
           setNextApiName(data.nextApiName);
+          window.scrollTo(0, 0);
           // console.log(data);
           data.result.forEach((book) => {
             content += book.data.content;
@@ -41,7 +47,7 @@ function BookPage() {
           console.log(err);
         });
     }
-  });
+  }, [params.book]);
 
   return (
     <>
@@ -72,6 +78,7 @@ function BookPage() {
       </div>
       <div className={styles.center}>
         <div>
+          {/* look into why next book button is not submitting a request to the api, quick fix: auto reload page */}
           <Link to={`/bookPage/${nextApiName}`}>
             <button className={`button is-large ${styles.button}`}>
               <div className={`${styles.center}`}>

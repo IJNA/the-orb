@@ -22,7 +22,7 @@ function SearchPage() {
     setShowPreviewText(false);
     setShowResults(true);
     console.log(e.target.value);
-    fetch(`/api/searchpage/${e.target.value}`)
+    fetch(`https://jenjaoocpj.execute-api.us-east-1.amazonaws.com/staging/searchPage/${e.target.value}`)
       .then((response) => {
         return response.json(); // parses response to only give use the data we want
       })
