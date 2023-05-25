@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import SectionPage from "./pages/SectionPage";
@@ -6,9 +7,7 @@ import BookPage from "./pages/BookPage";
 
 import './App.css';
 
-
-
-function App() {
+function App() {  
   return (
     <>
       <Router>

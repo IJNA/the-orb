@@ -50,7 +50,7 @@ function BookPage() {
   }, [params.book]);
 
   return (
-    <>
+    <div className={styles.bookPageContainer}>
       <nav
         className={styles.navbar}
         role="navigation"
@@ -92,7 +92,7 @@ function BookPage() {
           </Link>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

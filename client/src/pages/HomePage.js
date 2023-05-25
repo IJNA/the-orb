@@ -1,14 +1,22 @@
+import { useEffect } from 'react';
 import Ellipse from '../images/Ellipse_2.jpg';
 import 'bulma/css/bulma.min.css';
 import styles from "./HomePage.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons"
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 function HomePage() {
+    const location = useLocation();
+    const pathname = location.pathname;
+
+    useEffect(() => {
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+        }, 10);
+    }, [pathname])
 
     return (
-        // react fragment
         <div className={styles.homePageContainer}>
             <div className={`container ${styles.ellipseContainer}`}>
                 <img src={Ellipse} className={styles.homePageImg} alt="ellipse" />
@@ -18,10 +26,10 @@ function HomePage() {
                 <div className="control has-icons-left">
                     {/* <a href="../pages/searchPage.html"> */}
                     <Link to="searchPage">
-                        <button className="input is-large is-rounded">Search 
-                        <span className="icon is-left">
-                            <FontAwesomeIcon className={styles.searchIcon} icon={faMagnifyingGlass} />
-                        </span>
+                        <button className="input is-large is-rounded">Search
+                            <span className="icon is-left">
+                                <FontAwesomeIcon className={styles.searchIcon} icon={faMagnifyingGlass} />
+                            </span>
                         </button>
                     </Link>
                 </div>

@@ -3,7 +3,7 @@ import "bulma/css/bulma.min.css";
 import styles from "./SearchPage.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Card from "../components/Card.js";
 import { text } from "@fortawesome/fontawesome-svg-core";
 import parse from "html-react-parser";
@@ -16,6 +16,14 @@ function SearchPage() {
   const [showResults, setShowResults] = useState(false);
   const [bookResults, setBookResults] = useState([]);
   const searchRef = useRef();
+  const location = useLocation();
+  const pathname = location.pathname;
+
+  useEffect(() => {
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 10);
+  }, [pathname])
 
   const handleSearch = (e) => {
     searchRef.current.blur();
