@@ -7,6 +7,13 @@
       "permissions": {
         "setting": "open"
       }
+    },
+    "/searchPage/{search}": {
+      "name": "/searchPage/{search}",
+      "lambdaFunction": "search",
+      "permissions": {
+        "setting": "open"
+      }
     }
   }
 }

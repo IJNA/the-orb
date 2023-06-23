@@ -9,6 +9,14 @@
           ],
           "category": "function",
           "resourceName": "getBook"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "search"
         }
       ],
       "providerPlugin": "awscloudformation",
