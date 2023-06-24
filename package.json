@@ -1,5 +1,5 @@
 {
-  "name": "the-orb",
+  "name": "hagah",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -14,7 +14,7 @@
     "type": "git",
     "url": ""
   },
-  "author": "Theo Basallaje, Kaitlyn Niesen, Eli Markarian, and Gabe Argenal",
+  "author": "Theo Basallaje, Kaitlyn Niesen",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.0.0",
