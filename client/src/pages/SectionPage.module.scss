@@ -5,6 +5,7 @@ body {
 
 .sectionPageContainer {
     overflow: hidden;
+    padding-top: 88px;
 }
 
 .sectionContainer {
@@ -18,9 +19,6 @@ body {
     margin-bottom: 8px;
 }
 
-.navbarContainer {
-    border-bottom: 1px solid #DBDBDB;
-}
 
 .navbarBrandContainer {
     align-items: center;
@@ -78,4 +76,7 @@ body {
 .backLink {
     color: black;
     display: flex;
+}
+.navbar {
+    border-bottom: 1px solid #dbdbdb;
 }

@@ -1,0 +1,36 @@
+.headerBlock {
+    border-bottom: 2px solid black; 
+    position: fixed;
+    background-color: white;
+    width: 100%;
+    z-index: 100;
+ }
+
+ 
+ #title {
+    font-family: sans-serif;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 120%;
+    padding-top: 16px ;
+    color: black;
+    position: relative;
+    margin-bottom: 18px;
+    margin-left: 32px;
+}
+.homePageImg {
+    width: 44px;
+    height: 44px;
+    vertical-align: middle;
+    margin-left: 8px;
+  }
+
+  .searchIcon {
+    float: right;
+    width: 32px;
+    height: 32px;
+    margin-top: 8px;
+    margin-right: 32px;
+    color: black;
+}

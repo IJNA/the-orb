@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import parse from "html-react-parser";
+import Header from "../components/Header";
 
 function BookPage() {
   let params = useParams();
@@ -50,7 +51,9 @@ function BookPage() {
   }, [params.book]);
 
   return (
-    <div className={styles.bookPageContainer}>
+    <div>
+      <Header></Header>
+      <div className={styles.bookPageContainer}>
       <nav
         className={styles.navbar}
         role="navigation"
@@ -92,6 +95,7 @@ function BookPage() {
           </Link>
         </div>
       </div>
+    </div>
     </div>
   );
 }
