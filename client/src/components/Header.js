@@ -9,13 +9,13 @@ function Header(props) {
   return (
     <>
       <div className={` sticky-top ${styles.headerBlock}`}>
-      <Link reloadDocument to="hagah.io">
+      <Link to={{ pathname: "https://www.hagah.io/"}}>
          <h1 id={styles.title} className="title is-1">
           hagah
           <img src={Logo} className={styles.homePageImg} alt="logo" />
           </h1>  
           </Link>
-          <Link reloadDocument to="hagah.io/searchPage">
+          <Link reloadDocument to="https://www.hagah.io/searchPage/">
               <span>
                 <FontAwesomeIcon
                   className={styles.searchIcon}
