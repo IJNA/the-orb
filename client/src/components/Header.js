@@ -9,13 +9,12 @@ function Header(props) {
   return (
     <>
       <div className={` sticky-top ${styles.headerBlock}`}>
-      <Link to="">
          <h1 id={styles.title} className="title is-1">
+          <Link to = "/">
           hagah
           <img src={Logo} className={styles.homePageImg} alt="logo" />
-          </h1>  
           </Link>
-          <Link to="searchPage">
+          <Link to="/searchPage">
               <span>
                 <FontAwesomeIcon
                   className={styles.searchIcon}
@@ -23,6 +22,7 @@ function Header(props) {
                 />
               </span>
           </Link>
+          </h1> 
       </div>
     </>
   );
