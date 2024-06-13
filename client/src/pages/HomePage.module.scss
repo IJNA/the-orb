@@ -1,6 +1,19 @@
 .homePageContainer {
     padding: 112px 32px 0 32px;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.paragraphContainer {
+    width: 600px;
+}
+
+.paragraph {
+    width: 326px;
+    margin-bottom: 24px;
 }
 
 #title {
@@ -23,8 +36,7 @@
 }
 
 .sections {
-    margin: auto;
-    margin-top: 48px;
+    margin-top: 64px;
     max-width: 600px;
 }
 

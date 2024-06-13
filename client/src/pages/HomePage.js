@@ -59,65 +59,73 @@ function HomePage() {
     <div>
       <Header></Header>
       <div className={styles.homePageContainer}>
-      <div className={styles.sections}>
-        <h4 className="title is-4 subtitle">Sections</h4>
+        <div className={`${styles.paragraphContainer}`}>
+          <div className={`${styles.paragraph}`}>
+            <p>hagah is a bible app designed to help you meditate on scripture.</p>
+            <Link to="about">
+              ABOUT US
+            </Link>
+          </div>
+        </div>
+        <div className={styles.sections}>
+          <h4 className="title is-4 subtitle">Sections of the Bible</h4>
 
-        <Link to="theLaw">
-          <button className={`button ${styles.homePageButton} input is-large`}>
-            The Law
-          </button>
-        </Link>
-        <Link to="theProphets">
-          <button className={`button ${styles.homePageButton} input is-large`}>
-            The Prophets
-          </button>
-        </Link>
-        <Link to="theWritings">
-          <button className={`button ${styles.homePageButton} input is-large`}>
-            The Writings
-          </button>
-        </Link>
-        <Link to="theGospelsAndActs">
-          <button className={`button ${styles.homePageButton} input is-large`}>
-            The Gospels and Acts
-          </button>
-        </Link>
-        <Link to="theLetters">
-          <button className={`button ${styles.homePageButton} input is-large`}>
-            The Letters
-          </button>
-        </Link>
-        <Link to="bookPage/REV">
-          <button className={`button ${styles.homePageButton} input is-large`}>
-            The Revelation
-          </button>
-        </Link>
-      </div>
-      <div className={styles.smallLinks}>
-        <Link to="#">
-          <button
-            className={`button is-text ${styles.smallLinksText} is-medium`}
-          >
-            About
-          </button>
-        </Link>
-        <br />
-        <Link to="#">
-          <button
-            className={`button is-text ${styles.smallLinksText} is-medium`}
-          >
-            Give
-          </button>
-        </Link>
-        <br />
-        <Link to="#">
-          <button
-            className={`button is-text ${styles.smallLinksText} is-medium`}
-          >
-            Contact
-          </button>
-        </Link>
-      </div>
+          <Link to="theLaw">
+            <button className={`button ${styles.homePageButton} input is-large`}>
+              The Law
+            </button>
+          </Link>
+          <Link to="theProphets">
+            <button className={`button ${styles.homePageButton} input is-large`}>
+              The Prophets
+            </button>
+          </Link>
+          <Link to="theWritings">
+            <button className={`button ${styles.homePageButton} input is-large`}>
+              The Writings
+            </button>
+          </Link>
+          <Link to="theGospelsAndActs">
+            <button className={`button ${styles.homePageButton} input is-large`}>
+              The Gospels and Acts
+            </button>
+          </Link>
+          <Link to="theLetters">
+            <button className={`button ${styles.homePageButton} input is-large`}>
+              The Letters
+            </button>
+          </Link>
+          <Link to="bookPage/REV">
+            <button className={`button ${styles.homePageButton} input is-large`}>
+              The Revelation
+            </button>
+          </Link>
+        </div>
+        <div className={styles.smallLinks}>
+          <Link to="#">
+            <button
+              className={`button is-text ${styles.smallLinksText} is-medium`}
+            >
+              About
+            </button>
+          </Link>
+          <br />
+          <Link to="#">
+            <button
+              className={`button is-text ${styles.smallLinksText} is-medium`}
+            >
+              Give
+            </button>
+          </Link>
+          <br />
+          <Link to="#">
+            <button
+              className={`button is-text ${styles.smallLinksText} is-medium`}
+            >
+              Contact
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   );
