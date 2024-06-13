@@ -1,93 +1,44 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import "bulma/css/bulma.min.css";
 import styles from "./HomePage.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { Link, useLocation } from "react-router-dom";
-import NDK from "@nostr-dev-kit/ndk";
 import Header from "../components/Header";
 
 function HomePage() {
-  const location = useLocation();
-  const pathname = location.pathname;
-  const ndk = new NDK({
-    explicitRelayUrls: [
-      "wss://nos.lol/",
-      "wss://nostr.bitcoiner.social/",
-      "wss://relayable.org/",
-      "wss://yabu.me/",
-      "ws://yabu.me/",
-      "wss://relay.nostr.wirednet.jp/",
-      "wss://relay.haths.cc/",
-      "wss://n-word.sharivegas.com/",
-      "wss://relay.shitforce.one/",
-      "wss://nostr1.current.fyi/",
-    ],
-  });
-  const filter = {
-    kinds: [30023],
-    authors: [
-      "957966b656723845d6d63f102715203e17a2865efe270591400407ee2d4fe6b7",
-    ],
-  };
-
-  useEffect(() => {
-    let event;
-    let events;
-    const fetchData = async () => {
-      try {
-        await ndk.connect();
-        // Will return only the first event
-        event = await ndk.fetchEvent(filter);
-
-        // Will return all found events
-        events = await ndk.fetchEvents(filter);
-        console.log({ event, events });
-      } catch (error) {
-        // Handle any errors that occurred during the fetch
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-    setTimeout(() => {
-      window.scrollTo(0, 0);
-    }, 10);
-  }, [pathname]);
-
   return (
     <div>
-      <Header></Header>
       <div className={styles.homePageContainer}>
       <div className={styles.sections}>
         <h4 className="title is-4 subtitle">Sections</h4>
 
-        <Link to="theLaw">
+        <Link to="sections/the-law">
           <button className={`button ${styles.homePageButton} input is-large`}>
             The Law
           </button>
         </Link>
-        <Link to="theProphets">
+        <Link to="sections/the-prophets">
           <button className={`button ${styles.homePageButton} input is-large`}>
             The Prophets
           </button>
         </Link>
-        <Link to="theWritings">
+        <Link to="sections/the-writings">
           <button className={`button ${styles.homePageButton} input is-large`}>
             The Writings
           </button>
         </Link>
-        <Link to="theGospelsAndActs">
+        <Link to="sections/the-gospels-and-acts">
           <button className={`button ${styles.homePageButton} input is-large`}>
             The Gospels and Acts
           </button>
         </Link>
-        <Link to="theLetters">
+        <Link to="sections/the-letters">
           <button className={`button ${styles.homePageButton} input is-large`}>
             The Letters
           </button>
         </Link>
-        <Link to="bookPage/REV">
+        <Link to="sections/the-revelation/revelation">
           <button className={`button ${styles.homePageButton} input is-large`}>
             The Revelation
           </button>

@@ -9,29 +9,33 @@
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@nostr-dev-kit/ndk": "^0.7.7",
-    "nostr-react": "^0.7.0",
-    "nostr-tools": "^2.7.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "@types/react": "^18.3.3",
+    "axios": "^1.7.2",
     "bulma": "^0.9.4",
-    "html-react-parser": "^3.0.1",
+    "html-react-parser": "^3.0.16",
+    "nostr-react": "^0.7.0",
+    "nostr-tools": "^2.7.0",
     "react": "^18.2.0",
     "react-bulma-components": "^4.1.0",
     "react-dom": "^18.2.0",
+    "react-query": "^3.39.3",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "sass": "^1.54.0",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "zustand": "^4.5.2"
   },
   "overrides": {
     "react-scripts": {
-        "typescript": "^5"
+      "typescript": "^5"
     }
-},
+  },
   "scripts": {
     "predeploy": "npm run build",
-    "start": "set HTTPS=true&&react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
