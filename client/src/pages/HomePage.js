@@ -6,6 +6,7 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { Link, useLocation } from "react-router-dom";
 import NDK from "@nostr-dev-kit/ndk";
 import Header from "../components/Header";
+import IJNA from "../images/IJNA_logo.png";
 
 function HomePage() {
   const location = useLocation();
@@ -59,65 +60,73 @@ function HomePage() {
     <div>
       <Header></Header>
       <div className={styles.homePageContainer}>
-      <div className={styles.sections}>
-        <h4 className="title is-4 subtitle">Sections</h4>
+        <div className={`${styles.paragraphContainer}`}>
+          <div className={`${styles.paragraph}`}>
+            <p>hagah is a bible app designed to help you meditate on scripture.</p>
+            <Link to="about" className={styles.aboutLink}>
+              ABOUT US
+            </Link>
+          </div>
+        </div>
+        <div className={styles.sections}>
+          <h4 className={styles.sectionsHeader}>Sections of the Bible</h4>
 
-        <Link to="theLaw">
-          <button className={`button ${styles.homePageButton} input is-large`}>
-            The Law
-          </button>
-        </Link>
-        <Link to="theProphets">
-          <button className={`button ${styles.homePageButton} input is-large`}>
-            The Prophets
-          </button>
-        </Link>
-        <Link to="theWritings">
-          <button className={`button ${styles.homePageButton} input is-large`}>
-            The Writings
-          </button>
-        </Link>
-        <Link to="theGospelsAndActs">
-          <button className={`button ${styles.homePageButton} input is-large`}>
-            The Gospels and Acts
-          </button>
-        </Link>
-        <Link to="theLetters">
-          <button className={`button ${styles.homePageButton} input is-large`}>
-            The Letters
-          </button>
-        </Link>
-        <Link to="bookPage/REV">
-          <button className={`button ${styles.homePageButton} input is-large`}>
-            The Revelation
-          </button>
-        </Link>
-      </div>
-      <div className={styles.smallLinks}>
-        <Link to="#">
-          <button
-            className={`button is-text ${styles.smallLinksText} is-medium`}
-          >
-            About
-          </button>
-        </Link>
-        <br />
-        <Link to="#">
-          <button
-            className={`button is-text ${styles.smallLinksText} is-medium`}
-          >
-            Give
-          </button>
-        </Link>
-        <br />
-        <Link to="#">
-          <button
-            className={`button is-text ${styles.smallLinksText} is-medium`}
-          >
-            Contact
-          </button>
-        </Link>
-      </div>
+          <Link to="theLaw" className={`${styles.homePageLink}`}>
+            <div className={`${styles.homePageLinkContainer}`}>
+              <div className={`${styles.homePageButton}`}>
+                The Law
+              </div>
+              <div className={`${styles.homePageButtonDiv}`}></div>
+            </div>
+          </Link>
+          <Link to="theProphets">
+            <div className={`${styles.homePageLinkContainer}`}>
+              <div className={`${styles.homePageButton}`}>
+                The Prophets
+              </div>
+              <div className={`${styles.homePageButtonDiv}`}></div>
+            </div>
+          </Link>
+          <Link to="theWritings">
+            <div className={`${styles.homePageLinkContainer}`}>
+              <div className={`${styles.homePageButton}`}>
+                The Writings
+              </div>
+              <div className={`${styles.homePageButtonDiv}`}></div>
+            </div>
+          </Link>
+          <Link to="theGospelsAndActs">
+            <div className={`${styles.homePageLinkContainer}`}>
+              <div className={`${styles.homePageButton}`}>
+                The Gospels and Acts
+              </div>
+              <div className={`${styles.homePageButtonDiv}`}></div>
+            </div>
+          </Link>
+          <Link to="theLetters">
+            <div className={`${styles.homePageLinkContainer}`}>
+              <div className={`${styles.homePageButton}`}>
+                The Letters
+              </div>
+              <div className={`${styles.homePageButtonDiv}`}></div>
+            </div>
+          </Link>
+          <Link to="bookPage/REV">
+            <div className={`${styles.homePageLinkContainer}`}>
+              <div className={`${styles.homePageButton}`}>
+                The Revelation
+              </div>
+              <div className={`${styles.homePageButtonDiv}`}></div>
+            </div>
+          </Link>
+        </div>
+        <img
+          className={styles.ijnaLogo}
+          src={IJNA}
+          alt="IJNA logo which is a blue window with a star on the bottom right"
+          title="IJNA logo which is a blue window with a star on the bottom right"
+        />
+        <p className={styles.openSourceParagraph}>Open-source | <span className={styles.gitHub}><a href="https://github.com/IJNA/the-orb">See Github</a></span></p>
       </div>
     </div>
   );
