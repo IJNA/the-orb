@@ -1,18 +1,18 @@
 .homePageContainer {
-    padding: 0 25px 0 25px;
-}
-
-.container {
-    width: 312px;
-    margin-top: 64px;
+    padding: 112px 32px 0 32px;
+    overflow: hidden;
 }
 
 #title {
-    position: absolute;
-    top: 74px;
-    left: 74px;
-    margin-left: auto;
-    margin-right: auto;
+    font-family: sans-serif;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 120%;
+    padding-top: 16px ;
+    color: black;
+    position: relative;
+    margin-bottom: 18px;
 }
 
 .searchContainer {
@@ -37,4 +37,19 @@
 .smallLinks {
     margin-top: 100px;
     text-align: center;
+}
+.homePageImg {
+  width: 44px;
+  height: 44px;
+  vertical-align: middle;
+  margin-left: 8px;
+}
+.searchIcon {
+    float: right;
+    width: 32px;
+    height: 32px;
+    margin-top: 8px;
+}
+.headerBlock {
+   border-bottom: 2px solid black; 
 }

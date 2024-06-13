@@ -1,18 +1,20 @@
 {
-  "name": "the-orb",
+  "name": "hagah",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "lite-server": "lite-server"
+    "lite-server": "lite-server",
+    "install": "cd client && npm install",
+    "build": "cd client && npm run build"
   },
   "repository": {
     "type": "git",
     "url": ""
   },
-  "author": "Theo Basallaje, Kaitlyn Niesen, Eli Markarian, and Gabe Argenal",
+  "author": "Theo Basallaje, Kaitlyn Niesen",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.0.0",

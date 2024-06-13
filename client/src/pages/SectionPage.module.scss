@@ -3,7 +3,12 @@ body {
     height: 100%;
 }
 
-.theLawContainer {
+.sectionPageContainer {
+    overflow: hidden;
+    padding-top: 68px;
+}
+
+.sectionContainer {
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -14,9 +19,6 @@ body {
     margin-bottom: 8px;
 }
 
-.navbarContainer {
-    border-bottom: 1px solid #DBDBDB;
-}
 
 .navbarBrandContainer {
     align-items: center;
@@ -27,11 +29,11 @@ body {
     margin-left: 25px;
     margin-right: 25px;
     margin-top: 42px;
-    padding-bottom: 16px;
+    padding-bottom: 56px;
     align-self: center;
 }
 
-.theLawHeader {
+.sectionHeader {
     text-align: center;
     margin-top: 32px;
     font-weight: 800;
@@ -48,6 +50,11 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.sectionEllipse {
+    height: 200px;
+    width: 200px;
 }
 
 .sectionEllipse {
@@ -69,4 +76,7 @@ body {
 .backLink {
     color: black;
     display: flex;
+}
+.navbar {
+    border-bottom: 1px solid #dbdbdb;
 }
