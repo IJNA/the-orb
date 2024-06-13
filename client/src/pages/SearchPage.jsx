@@ -4,7 +4,7 @@ import styles from "./SearchPage.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { Link, useLocation } from "react-router-dom";
-import Card from "../components/Card";
+import { PassageCard } from "../components/PassageCard";
 import TITLES from "../book";
 import { Container } from "react-bulma-components";
 import { useGetSearchResults } from "../utils/Queries";
@@ -30,31 +30,9 @@ const SearchPage = () => {
 
     const handleSearch = useCallback((e) => {
         if (e.key !== "Enter") return;
-        const query = e.target.value;
-        setQuery(query);
-        //searchRef.current.blur();
+        setQuery(e.target.value);
         setShowPreviewText(false);
         setShowResults(true);
-
-        // fetch(`https://jenjaoocpj.execute-api.us-east-1.amazonaws.com/staging/searchPage/${query}`)
-        //     .then((response) => response.json())
-        //     .then((data) => {
-        //         const re = new RegExp(`${query}`, "i");
-        //         const verseSummary = data.data.verses.map((verse) =>
-        //             verse.text.replace(re, (match) => `<b><i>${match}</i></b>`)
-        //         );
-        //         setVerseText(verseSummary);
-        //         setVerses(data.data.verses);
-
-        //         const bookMatches = Object.values(TITLES)
-        //             .filter((book) => book.BOOK_NAME.toLowerCase().includes(query.toLowerCase()))
-        //             .map((book) => ({
-        //                 bookName: book.BOOK_NAME,
-        //                 apiName: book.API_NAME,
-        //             }));
-        //         setBookResults(bookMatches);
-        //     })
-        //     .catch(console.error);
     }, []);
 
     const handleFocus = () => {
@@ -138,7 +116,7 @@ const SearchPage = () => {
                             <>
                                 <h4 className={`title is-4 ${styles.results}`}>Passages</h4>
                                 {verses.map((verse, index) => (
-                                    <Card
+                                    <PassageCard
                                         key={index}
                                         reference={verse.reference}
                                         text={verseText[index]}
