@@ -58,7 +58,7 @@ function HomePage() {
 
   return (
     <div>
-      <Header></Header>
+      <Header />
       <div className={styles.homePageContainer}>
         <div className={`${styles.paragraphContainer}`}>
           <div className={`${styles.paragraph}`}>
@@ -126,7 +126,7 @@ function HomePage() {
           alt="IJNA logo which is a blue window with a star on the bottom right"
           title="IJNA logo which is a blue window with a star on the bottom right"
         />
-        <p className={styles.openSourceParagraph}>Open-source | <span className={styles.gitHub}><a href="https://github.com/IJNA/the-orb">See Github</a></span></p>
+        <p className={styles.openSourceParagraph}>Open-source | <span className={styles.gitHub}><a target="_blank" href="https://github.com/IJNA/the-orb">See Github</a></span></p>
       </div>
     </div>
   );

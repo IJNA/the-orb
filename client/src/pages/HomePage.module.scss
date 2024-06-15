@@ -7,14 +7,16 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding-bottom: 64px;
 }
 
 .paragraphContainer {
-    // width: 600px;
+    max-width: 600px;
+    width: 100%;
 }
 
 .paragraph {
-    width: 326px;
+    max-width: 600px;
     margin-bottom: 24px;
 }
 
@@ -43,6 +45,12 @@
 .sections {
     margin-top: 64px;
     max-width: 600px;
+    width: 100%;
+}
+
+.homePageLink, .homePageLinkContainer, .homePageButton, .homePageButtonDiv {
+    max-width: 600px;
+    width: 100%;
 }
 
 .homePageLinkContainer {
@@ -53,7 +61,6 @@
 .homePageButton {
     padding: 12px;
     border: 2px solid black;
-    width: 326px;
     height: 60px;
     font-family: Roboto Serif;
     font-size: 24px;
@@ -64,10 +71,8 @@
 .homePageButtonDiv {
     border: 2px solid black;
     border-top: none;
-    width: 326px;
     height: 6px;
     background: #E5E5E5;
-
 }
 
 .smallLinksText {
