@@ -8,6 +8,7 @@ import { PassageCard } from "../components/PassageCard";
 import TITLES from "../book";
 import { Container } from "react-bulma-components";
 import { useGetSearchResults } from "../utils/Queries";
+import { findSectionByAPIBookTitle } from "../utils/Hooks";
 
 const SearchPage = () => {
     const [query, setQuery] = useState(null);
@@ -18,7 +19,6 @@ const SearchPage = () => {
     const [bookResults, setBookResults] = useState([]);
     const searchRef = useRef();
     const location = useLocation();
-
     const { data: searchResults, isLoading: isSearching } = useGetSearchResults(query);
 
     useEffect(() => {
@@ -103,7 +103,7 @@ const SearchPage = () => {
                                 {bookResults.map((bookResult, index) => (
                                     <Link
                                         key={index}
-                                        to={`/${toKebabCase(bookResult.bookName)}/${toKebabCase(bookResult.apiName)}`}
+                                        to={findSectionByAPIBookTitle(bookResult.apiName).book.route}
                                     >
                                         <button className={`button input ${styles.space} is-large`}>
                                             {bookResult.bookName}

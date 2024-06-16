@@ -462,35 +462,34 @@ export const BookSectionMap = {
                     route: "/sections/the-letters/2-peter",
                     title: "2 Peter",
                     nostrId:
-                        "naddr1qqxnzd3c8qcrwv3hx5cnywvjqgsf27txket8ywz96mtr7yp8z5sru9azse00ufc9j9qqgplw9487ddcrqsqqqa28j2j2jw",
+                        "naddr1qqxnzd3c8qcrwv3hxvcrxd3nqgsf27txket8ywz96mtr7yp8z5sru9azse00ufc9j9qqgplw9487ddcrqsqqqa28ghftk9",
                     nextRoute: "/sections/the-letters/1-john",
                 },
                 {
                     route: "/sections/the-letters/1-john",
                     title: "1 John",
-                    nostrId:
-                        "naddr1qqxnzd3c8qcrwv3hx5q6r2vjqgsf27txket8ywz96mtr7yp8z5sru9azse00ufc9j9qqgplw9487ddcrqsqqqa28j2j2jw",
+                    nostrId:"naddr1qqxnzd3c8qcrwv3hx5urjve5qgsf27txket8ywz96mtr7yp8z5sru9azse00ufc9j9qqgplw9487ddcrqsqqqa284xaek4",
                     nextRoute: "/sections/the-letters/2-john",
                 },
                 {
                     route: "/sections/the-letters/2-john",
                     title: "2 John",
                     nostrId:
-                        "naddr1qqxnzd3c8qcrwv3hx5q6r2vjqgsf27txket8ywz96mtr7yp8z5sru9azse00ufc9j9qqgplw9487ddcrqsqqqa28j2j2jw",
+                        "naddr1qqxnzd3c8qcrwvehxvcr2dekqgsf27txket8ywz96mtr7yp8z5sru9azse00ufc9j9qqgplw9487ddcrqsqqqa28sah8am",
                     nextRoute: "/sections/the-letters/3-john",
                 },
                 {
                     route: "/sections/the-letters/3-john",
                     title: "3 John",
                     nostrId:
-                        "naddr1qqxnzd3c8qcrwv3hx5q6r2vjqgsf27txket8ywz96mtr7yp8z5sru9azse00ufc9j9qqgplw9487ddcrqsqqqa28j2j2jw",
+                        "naddr1qqxnzd3c8qcrwvehxcunyve3qgsf27txket8ywz96mtr7yp8z5sru9azse00ufc9j9qqgplw9487ddcrqsqqqa28h8079g",
                     nextRoute: "/sections/the-letters/jude",
                 },
                 {
                     route: "/sections/the-letters/jude",
                     title: "Jude",
                     nostrId:
-                        "naddr1qqxnzd3c8qcrwv3hx5q6r2vjqgsf27txket8ywz96mtr7yp8z5sru9azse00ufc9j9qqgplw9487ddcrqsqqqa28j2j2jw",
+                        "naddr1qqxnzd3c8qcrwveh8y6rqd3kqgsf27txket8ywz96mtr7yp8z5sru9azse00ufc9j9qqgplw9487ddcrqsqqqa28hj565a",
                     nextRoute: null,
                 },
             ],
