@@ -28,3 +28,26 @@ body {
 .previewText {
     color: gray;
 }
+
+.resultsContainer {
+    width: 90vw;
+    max-width: 600px;
+    align-items: center;
+}
+
+.results{
+   margin-top: 50px;
+}
+
+.booksHeader {
+    margin-top: 52px;
+}
+.space {
+    margin-bottom: 16px;
+}
+
+.noResult {
+    margin-top: 50px;
+    margin-left: 24px;
+    color: black;
+}

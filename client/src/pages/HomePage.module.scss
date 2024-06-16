@@ -1,40 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
 .homePageContainer {
-    padding: 0 25px 0 25px;
+    padding: 112px 32px 0 32px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 64px;
 }
 
-.container {
-    width: 312px;
-    margin-top: 64px;
-}
-
-#title {
-    position: absolute;
-    top: 74px;
-    left: 74px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.searchContainer {
-    margin: auto;
+.paragraphContainer {
     max-width: 600px;
-    margin-top: 100px;
-    text-align: center;
+    width: 100%;
+}
+
+.paragraph {
+    max-width: 600px;
+    margin-bottom: 24px;
+}
+
+.paragraph p {
+    font-family: Roboto Serif;
+    font-size: 24px;
+    font-weight: 400;
+}
+
+.aboutLink {
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.46000000834465027px;
+    color: #3B6362;
+}
+
+.sectionsHeader {
+    font-family: Inter;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 28.8px;
+    margin-bottom: 32px;
 }
 
 .sections {
-    margin: auto;
-    margin-top: 48px;
+    margin-top: 64px;
     max-width: 600px;
+    width: 100%;
+}
+
+.homePageLink, .homePageLinkContainer, .homePageButton, .homePageButtonDiv {
+    max-width: 600px;
+    width: 100%;
+}
+
+.homePageLinkContainer {
+    align-items: center;
+    margin-bottom: 24px;
 }
 
 .homePageButton {
-    margin-bottom: 16px;
+    padding: 12px;
+    border: 2px solid black;
+    height: 60px;
+    font-family: Roboto Serif;
+    font-size: 24px;
+    font-weight: 400;
+    text-align: center;
 }
+
+.homePageButtonDiv {
+    border: 2px solid black;
+    border-top: none;
+    height: 6px;
+    background: #E5E5E5;
+}
+
 .smallLinksText {
     margin-bottom: 24px;
 }
+
 .smallLinks {
     margin-top: 100px;
     text-align: center;
+}
+
+.homePageImg {
+    width: 44px;
+    height: 44px;
+    vertical-align: middle;
+    margin-left: 8px;
+}
+
+.searchIcon {
+    float: right;
+    width: 32px;
+    height: 32px;
+    margin-top: 8px;
+}
+
+.headerBlock {
+    border-bottom: 2px solid black;
+}
+
+.ijnaLogo {
+    margin-top: 116px;
+    width: 86px;
+    height: 196px;
+}
+
+.openSourceParagraph {
+    margin-top: 64px;
+    font-family: Roboto Mono;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 23.74px;
+}
+
+.openSourceParagraph .gitHub {
+    text-decoration: underline;
 }
