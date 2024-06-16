@@ -2,11 +2,11 @@ import React from "react";
 import "bulma/css/bulma.min.css";
 import styles from "./Card.module.scss";
 import { Link } from "react-router-dom";
-import { useFindSectionByAPIBookTitle } from "../utils/Hooks";
+import { findSectionByAPIBookTitle } from "../utils/Hooks";
 import { Card } from "react-bulma-components";
 
 export const PassageCard = ({ reference, text, bookId }) => {
-    const { book } = useFindSectionByAPIBookTitle(bookId);
+    const { book } = findSectionByAPIBookTitle(bookId);
     return (
         <>
             <Card className={styles.passageCard}>
