@@ -8,8 +8,8 @@ import parse from "html-react-parser";
 import Header from "../components/Header";
 
 function About() {
-  let params = useParams();
-  let navigate = useNavigate();
+  const params = useParams();
+  const navigate = useNavigate();
   const handleBack = () => navigate(-1);
   const [content, setContent] = useState("retrieving content...");
   const [bookName, setBookName] = useState("");

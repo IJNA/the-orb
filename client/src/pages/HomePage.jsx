@@ -1,77 +1,74 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "bulma/css/bulma.min.css";
 import styles from "./HomePage.module.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { Link, useLocation } from "react-router-dom";
-import Header from "../components/Header";
+import { Link } from "react-router-dom";
 
 function HomePage() {
-  return (
-    <div>
-      <div className={styles.homePageContainer}>
-      <div className={styles.sections}>
-        <h4 className="title is-4 subtitle">Sections</h4>
-
-        <Link to="sections/the-law">
-          <button className={`button ${styles.homePageButton} input is-large`}>
-            The Law
-          </button>
-        </Link>
-        <Link to="sections/the-prophets">
-          <button className={`button ${styles.homePageButton} input is-large`}>
-            The Prophets
-          </button>
-        </Link>
-        <Link to="sections/the-writings">
-          <button className={`button ${styles.homePageButton} input is-large`}>
-            The Writings
-          </button>
-        </Link>
-        <Link to="sections/the-gospels-and-acts">
-          <button className={`button ${styles.homePageButton} input is-large`}>
-            The Gospels and Acts
-          </button>
-        </Link>
-        <Link to="sections/the-letters">
-          <button className={`button ${styles.homePageButton} input is-large`}>
-            The Letters
-          </button>
-        </Link>
-        <Link to="sections/the-revelation/revelation">
-          <button className={`button ${styles.homePageButton} input is-large`}>
-            The Revelation
-          </button>
-        </Link>
-      </div>
-      <div className={styles.smallLinks}>
-        <Link to="#">
-          <button
-            className={`button is-text ${styles.smallLinksText} is-medium`}
-          >
-            About
-          </button>
-        </Link>
-        <br />
-        <Link to="#">
-          <button
-            className={`button is-text ${styles.smallLinksText} is-medium`}
-          >
-            Give
-          </button>
-        </Link>
-        <br />
-        <Link to="#">
-          <button
-            className={`button is-text ${styles.smallLinksText} is-medium`}
-          >
-            Contact
-          </button>
-        </Link>
-      </div>
-      </div>
-    </div>
-  );
+    return (
+        <>
+            <div className={styles.homePageContainer}>
+                <div className={styles.paragraphContainer}>
+                    <div className={styles.paragraph}>
+                        <p>hagah is a bible app designed to help you meditate on scripture.</p>
+                        <Link to="about" className={styles.aboutLink}>
+                            ABOUT US
+                        </Link>
+                    </div>
+                </div>
+                <div className={styles.sections}>
+                    <h4 className={styles.sectionsHeader}>Sections of the Bible</h4>
+                    <Link to="sections/the-law" className={styles.homePageLink}>
+                        <div className={`${styles.homePageLinkContainer}`}>
+                            <div className={`${styles.homePageButton}`}>The Law</div>
+                            <div className={`${styles.homePageButtonDiv}`}></div>
+                        </div>
+                    </Link>
+                    <Link to="sections/the-prophets" className={styles.homePageLink}>
+                        <div className={`${styles.homePageLinkContainer}`}>
+                            <div className={`${styles.homePageButton}`}>The Prophets</div>
+                            <div className={`${styles.homePageButtonDiv}`}></div>
+                        </div>
+                    </Link>
+                    <Link to="sections/the-writings" className={styles.homePageLink}>
+                        <div className={`${styles.homePageLinkContainer}`}>
+                            <div className={`${styles.homePageButton}`}>The Writings</div>
+                            <div className={`${styles.homePageButtonDiv}`}></div>
+                        </div>
+                    </Link>
+                    <Link to="sections/the-gospels-and-acts" className={styles.homePageLink}>
+                        <div className={`${styles.homePageLinkContainer}`}>
+                            <div className={`${styles.homePageButton}`}>The Gospels and Acts</div>
+                            <div className={`${styles.homePageButtonDiv}`}></div>
+                        </div>
+                    </Link>
+                    <Link to="sections/the-letters" className={styles.homePageLink}>
+                        <div className={`${styles.homePageLinkContainer}`}>
+                            <div className={`${styles.homePageButton}`}>The Letters</div>
+                            <div className={`${styles.homePageButtonDiv}`}></div>
+                        </div>
+                    </Link>
+                    <Link to="sections/the-revelation/revelation" className={styles.homePageLink}>
+                        <div className={`${styles.homePageLinkContainer}`}>
+                            <div className={`${styles.homePageButton}`}>The Revelation</div>
+                            <div className={`${styles.homePageButtonDiv}`}></div>
+                        </div>
+                    </Link>
+                </div>
+                <img
+                    className={styles.ijnaLogo}
+                    src="/images/IJNA_logo.png"
+                    alt="IJNA logo which is a blue window with a star on the bottom right"
+                    title="IJNA logo which is a blue window with a star on the bottom right"
+                />
+                <p className={styles.openSourceParagraph}>
+                    Open-source |
+                    <span className={styles.gitHub}>
+                        <a href="https://github.com/IJNA/the-orb">See Github</a>
+                    </span>
+                </p>
+            </div>
+        </>
+    );
 }
 
 export default HomePage;

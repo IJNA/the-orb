@@ -4,7 +4,6 @@ import styles from "./Header.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { Link, useLocation } from "react-router-dom";
-import { Heading } from "react-bulma-components";
 
 function Header() {
     const { pathname } = useLocation();
@@ -13,17 +12,19 @@ function Header() {
 
     return (
         <div className={`sticky-top ${styles.headerBlock}`}>
-            <Heading id={styles.title} size={1}>
-                <Link to="/">
+            <div className={styles.headerTextBrand}>
+                <img src="/images/hagah_logo.png" className={styles.homePageImg} alt="logo" />
+                <Link to="/" className={styles.headerText}>
                     hagah
-                    <img src="/images/hagah_logo.png" className={styles.homePageImg} alt="logo" />
                 </Link>
+            </div>
+            <div className={styles.searchIconContainer}>
                 <Link to="search">
                     <span>
                         <FontAwesomeIcon className={styles.searchIcon} icon={faMagnifyingGlass} />
                     </span>
                 </Link>
-            </Heading>
+            </div>
         </div>
     );
 }

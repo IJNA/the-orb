@@ -4,7 +4,7 @@ import HomePage from "./pages/HomePage";
 import SectionPage from "./pages/SectionPage";
 import SearchPage from "./pages/SearchPage";
 import BookPage from "./pages/BookPage";
-
+import About from "./pages/About";
 import "./App.css";
 import Header from "./components/Header";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -22,6 +22,7 @@ function App() {
                     <Route path="sections/:section" element={<SectionPage />} />
                     <Route path="search" element={<SearchPage />} />
                     <Route path="sections/:section/:book" element={<BookPage />} />
+                    <Route path="about" exact element={<About />} />
                 </Routes>
             </Router>
         </QueryClientProvider>
