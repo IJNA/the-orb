@@ -22,7 +22,7 @@ function App() {
                     <Route path="sections/:section" element={<SectionPage />} />
                     <Route path="search" element={<SearchPage />} />
                     <Route path="sections/:section/:book" element={<BookPage />} />
-                    <Route path="about" exact element={<About />} />
+                    <Route path="about" element={<About />} />
                 </Routes>
             </Router>
         </QueryClientProvider>
