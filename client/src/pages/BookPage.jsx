@@ -15,13 +15,16 @@ function BookPage() {
     const currentBook = useCurrentBook();
     const { pageContent, isLoading } = GetBookContentByNoteId(currentBook?.nostrId);
 
-    function cleanedPageContent() {
-        return pageContent?.split("<br>")?.at(0);
-    }
-
-    const formattedPageContent = cleanedPageContent()
-        ?.split("\n")
-        .map((line, index) => <p key={index}>{line}</p>);
+    const formattedPageContent = pageContent?.split("\n").map((line, index) => (
+        <p key={index}>
+            {line.split("<br>").map((segment, i) => (
+                <>
+                    {i > 0 && <br />}
+                    {segment}
+                </>
+            ))}
+        </p>
+    ));
 
     return (
         <div className={styles.bookPageContainer}>
