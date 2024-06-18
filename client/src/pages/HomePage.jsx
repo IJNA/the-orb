@@ -1,9 +1,20 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "bulma/css/bulma.min.css";
 import styles from "./HomePage.module.scss";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
-function HomePage() {
+const HomePage = () => {
+
+    const location = useLocation();
+
+    const url = location.pathname;
+
+    useEffect(() => {
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+        }, 5);
+    }, [url]);
+
     return (
         <>
             <div className={styles.homePageContainer}>
