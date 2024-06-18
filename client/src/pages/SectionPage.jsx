@@ -8,7 +8,7 @@ import { Link, useLocation, useParams } from "react-router-dom";
 import Header from "../components/Header";
 import { useCurrentSection } from "../utils/Hooks";
 
-function SectionPage() {
+const SectionPage = () => {
     const location = useLocation();
     const currentSection = useCurrentSection();
     const image = "/images/" + currentSection.image + ".png";
