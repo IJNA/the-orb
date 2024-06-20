@@ -15,12 +15,17 @@
   font-family: Inter;
   font-size: 40px;
   font-weight: 700;
+  height: 100%;
+  width: 100%;
 }
 
 .headerTextBrand {
   display: flex;
   align-items: center;
+  height: 100%;
+  width: 100%;
   margin-left: 32px;
+  border: 2px red;
 }
 
 .homePageImg {
@@ -28,6 +33,7 @@
   height: 32px;
   vertical-align: middle;
   margin-right: 16px;
+  margin-bottom: 8px;
 }
 
 .searchIcon {
