@@ -39,35 +39,41 @@ function About() {
         </div>
         <h4 className={styles.aboutHeader}>Contact</h4>
         <div className={styles.buttonContainer}>
-          <button><img
-            className={styles.contactButtonImg}
-            src="/images/mailIcon.png"
-            alt="Email button icon, evelope"
-            title="Email button icon, evelope"
-          />EMAIL</button>
-          <button><img
-            className={styles.contactButtonImg}
-            src="/images/nostrIcon.png"
-            alt="NOSTR button icon, ostrich"
-            title="NOSTR button icon, ostrich"
-          />NOSTR</button>
-          <button><img
-            className={styles.contactButtonImg}
-            src="/images/feedbackIcon.png"
-            alt="Give Feedback button icon, megaphone"
-            title="Give Feedback button icon, megaphone"
-          />GIVE FEEDBACK</button>
-          <div className={styles.contributerListContainer}>
-            <a target="_blank" rel="noreferrer" href="https://github.com/IJNA/the-orb/graphs/contributors" className={styles.contributerList}>
-              SEE CONTRIBUTER LIST
-            </a>
-            <img
+          <a target="_blank" rel="noreferrer" href="mailto:jbasallaje@gmail.com">
+            <button><img
               className={styles.contactButtonImg}
-              src="/images/openInNewTabIcon.png"
-              alt="Open link in new tab icon, square with arrow comming out"
-              title="Open link in new tab icon, square with arrow comming out"
-            />
-          </div>
+              src="/images/mailIcon.png"
+              alt="Email button icon, evelope"
+              title="Email button icon, evelope"
+            />EMAIL</button>
+          </a>
+          <a target="_blank" rel="noreferrer" href="http://primal.net/p/npub1j4ukddjkwguyt4kk8ugzw9fq8ct69pj7lcnsty2qqsr7ut20u6mshfllhh">
+            <button><img
+              className={styles.contactButtonImg}
+              src="/images/nostrIcon.png"
+              alt="NOSTR button icon, ostrich"
+              title="NOSTR button icon, ostrich"
+            />NOSTR</button>
+          </a>
+          <a className={`${styles.feedBackLink}`} href="#">
+            <button className={`${styles.feedBackButton}`}><img
+              className={`${styles.contactButtonImg}`}
+              src="/images/feedbackIcon.png"
+              alt="Give Feedback button icon, megaphone"
+              title="Give Feedback button icon, megaphone"
+            />GIVE FEEDBACK</button>
+          </a>
+        </div>
+        <div className={styles.contributorListContainer}>
+          <a target="_blank" rel="noreferrer" href="https://github.com/IJNA/the-orb/graphs/contributors" className={styles.contributorListLink}>
+            SEE CONTRIBUTOR LIST
+          </a>
+          <img
+            className={`${styles.contributorImg}`}
+            src="/images/openInNewTabIcon.png"
+            alt="Open link in new tab icon, square with arrow comming out"
+            title="Open link in new tab icon, square with arrow comming out"
+          />
         </div>
         <h4 className={styles.aboutHeader}>Support</h4>
         <div className={styles.paragraphContainer}>

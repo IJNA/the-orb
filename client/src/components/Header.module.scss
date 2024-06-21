@@ -17,6 +17,7 @@
   font-weight: 700;
   height: 100%;
   width: 100%;
+  color: black;
 }
 
 .headerTextBrand {
@@ -25,7 +26,10 @@
   height: 100%;
   width: 100%;
   margin-left: 32px;
-  border: 2px red;
+}
+
+.headerText:hover {
+  color: black;
 }
 
 .homePageImg {
@@ -46,8 +50,4 @@
 
 .searchIconContainer {
   margin-right: 32px;
-}
-
-a {
-  color: black;
 }
