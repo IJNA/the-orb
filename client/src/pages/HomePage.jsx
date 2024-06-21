@@ -72,7 +72,7 @@ const HomePage = () => {
                     title="IJNA logo which is a blue window with a star on the bottom right"
                 />
                 <p className={styles.openSourceParagraph}>
-                    Open-source |
+                    Open-source |&nbsp;
                     <span className={styles.gitHub}>
                         <a target="_blank" rel="noreferrer" href="https://github.com/IJNA/the-orb">See Github</a>
                     </span>
