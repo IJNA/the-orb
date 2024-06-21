@@ -74,7 +74,7 @@ const HomePage = () => {
                 <p className={styles.openSourceParagraph}>
                     Open-source |
                     <span className={styles.gitHub}>
-                        <a href="https://github.com/IJNA/the-orb">See Github</a>
+                        <a target="_blank" rel="noreferrer" href="https://github.com/IJNA/the-orb">See Github</a>
                     </span>
                 </p>
             </div>
