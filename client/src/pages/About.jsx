@@ -5,6 +5,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import parse from "html-react-parser";
+import mailIcon from '../images/mailIcon.svg'
+import nostrIcon from '../images/nostrIcon.svg'
+import bullHornIcon from '../images/bullHornIcon.svg'
 
 function About() {
   const params = useParams();
@@ -46,7 +49,7 @@ function About() {
           <a target="_blank" rel="noreferrer" href="mailto:jbasallaje@gmail.com">
             <button><img
               className={styles.contactButtonImg}
-              src="/images/mailIcon.png"
+              src={mailIcon}
               alt="Email button icon, evelope"
               title="Email button icon, evelope"
             />EMAIL</button>
@@ -54,7 +57,7 @@ function About() {
           <a target="_blank" rel="noreferrer" href="http://primal.net/p/npub1j4ukddjkwguyt4kk8ugzw9fq8ct69pj7lcnsty2qqsr7ut20u6mshfllhh">
             <button><img
               className={styles.contactButtonImg}
-              src="/images/nostrIcon.png"
+              src={nostrIcon}
               alt="NOSTR button icon, ostrich"
               title="NOSTR button icon, ostrich"
             />NOSTR</button>
@@ -62,9 +65,9 @@ function About() {
           <a className={`${styles.feedBackLink}`} href="#">
             <button className={`${styles.feedBackButton}`}><img
               className={`${styles.contactButtonImg}`}
-              src="/images/feedbackIcon.png"
-              alt="Give Feedback button icon, megaphone"
-              title="Give Feedback button icon, megaphone"
+              src={bullHornIcon}
+              alt="Give Feedback button icon, bullhorn"
+              title="Give Feedback button icon, bullhorn"
             />GIVE FEEDBACK</button>
           </a>
         </div>
