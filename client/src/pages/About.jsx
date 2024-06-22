@@ -5,9 +5,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import parse from "html-react-parser";
-import mailIcon from '../images/mailIcon.svg'
-import nostrIcon from '../images/nostrIcon.svg'
-import bullHornIcon from '../images/bullHornIcon.svg'
+import mailIcon from '../images/mailIcon.svg';
+import nostrIcon from '../images/nostrIcon.svg';
+import bullHornIcon from '../images/bullHornIcon.svg';
+import openInNewIcon from '../images/openInNewIcon.svg';
+import heartIcon from '../images/heartIcon.svg';
 
 function About() {
   const params = useParams();
@@ -77,7 +79,7 @@ function About() {
           </a>
           <img
             className={`${styles.contributorImg}`}
-            src="/images/openInNewTabIcon.png"
+            src={openInNewIcon}
             alt="Open link in new tab icon, square with arrow comming out"
             title="Open link in new tab icon, square with arrow comming out"
           />
@@ -90,7 +92,7 @@ function About() {
         </div>
         <button className={styles.supportBtn}>SUPPORT<img
           className={styles.contactButtonImg}
-          src="/images/heartIcon.png"
+          src={heartIcon}
           alt="Support button icon, heart"
           title="Support button icon, heart"
         /></button>
