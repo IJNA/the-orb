@@ -3,7 +3,7 @@ import "bulma/css/bulma.min.css";
 import styles from "./About.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import parse from "html-react-parser";
 
 function About() {
@@ -15,10 +15,14 @@ function About() {
   const [nextBook, setNextBook] = useState("");
   const [nextApiName, setNextApiName] = useState("");
   const shouldMount = useRef(true);
+  const location = useLocation();
+  const url = location.pathname;
 
   useEffect(() => {
-
-  }, []);
+      setTimeout(() => {
+          window.scrollTo(0, 0);
+      }, 5);
+  }, [url]);
 
   return (
     <div className={styles.aboutContainer}>
