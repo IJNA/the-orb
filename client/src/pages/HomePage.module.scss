@@ -5,7 +5,6 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     padding-bottom: 64px;
 }
@@ -66,6 +65,7 @@
     font-size: 24px;
     font-weight: 400;
     text-align: center;
+    color: black;
 }
 
 .homePageButtonDiv {
@@ -116,6 +116,7 @@
     line-height: 23.74px;
 }
 
-.openSourceParagraph .gitHub {
+.openSourceParagraph .gitHub a {
     text-decoration: underline;
+    color: black;
 }

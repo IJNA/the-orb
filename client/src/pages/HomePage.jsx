@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import "bulma/css/bulma.min.css";
 import styles from "./HomePage.module.scss";
 import { Link, useLocation, useParams } from "react-router-dom";
@@ -65,14 +65,16 @@ const HomePage = () => {
                         </div>
                     </Link>
                 </div>
-                <img
-                    className={styles.ijnaLogo}
-                    src="/images/IJNA_logo.png"
-                    alt="IJNA logo which is a blue window with a star on the bottom right"
-                    title="IJNA logo which is a blue window with a star on the bottom right"
-                />
+                <Link to="about">
+                    <img
+                        className={styles.ijnaLogo}
+                        src="/images/IJNA_logo.png"
+                        alt="IJNA logo which is a blue window with a star on the bottom right"
+                        title="IJNA logo which is a blue window with a star on the bottom right"
+                    />
+                </Link>
                 <p className={styles.openSourceParagraph}>
-                    Open-source |
+                    Open-source |&nbsp;
                     <span className={styles.gitHub}>
                         <a target="_blank" rel="noreferrer" href="https://github.com/IJNA/the-orb">See Github</a>
                     </span>
