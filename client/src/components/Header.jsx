@@ -13,10 +13,6 @@ function Header() {
     return (
         <div className={`sticky-top ${styles.headerBlock}`}>
             <div className={styles.headerTextBrand}>
-<<<<<<< HEAD
-                <a href="/"><img src="/images/hagah_logo.png" className={styles.homePageImg} alt="logo" /></a>
-=======
->>>>>>> dev
                 <Link to="/" className={styles.headerText}>
                     <img src="/images/hagah_logo.png" className={styles.homePageImg} alt="logo" />
                     <span>hagah</span>
