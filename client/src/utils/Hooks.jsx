@@ -14,7 +14,7 @@ export const useCurrentBook = () => {
     return currentSection.books.find((book) => location.pathname.includes(book.route));
 };
 
-export const useFindSectionByAPIBookTitle = (bookId) => {
+export const findSectionByAPIBookTitle = (bookId) => {
     const getBookTitle = () => {
         for (let key in TITLES) {
             if (TITLES[key].API_NAME === bookId) {
@@ -26,9 +26,11 @@ export const useFindSectionByAPIBookTitle = (bookId) => {
     for (let section of BookSectionMap.sections) {
         for (let book of section.books) {
             if (book.title.toLowerCase() === getBookTitle()?.toLowerCase()) {
+                console.log({ section, book });
                 return { section, book };
             }
         }
     }
+    
     return { section: null, book: null };
 };

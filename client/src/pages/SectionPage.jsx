@@ -1,18 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "bulma/css/bulma.min.css";
-import { BookSectionMap } from "./BookSectionMap";
 import styles from "./SectionPage.module.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { Link, useLocation, useParams } from "react-router-dom";
-import Header from "../components/Header";
+import { Link, useLocation } from "react-router-dom";
 import { useCurrentSection } from "../utils/Hooks";
 
-function SectionPage() {
+const SectionPage = () => {
     const location = useLocation();
     const currentSection = useCurrentSection();
-    const image = "/images/" + currentSection.image + ".png";
-
     const url = location.pathname;
 
     useEffect(() => {
@@ -24,29 +18,18 @@ function SectionPage() {
     return (
         <div>
             <div className={styles.sectionPageContainer}>
-                <nav className={styles.navbar} role="navigation" aria-label="main navigation">
-                    <div className={`navbar-brand ${styles.navbarBrandContainer}`}>
-                        <Link to="/" className={styles.backLink}>
-                            <span className="icon is-medium">
-                                <FontAwesomeIcon className={styles.backIcon} icon={faArrowLeft} />
-                            </span>
-                            <div className={`subtitle is-4 ${styles.backText}`}>Back</div>
-                        </Link>
-                    </div>
-                </nav>
-                <div className={`container ${styles.sectionContainer}`}>
-                    <h2 className={`title is-2 ${styles.sectionHeader}`}>{currentSection.title}</h2>
-                    <div className={styles.imgContainer}>
-                        <img className={styles.sectionEllipse} src={image} alt="ellipseImg" />
-                    </div>
+                <div className={`${styles.sectionContainer}`}>
+                    <h2 className={`${styles.sectionHeader}`}>{currentSection.title}</h2>
                     <div className={styles.quotedTextContainer}>
                         <p className={styles.quotedText}>{currentSection.quote}</p>
                     </div>
-
                     <div className={styles.buttonContainer}>
                         {currentSection.books.map((book, index) => (
-                            <Link key={index} to={book.route}>
-                                <button className={`button input ${styles.space} is-large`}>{book.title}</button>
+                            <Link key={index} to={book.route} className={styles.sectionPageLink}>
+                                <div className={`${styles.sectionPageLinkContainer}`}>
+                                    <div className={`${styles.sectionPageButton}`}>{book.title}</div>
+                                    <div className={`${styles.sectionPageButtonDiv}`}></div>
+                                </div>
                             </Link>
                         ))}
                     </div>

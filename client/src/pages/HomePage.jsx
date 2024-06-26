@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "bulma/css/bulma.min.css";
 import styles from "./HomePage.module.scss";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
-function HomePage() {
+const HomePage = () => {
+
+    const location = useLocation();
+
+    const url = location.pathname;
+
+    useEffect(() => {
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+        }, 5);
+    }, [url]);
+
     return (
         <>
             <div className={styles.homePageContainer}>
@@ -54,16 +65,18 @@ function HomePage() {
                         </div>
                     </Link>
                 </div>
-                <img
-                    className={styles.ijnaLogo}
-                    src="/images/IJNA_logo.png"
-                    alt="IJNA logo which is a blue window with a star on the bottom right"
-                    title="IJNA logo which is a blue window with a star on the bottom right"
-                />
+                <Link to="about">
+                    <img
+                        className={styles.ijnaLogo}
+                        src="/images/IJNA_logo.png"
+                        alt="IJNA logo which is a blue window with a star on the bottom right"
+                        title="IJNA logo which is a blue window with a star on the bottom right"
+                    />
+                </Link>
                 <p className={styles.openSourceParagraph}>
-                    Open-source |
+                    Open-source |&nbsp;
                     <span className={styles.gitHub}>
-                        <a href="https://github.com/IJNA/the-orb">See Github</a>
+                        <a target="_blank" rel="noreferrer" href="https://github.com/IJNA/the-orb">See Github</a>
                     </span>
                 </p>
             </div>
