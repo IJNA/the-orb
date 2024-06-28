@@ -3,7 +3,7 @@ export const BookSectionMap = {
         {
             route: "/sections/the-law",
             title: "The Law (Torah)",
-            quote: "Hear, O Israel: The LORD our God, the LORD is one.",
+            quote: "The first part of the Hebrew scriptures, sometimes translated as “the instruction,” is comprised of the first five books of the Bible.",
             image: "imageThe_Law",
             books: [
                 {
@@ -46,7 +46,7 @@ export const BookSectionMap = {
         {
             route: "/sections/the-prophets",
             title: "The Prophets (Nevi'im)",
-            quote: "He shall build a house for my name, and I will establish the throne of his kingdom forever.",
+            quote: "This section of the Hebrew scriptures contains writings and prophetic literature primarily describing the period of the kings in Israel.",
             image: "imageThe_Prophets",
             books: [
                 {
@@ -201,7 +201,7 @@ export const BookSectionMap = {
         {
             route: "/sections/the-writings",
             title: "The Writings (Ketuvim)",
-            quote: "Wisdom cries aloud in the street, in the markets she raises her voice.",
+            quote: "This section of the Hebrew scriptures contains diverse writing styles and modes including foundational wisdom literature, poetry, and song.",
             image: "imageThe_Writings",
             books: [
                 {
@@ -300,7 +300,7 @@ export const BookSectionMap = {
         {
             route: "/sections/the-gospels-and-acts",
             title: "The Gospels and Acts",
-            quote: "And the Word became flesh and dwelt among us, and we have seen his glory, glory as of the only Son from the Father, full of grace and truth.",
+            quote: "There are here four different accounts of the life of Jesus each given with unique perspective and emphases. The book of Acts describes the period following Jesus’ resurrection and ascension.",
             image: "imageThe_Gospels_and_Acts",
             books: [
                 {
@@ -315,13 +315,6 @@ export const BookSectionMap = {
                     title: "Mark",
                     nostrId:
                         "naddr1qqxnzd3c8qcrvwpexcurxwp5qgsf27txket8ywz96mtr7yp8z5sru9azse00ufc9j9qqgplw9487ddcrqsqqqa28epamcg",
-                    nextRoute: "/sections/the-gospels-and-acts/luke",
-                },
-                {
-                    route: "/sections/the-gospels-and-acts/luke",
-                    title: "Luke",
-                    nostrId:
-                        "naddr1qqxnzd3c8qcrvwfj8qcnqwfkqgsf27txket8ywz96mtr7yp8z5sru9azse00ufc9j9qqgplw9487ddcrqsqqqa285deufe",
                     nextRoute: "/sections/the-gospels-and-acts/john",
                 },
                 {
@@ -329,6 +322,13 @@ export const BookSectionMap = {
                     title: "John",
                     nostrId:
                         "naddr1qqxnzd3c8qcrvwfjxscrqdpsqgsf27txket8ywz96mtr7yp8z5sru9azse00ufc9j9qqgplw9487ddcrqsqqqa2863jzwr",
+                    nextRoute: "/sections/the-gospels-and-acts/luke",
+                },
+                {
+                    route: "/sections/the-gospels-and-acts/luke",
+                    title: "Luke",
+                    nostrId:
+                        "naddr1qqxnzd3c8qcrvwfj8qcnqwfkqgsf27txket8ywz96mtr7yp8z5sru9azse00ufc9j9qqgplw9487ddcrqsqqqa285deufe",
                     nextRoute: "/sections/the-gospels-and-acts/acts",
                 },
                 {
@@ -343,7 +343,7 @@ export const BookSectionMap = {
         {
             route: "/sections/the-letters",
             title: "The Letters",
-            quote: "I do it all for the sake of the gospel, that I may share with them in its blessings.",
+            quote: "Leaders in the early Christian church wrote letters to groups of Jesus’ followers and also to individuals. These contain personal messages, teaching, and poetry.",
             image: "imageThe_Letters",
             books: [
                 {
