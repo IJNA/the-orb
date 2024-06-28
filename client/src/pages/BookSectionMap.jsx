@@ -315,13 +315,6 @@ export const BookSectionMap = {
                     title: "Mark",
                     nostrId:
                         "naddr1qqxnzd3c8qcrvwpexcurxwp5qgsf27txket8ywz96mtr7yp8z5sru9azse00ufc9j9qqgplw9487ddcrqsqqqa28epamcg",
-                    nextRoute: "/sections/the-gospels-and-acts/luke",
-                },
-                {
-                    route: "/sections/the-gospels-and-acts/luke",
-                    title: "Luke",
-                    nostrId:
-                        "naddr1qqxnzd3c8qcrvwfj8qcnqwfkqgsf27txket8ywz96mtr7yp8z5sru9azse00ufc9j9qqgplw9487ddcrqsqqqa285deufe",
                     nextRoute: "/sections/the-gospels-and-acts/john",
                 },
                 {
@@ -329,6 +322,13 @@ export const BookSectionMap = {
                     title: "John",
                     nostrId:
                         "naddr1qqxnzd3c8qcrvwfjxscrqdpsqgsf27txket8ywz96mtr7yp8z5sru9azse00ufc9j9qqgplw9487ddcrqsqqqa2863jzwr",
+                    nextRoute: "/sections/the-gospels-and-acts/luke",
+                },
+                {
+                    route: "/sections/the-gospels-and-acts/luke",
+                    title: "Luke",
+                    nostrId:
+                        "naddr1qqxnzd3c8qcrvwfj8qcnqwfkqgsf27txket8ywz96mtr7yp8z5sru9azse00ufc9j9qqgplw9487ddcrqsqqqa285deufe",
                     nextRoute: "/sections/the-gospels-and-acts/acts",
                 },
                 {
