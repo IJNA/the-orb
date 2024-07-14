@@ -7,13 +7,10 @@ import BookPage from "./pages/BookPage";
 import About from "./pages/About";
 import "./App.css";
 import Header from "./components/Header";
-import { QueryClient, QueryClientProvider } from "react-query";
-
-const queryClient = new QueryClient();
 
 function App() {
     return (
-        <QueryClientProvider client={queryClient}>
+        <>
             <Router>
                 <Header />
                 <Routes>
@@ -22,10 +19,12 @@ function App() {
                     <Route path="sections/:section" element={<SectionPage />} />
                     <Route path="search" element={<SearchPage />} />
                     <Route path="sections/:section/:book" element={<BookPage />} />
-                    <Route path="about" exact element={<About />} />
+                    <Route path="sections/:section/:book/:selectedChapter" element={<BookPage />} />
+                    <Route path="sections/:section/:book/:selectedChapter/:selectedVerse" element={<BookPage />} />
+                    <Route path="about" element={<About />} />
                 </Routes>
             </Router>
-        </QueryClientProvider>
+        </>
     );
 }
 

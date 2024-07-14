@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import "bulma/css/bulma.min.css";
 import styles from "./SectionPage.module.scss";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useCurrentSection } from "../utils/Hooks";
+import { Navigation } from "../components/Navigation";
 
 const SectionPage = () => {
     const location = useLocation();
     const currentSection = useCurrentSection();
     const url = location.pathname;
-
     useEffect(() => {
         setTimeout(() => {
             window.scrollTo(0, 0);
@@ -17,6 +17,7 @@ const SectionPage = () => {
 
     return (
         <div>
+            <Navigation />
             <div className={styles.sectionPageContainer}>
                 <div className={`${styles.sectionContainer}`}>
                     <h2 className={`${styles.sectionHeader}`}>{currentSection.title}</h2>
@@ -37,6 +38,6 @@ const SectionPage = () => {
             </div>
         </div>
     );
-}
+};
 
 export default SectionPage;

@@ -2,6 +2,12 @@ body {
     font-family: "Roboto", Arial, sans-serif;
 }
 
+.boldText {
+    font-weight: bold;
+    background-color: transparent;
+    font-style: italic;
+}
+
 .searchPageContainer {
     display: flex;
     flex-direction: column;
@@ -15,7 +21,7 @@ body {
     margin-top: 32px;
 }
 
-.backIcon {
+.clickableIcon {
     pointer-events: all;
     cursor: pointer;
 }

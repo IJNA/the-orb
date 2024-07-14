@@ -4,9 +4,10 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { NostrProvider } from "nostr-react";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-
+const queryClient = new QueryClient();
 const relayUrls = [
     "wss://relay.damus.io",
     "wss://nostr.mom",
@@ -20,7 +21,9 @@ const relayUrls = [
 root.render(
     <React.StrictMode>
         <NostrProvider relayUrls={relayUrls}>
-            <App />
+            <QueryClientProvider client={queryClient}>
+                <App />
+            </QueryClientProvider>
         </NostrProvider>
     </React.StrictMode>
 );
