@@ -1,23 +1,19 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState, useRef, useCallback, useMemo } from "react";
 import "bulma/css/bulma.min.css";
 import styles from "./SearchPage.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { Link, useLocation } from "react-router-dom";
 import { PassageCard } from "../components/PassageCard";
-import TITLES from "../book";
 import { Container } from "react-bulma-components";
 import { useGetSearchResults } from "../utils/Queries";
-import { findSectionByAPIBookTitle } from "../utils/Hooks";
+import { getDetailsByBookTitle } from "./BookSectionMap";
+import Highlighter from "react-highlight-words";
+import { faTimes } from "../../node_modules/@fortawesome/free-solid-svg-icons/index";
 
 const SearchPage = () => {
+    const [searchInput, setSearchInput] = useState("");
     const [query, setQuery] = useState(null);
-    const [verses, setVerses] = useState([]);
-    const [verseText, setVerseText] = useState([]);
-    const [showPreviewText, setShowPreviewText] = useState(true);
-    const [showResults, setShowResults] = useState(false);
-    const [bookResults, setBookResults] = useState([]);
-    const searchRef = useRef();
     const location = useLocation();
     const { data: searchResults, isLoading: isSearching } = useGetSearchResults(query);
 
@@ -28,59 +24,93 @@ const SearchPage = () => {
         setTimeout(scrollToTop, 10);
     }, [location.pathname]);
 
-    const handleSearch = useCallback((e) => {
-        if (e.key !== "Enter") return;
-        setQuery(e.target.value);
-        setShowPreviewText(false);
-        setShowResults(true);
-    }, []);
-
-    const handleFocus = () => {
-        setShowPreviewText(true);
-        setShowResults(false);
+    const handleClear = () => {
+        setSearchInput("");
+        setQuery(null);
     };
 
-    useEffect(() => {
-        if (searchResults) {
-            const verseSummary = searchResults.verses?.map((verse, index) => (
-                <div key={index}>{highlightText(verse.text, query)}</div>
-            ));
+    const handleSearch = useCallback(
+        (e) => {
+            if (e.key === "Enter") {
+                setQuery(searchInput);
+            }
+        },
+        [searchInput]
+    );
 
-            setVerseText(verseSummary);
-            setVerses(searchResults.verses);
+    const searchResultContents = useMemo(
+        () =>
+            searchResults?.map((item) => ({
+                bookTitle: item.title,
+                foundVerses: item.content.map((x) => ({ ...x })),
+            })),
+        [searchResults]
+    );
 
-            const bookMatches = Object.values(TITLES)
-                .filter((book) => book.BOOK_NAME.toLowerCase().includes(query.toLowerCase()))
-                ?.map((book) => ({
-                    bookName: book.BOOK_NAME,
-                    apiName: book.API_NAME,
-                }));
-            setBookResults(bookMatches);
-        }
-    }, [query, searchResults]);
+    const verseSummary = useMemo(
+        () =>
+            searchResultContents?.map((content, chapterIndex) => (
+                <div key={chapterIndex}>
+                    {content.foundVerses?.map((verse, verseIndex) => (
+                        <div key={verseIndex}>
+                            <Highlighter
+                                highlightClassName={styles.boldText}
+                                searchWords={[query]}
+                                autoEscape={true}
+                                textToHighlight={verse.value}
+                            />
+                        </div>
+                    ))}
+                </div>
+            )),
+        [query, searchResultContents]
+    );
+
+    const verseText = useMemo(() => verseSummary, [verseSummary]);
+
+    const verses = useMemo(
+        () => searchResultContents?.map((item) => ({ bookTitle: item.bookTitle, foundVerses: item.foundVerses })),
+        [searchResultContents]
+    );
+    const bookResults = useMemo(
+        () => [...new Set(searchResultContents?.map((item) => item.bookTitle))],
+        [searchResultContents]
+    );
 
     return (
         <Container className={styles.searchPageContainer}>
             <div className={`field ${styles.searchBar}`}>
                 <div className="control has-icons-left has-icons-right">
                     <input
-                        ref={searchRef}
-                        className="input is-large is-rounded"
                         type="text"
+                        className="input is-large is-rounded"
+                        onKeyDown={handleSearch}
                         placeholder="Search"
-                        onKeyPress={handleSearch}
-                        onFocus={handleFocus}
+                        value={searchInput}
+                        onChange={(e) => setSearchInput(e.target.value)}
                     />
                     <span className="icon is-medium is-left">
                         <Link to="/" className={styles.anchorClass}>
-                            <FontAwesomeIcon className={styles.backIcon} icon={faArrowLeft} />
+                            <FontAwesomeIcon className={styles.clickableIcon} icon={faArrowLeft} />
                         </Link>
                     </span>
-                    <span className="icon is-medium is-right is-hidden">
-                        <i className="fa fa-times"></i>
-                    </span>
+
+                    {!!query && isSearching ? (
+                        <span className="icon is-medium is-right">
+                            <div className="loader" />
+                        </span>
+                    ) : (
+                        !!query &&
+                        searchResults?.length > 0 && (
+                            <span className="icon is-medium is-right">
+                                <Link to="/search" className={styles.anchorClass} onClick={handleClear}>
+                                    <FontAwesomeIcon className={styles.clickableIcon} icon={faTimes} />
+                                </Link>
+                            </span>
+                        )
+                    )}
                 </div>
-                {showPreviewText && (
+                {!query && searchResults?.length === 0 && (
                     <p className={`is-size-5 ${styles.previewText}`}>
                         <br />
                         <br />
@@ -91,72 +121,55 @@ const SearchPage = () => {
                     </p>
                 )}
             </div>
-            {isSearching ? (
-                <p className={`is-size-5 ${styles.loading}`}>Loading...</p>
-            ) : (
-                searchResults &&
-                showResults && (
-                    <div className={styles.resultsContainer}>
-                        {bookResults?.length > 0 && (
-                            <>
-                                <h4 className={`title is-4 ${styles.booksHeader}`}>Books</h4>
-                                {bookResults.map((bookResult, index) => (
-                                    <Link
-                                        key={index}
-                                        to={findSectionByAPIBookTitle(bookResult.apiName).book.route}
-                                    >
+
+            {query && searchResults && (
+                <div className={styles.resultsContainer}>
+                    {bookResults?.length > 0 && (
+                        <>
+                            <h4 className={`title is-4 ${styles.booksHeader}`}>Books</h4>
+
+                            {bookResults.map((bookResult, index) => {
+                                const book = getDetailsByBookTitle(bookResult);
+                                if (!book?.route) return null;
+                                return (
+                                    <Link key={index} to={book.route}>
                                         <button className={`button input ${styles.space} is-large`}>
-                                            {bookResult.bookName}
+                                            {book.title}
                                         </button>
                                     </Link>
-                                ))}
-                            </>
-                        )}
-                        {verses?.length > 0 && (
-                            <>
-                                <h4 className={`title is-4 ${styles.results}`}>Passages</h4>
-                                {verses.map((verse, index) => (
-                                    <PassageCard
-                                        key={index}
-                                        reference={verse.reference}
-                                        text={verseText[index]}
-                                        bookId={verse.bookId}
-                                    />
-                                ))}
-                            </>
-                        )}
+                                );
+                            })}
+                        </>
+                    )}
+                    {verses?.length > 0 && (
+                        <>
+                            <h4 className={`title is-4 ${styles.results}`}>Passages</h4>
 
-                        {!isSearching && searchResults?.length === 0 && (
-                            <p className={`is-size-5 ${styles.noResult}`}>No results found.</p>
-                        )}
-                    </div>
-                )
+                            {verses.map((item, index) =>
+                                item.foundVerses.map((verse) => {
+                                    const book = getDetailsByBookTitle(item.bookTitle);
+                                    if (!book?.route) return null;
+                                    return (
+                                        <PassageCard
+                                            key={index}
+                                            query={query}
+                                            reference={`${book.title} ${verse.chapter}:${verse.verse}`}
+                                            text={verseText[index]}
+                                            route={`${book.route}/${verse.chapter}/${verse.verse}`}
+                                        />
+                                    );
+                                })
+                            )}
+                        </>
+                    )}
+
+                    {query && !isSearching && searchResultContents?.length === 0 && (
+                        <p className={`is-size-5 ${styles.noResult}`}>No results found.</p>
+                    )}
+                </div>
             )}
         </Container>
     );
-};
-
-const highlightText = (text, query) => {
-    const re = new RegExp(`\\b${query}\\b`, "gi");
-    const parts = text.split(re);
-    const matches = text.match(re);
-
-    return parts.reduce((acc, part, index) => {
-        acc.push(part);
-        if (matches && matches[index]) {
-            acc.push(
-                <b key={index}>
-                    <i>{matches[index]}</i>
-                </b>
-            );
-        }
-        return acc;
-    }, []);
-};
-
-const toKebabCase = (text) => {
-    const kebabCaseText = text.replace(/([a-z])([A-Z])/g, "$1-$2");
-    return kebabCaseText.replace(/\s+/g, "-").toLowerCase();
 };
 
 export default SearchPage;
