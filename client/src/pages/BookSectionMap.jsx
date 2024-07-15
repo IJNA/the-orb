@@ -211,7 +211,7 @@ export const BookSectionMap = {
                             nostrId: "46ab8fcb3a657e4787efc7a77acd9ec964c008225b65cdeb0efd4b00c5392316",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-law/exodus",
                 },
                 {
                     route: "/sections/the-law/exodus",
@@ -378,7 +378,7 @@ export const BookSectionMap = {
                             nostrId: "ef9236f3f718af4388d6429319c2d8ba3f111dce330b9d179fcc75e32f53c46a",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-law/leviticus",
                 },
                 {
                     route: "/sections/the-law/leviticus",
@@ -493,7 +493,7 @@ export const BookSectionMap = {
                             nostrId: "f0a2757e89101aa7c6d5c1985b9102b51d050ed2d3b06c8c549469301766b8ff",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-law/numbers",
                 },
                 {
                     route: "/sections/the-law/numbers",
@@ -644,7 +644,7 @@ export const BookSectionMap = {
                             nostrId: "7f948b1f188ad68822942605f22d06d2a6ccc95b2dbb5f9cd92bcc28ce3a2885",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-law/deuteronomy",
                 },
                 {
                     route: "/sections/the-law/deuteronomy",
@@ -1066,7 +1066,7 @@ export const BookSectionMap = {
                             nostrId: "1fd178bfe9fb0c95198ec9816ab684c6bfe121c5f3281f2b2b941968826bf512",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-prophets/micah",
                 },
                 {
                     route: "/sections/the-prophets/micah",
@@ -1101,7 +1101,7 @@ export const BookSectionMap = {
                             nostrId: "11fa0a7d65a0d08ca933238c1c69ede99cce3d3dd7887ecb2a3b898d43329906",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-prophets/jeremiah",
                 },
                 {
                     route: "/sections/the-prophets/jeremiah",
@@ -1316,7 +1316,7 @@ export const BookSectionMap = {
                             nostrId: "14465545fe52c1c7df156c972ad35a03d8746a478b78f3b4380bda3f4f68ea1a",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-prophets/zechariah",
                 },
                 {
                     route: "/sections/the-prophets/zechariah",
@@ -1379,7 +1379,7 @@ export const BookSectionMap = {
                             nostrId: "84810e3d4d6ee4b4d15bee3674435e3e9be2d74ba21e44102ef8f17b2a6eea69",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-prophets/zephaniah",
                 },
                 {
                     route: "/sections/the-prophets/zephaniah",
@@ -1398,7 +1398,7 @@ export const BookSectionMap = {
                             nostrId: "248db0b9184d36ce8ac7e07de3c100208c566948d53c56607e4c9cd5c4fee8c3",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-prophets/hosea",
                 },
                 {
                     route: "/sections/the-prophets/hosea",
@@ -1461,7 +1461,7 @@ export const BookSectionMap = {
                             nostrId: "024cab717204036bdda15a027c3441f310517c0fb73504adce99e1ec3ec62882",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-prophets/2-kings",
                 },
                 {
                     route: "/sections/the-prophets/2-kings",
@@ -1568,7 +1568,7 @@ export const BookSectionMap = {
                             nostrId: "8e89aad8493a167130989db5231ea58e6cdab63b9b2d3fd26034512286d84655",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-prophets/jonah",
                 },
                 {
                     route: "/sections/the-prophets/jonah",
@@ -1591,7 +1591,7 @@ export const BookSectionMap = {
                             nostrId: "19bb3c8425fe6af92347d55fccb269956244d9138b3c61978bd601e78e52fea0",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-prophets/ezekiel",
                 },
                 {
                     route: "/sections/the-prophets/ezekiel",
@@ -1790,7 +1790,7 @@ export const BookSectionMap = {
                             nostrId: "eeee0f5d9f8eaa4a74fceb3e4917be85bd1d9a7eae5cf8bbd6c4adbe63c8cb1b",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-prophets/1-kings",
                 },
                 {
                     route: "/sections/the-prophets/1-kings",
@@ -1885,7 +1885,7 @@ export const BookSectionMap = {
                             nostrId: "af21f2fe23341606c91abbc635122f7378375747c8cd29dd23ee6ac5a2d226f1",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-prophets/2-samuel",
                 },
                 {
                     route: "/sections/the-prophets/2-samuel",
@@ -1988,7 +1988,7 @@ export const BookSectionMap = {
                             nostrId: "da438a4557e0fb1034eaf1f2ae32960f7c2dd892bc6dc89cece6eb656fcad35f",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-prophets/obadiah",
                 },
                 {
                     route: "/sections/the-prophets/obadiah",
@@ -1999,7 +1999,7 @@ export const BookSectionMap = {
                             nostrId: "a759204546b42b687e6ab95257ded40ea3d48a23c2cfdfddd6e5030c67c04d85",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-prophets/habakkuk",
                 },
                 {
                     route: "/sections/the-prophets/habakkuk",
@@ -2018,7 +2018,7 @@ export const BookSectionMap = {
                             nostrId: "f8e138e4557c43a0bbae0bca8d7d9e82b79d022a558ab4f1b9b00e3e32f3e3e1",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-prophets/amos",
                 },
                 {
                     route: "/sections/the-prophets/amos",
@@ -2061,7 +2061,7 @@ export const BookSectionMap = {
                             nostrId: "4aa282d5dd9263820476945538f293cb21814f71a1c8f7ac79b5f9ce457d885d",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-prophets/1-samuel",
                 },
                 {
                     route: "/sections/the-prophets/1-samuel",
@@ -2192,7 +2192,7 @@ export const BookSectionMap = {
                             nostrId: "c0eb51da20fc6e2dc569efd689cde1c01d0acd483de6c5ada8fed62d73518a39",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-prophets/judges",
                 },
                 {
                     route: "/sections/the-prophets/judges",
@@ -2283,7 +2283,7 @@ export const BookSectionMap = {
                             nostrId: "b363ccb78082754ba5f3d07a2664f501ca113d0cb2fdd8009b01e844b09a7083",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-prophets/malachi",
                 },
                 {
                     route: "/sections/the-prophets/malachi",
@@ -2306,7 +2306,7 @@ export const BookSectionMap = {
                             nostrId: "22ab0b2b1c739ff20f495399dac542032af1a20464e006b2300d789ca5bdfe5b",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-prophets/haggai",
                 },
                 {
                     route: "/sections/the-prophets/haggai",
@@ -2321,7 +2321,7 @@ export const BookSectionMap = {
                             nostrId: "bc2e36af6507e41da1c74df75d9759c36a8d0619a42c4f2a5555b5cc5406e929",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-prophets/nahum",
                 },
                 {
                     route: "/sections/the-prophets/nahum",
@@ -2340,7 +2340,7 @@ export const BookSectionMap = {
                             nostrId: "f1856fb610b2ecb4a2a5e437a8fdf7d49a6fced4e5caa83f365fcccf431de353",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-prophets/joel",
                 },
                 {
                     route: "/sections/the-prophets/joel",
@@ -2974,7 +2974,7 @@ export const BookSectionMap = {
                             nostrId: "04c2338d1c807da35a984498e1f95ddad7cccb4ed9bbf7baf7e967af617b6d42",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-writings/ezra",
                 },
                 {
                     route: "/sections/the-writings/ezra",
@@ -3021,7 +3021,7 @@ export const BookSectionMap = {
                             nostrId: "34d917af210b8545ddfe9e4f2374a0eeb13af719e352db99ab35bf37d2f1c504",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-writings/job",
                 },
                 {
                     route: "/sections/the-writings/job",
@@ -3196,7 +3196,7 @@ export const BookSectionMap = {
                             nostrId: "94cc4b0d4abbb05fbf7810549d807192a72b7a53fe64d78e199722856b7379ee",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-writings/proverbs",
                 },
                 {
                     route: "/sections/the-writings/proverbs",
@@ -3327,7 +3327,7 @@ export const BookSectionMap = {
                             nostrId: "436277eeea15505d67719ffe1032ee48d3decde2170e3d544d7366a2e0a24be5",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute:  "/sections/the-writings/song-of-solomon",
                 },
                 {
                     route: "/sections/the-writings/song-of-solomon",
@@ -3366,7 +3366,7 @@ export const BookSectionMap = {
                             nostrId: "78180d1401a4cbc174aa5c1c6435655ee743c8c27b047983f29d8284a140f212",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute:"/sections/the-writings/ruth",
                 },
                 {
                     route: "/sections/the-writings/ruth",
@@ -3389,7 +3389,7 @@ export const BookSectionMap = {
                             nostrId: "dc9d12db02871fe5c876d50e53e587066750e028fe31db51de1093beb8543659",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-writings/lamentations",
                 },
                 {
                     route: "/sections/the-writings/lamentations",
@@ -3416,7 +3416,7 @@ export const BookSectionMap = {
                             nostrId: "ea9c14b59806cd022694c777198f5b2bc4a13f890848ce53183a4beba217539a",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-writings/nehemiah",
                 },
                 {
                     route: "/sections/the-writings/nehemiah",
@@ -3475,7 +3475,7 @@ export const BookSectionMap = {
                             nostrId: "40f659374a0e40300cc69c21e32bc01ebca4beb861f0ea6500a5c958221efd8c",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-writings/1-corinthians",
                 },
                 {
                     route: "/sections/the-writings/1-corinthians",
@@ -3546,7 +3546,7 @@ export const BookSectionMap = {
                             nostrId: "62390093e1a856c4622f4817e6bb9ff9f3f64d3649389f811e5568694acc2222",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute:"/sections/the-writings/2-chronicles",
                 },
                 {
                     route: "/sections/the-writings/2-chronicles",
@@ -3697,7 +3697,7 @@ export const BookSectionMap = {
                             nostrId: "0281efc6efb1c722b18b9c425af7b8fc2e61c32d5d582a7fbbd5b7dab8eb564c",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute:"/sections/the-writings/ecclesiastes",
                 },
                 {
                     route: "/sections/the-writings/ecclesiastes",
@@ -3752,7 +3752,7 @@ export const BookSectionMap = {
                             nostrId: "145234c965c1f53b6c7caa533e0a3174bc7e7a2098f750477d8bb858ced46d71",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-writings/daniel",
                 },
                 {
                     route: "/sections/the-writings/daniel",
@@ -3934,7 +3934,7 @@ export const BookSectionMap = {
                             nostrId: "4c1aebca691c9af7a1954d279800b39a041673b76e685fe6047ec1c853073343",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-gospels-and-acts/mark",
                 },
                 {
                     route: "/sections/the-gospels-and-acts/mark",
@@ -4005,7 +4005,7 @@ export const BookSectionMap = {
                             nostrId: "73c7e8bb9a10ecdfce3f3eb343ceac57892f6b4231d3365f509cec7018ceef91",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute:"/sections/the-gospels-and-acts/john",
                 },
                 {
                     route: "/sections/the-gospels-and-acts/john",
@@ -4096,7 +4096,7 @@ export const BookSectionMap = {
                             nostrId: "91509ae583b033f09ecb1336306966e1a95ee9e50f260d20d15ed0c04958a384",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute:"/sections/the-gospels-and-acts/luke",
                 },
                 {
                     route: "/sections/the-gospels-and-acts/luke",
@@ -4199,7 +4199,7 @@ export const BookSectionMap = {
                             nostrId: "ca34bb1b32bc2b01a62234cc5097db69edc25dd07878c29bd0e5b3625e989e76",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-gospels-and-acts/acts",
                 },
                 {
                     route: "/sections/the-gospels-and-acts/acts",
@@ -4357,7 +4357,7 @@ export const BookSectionMap = {
                             nostrId: "93f2e3f06c3f86ca1cebb6fda15697be4c51830bd4047b0fd27918d762e4883f",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-letters/philemon",
                 },
                 {
                     route: "/sections/the-letters/philemon",
@@ -4368,7 +4368,7 @@ export const BookSectionMap = {
                             nostrId: "2f646ad85d3c5bb1dd894381f2a33924dab07d8ecd93b6c0a6d42b6b3966c6ff",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-letters/joshua",
                 },
                 {
                     route: "/sections/the-letters/joshua",
@@ -4471,7 +4471,7 @@ export const BookSectionMap = {
                             nostrId: "6f13ae52ab1b6d19507ad8eb46f34f3e72c5000e3d1a26edb642d063a00bf9cb",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-letters/1-peter",
                 },
                 {
                     route: "/sections/the-letters/1-peter",
@@ -4498,7 +4498,7 @@ export const BookSectionMap = {
                             nostrId: "5dec1c7251cf102d0dba624934b182e103932c5f8ff176e60ca18a3c15f5584f",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-letters/ephesians",
                 },
                 {
                     route: "/sections/the-letters/ephesians",
@@ -4529,7 +4529,7 @@ export const BookSectionMap = {
                             nostrId: "c41ebcb6243f8a462173114c86c4d67bb70f294b539e8cc40e0909776df6d0f8",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-letters/hebrews",
                 },
                 {
                     route: "/sections/the-letters/hebrews",
@@ -4588,7 +4588,7 @@ export const BookSectionMap = {
                             nostrId: "9b10f36086475796aa12e24dbb5fa5b6fd12aea5d3b9f52f9ded3b30cee2d86b",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-letters/jude",
                 },
                 {
                     route: "/sections/the-letters/jude",
@@ -4599,7 +4599,7 @@ export const BookSectionMap = {
                             nostrId: "1f873819a05961f1e39254de28be3991293e013ae8adb39fa054ee97e4968fa1",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-letters/2-thessalonians",
                 },
                 {
                     route: "/sections/the-letters/2-thessalonians",
@@ -4618,7 +4618,7 @@ export const BookSectionMap = {
                             nostrId: "dd59252a2d20660a31df2b3b851644f3a4bd14ab607efc05c5cd29cf1f625e13",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-letters/philippians",
                 },
                 {
                     route: "/sections/the-letters/philippians",
@@ -4641,7 +4641,7 @@ export const BookSectionMap = {
                             nostrId: "d6806b928d0921b4120f51ad24b7ac6a9a0b8b6dac79607363fbb5bd6c039b81",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-letters/galatians",
                 },
                 {
                     route: "/sections/the-letters/galatians",
@@ -4672,7 +4672,7 @@ export const BookSectionMap = {
                             nostrId: "be44f82324276c5915d8986a5145467d4cf5cf7413d1a83c492a0c47bc71578c",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-letters/1-john",
                 },
                 {
                     route: "/sections/the-letters/1-john",
@@ -4699,7 +4699,7 @@ export const BookSectionMap = {
                             nostrId: "62296f28516f0bb22983ad7debb14a50281f6729ddb07ed9c3a255084cfb41ff",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-letters/colossians",
                 },
                 {
                     route: "/sections/the-letters/colossians",
@@ -4722,7 +4722,7 @@ export const BookSectionMap = {
                             nostrId: "ee59d1a187710e08dd62e8e9c11b70fb572f87af240dd0c7db3b6afbb1e4eff3",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-letters/titus",
                 },
                 {
                     route: "/sections/the-letters/titus",
@@ -4741,7 +4741,7 @@ export const BookSectionMap = {
                             nostrId: "b3a2111ff9db034d7653ba67ca00f8a930469dd9a1b02d7a645d208ae856eee3",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-letters/2-peter",
                 },
                 {
                     route: "/sections/the-letters/2-peter",
@@ -4760,7 +4760,7 @@ export const BookSectionMap = {
                             nostrId: "1d1eb8c96660a7378fca8bf0ce71e1d243c11ffd3fd3f5022c8c13bc3dbabf99",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-letters/2-corinthians",
                 },
                 {
                     route: "/sections/the-letters/2-corinthians",
@@ -4819,7 +4819,7 @@ export const BookSectionMap = {
                             nostrId: "9ecf77787f6aa47fa689b6a6127a22cc4b482a033139bdd5bd65af42eea7b3d4",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-letters/romans",
                 },
                 {
                     route: "/sections/the-letters/romans",
@@ -4890,7 +4890,7 @@ export const BookSectionMap = {
                             nostrId: "ff3f0ee34ebfe0ab84d6d464a15a35a4c12552b2b89aba5d043f9825661c7af5",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-letters/2-john",
                 },
                 {
                     route: "/sections/the-letters/2-john",
@@ -4901,7 +4901,7 @@ export const BookSectionMap = {
                             nostrId: "befbc92cb08cfa012e2020f55a8cd55339314bc8dc44956494ca6b2a96e9d3c6",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-letters/james",
                 },
                 {
                     route: "/sections/the-letters/james",
@@ -4928,7 +4928,7 @@ export const BookSectionMap = {
                             nostrId: "4e4cee55aef6c2217c20b91bf4f73c0706236f4c2d05d785539b8a162c72f45d",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-letters/1-chronicles",
                 },
                 {
                     route: "/sections/the-letters/1-chronicles",
@@ -5051,7 +5051,7 @@ export const BookSectionMap = {
                             nostrId: "74706e4559584c2663c7677f3b7d0660e3cc734f92424782c4878e78a04eef59",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-letters/2-timothy",
                 },
                 {
                     route: "/sections/the-letters/2-timothy",
@@ -5074,7 +5074,7 @@ export const BookSectionMap = {
                             nostrId: "974b47c6e342a664437f80a0dfc701e6dea809b9dbf3436a88bbd6b8e013e61d",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute:"/sections/the-letters/1-thessalonians",
                 },
                 {
                     route: "/sections/the-letters/1-thessalonians",
@@ -5101,7 +5101,7 @@ export const BookSectionMap = {
                             nostrId: "d923b30e7ce9b0604ee121dcb71739d85e1ad3b963577ac990882082a4332652",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-letters/esther",
                 },
                 {
                     route: "/sections/the-letters/esther",
@@ -5148,7 +5148,7 @@ export const BookSectionMap = {
                             nostrId: "078626bd0f5ded2ddcaf37dbc1496af41adcf3a6a7d4d5f6cec9b2ff4cb26638",
                         },
                     ],
-                    nextRoute: null,
+                    nextRoute: "/sections/the-letters/3-john",
                 },
                 {
                     route: "/sections/the-letters/3-john",
@@ -5281,9 +5281,15 @@ export const findChaptersByBookTitle = (bookTitle) => {
 };
 
 export const getDetailsByBookTitle = (bookTitle) => {
+    const normalizeTitle = (title) => {
+        return title
+            .toLowerCase()
+            .replace(/[^a-z0-9]/g, ''); // Remove special characters and spaces
+    };
+    const normalizedBookTitle = normalizeTitle(bookTitle);
     for (const section of BookSectionMap.sections) {
         for (const book of section.books) {
-            if (book.title.toLowerCase() === bookTitle?.toLowerCase()) {
+            if (normalizeTitle(book.title) === normalizedBookTitle) {
                 return book;
             }
         }
