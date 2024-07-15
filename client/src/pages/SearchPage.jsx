@@ -10,12 +10,14 @@ import { useGetSearchResults } from "../utils/Queries";
 import { getDetailsByBookTitle } from "./BookSectionMap";
 import Highlighter from "react-highlight-words";
 import { faTimes } from "../../node_modules/@fortawesome/free-solid-svg-icons/index";
+import { BookSectionMap } from "./BookSectionMap";
 
 const SearchPage = () => {
     const [searchInput, setSearchInput] = useState("");
     const [query, setQuery] = useState(null);
     const location = useLocation();
-    const { data: searchResults, isLoading: isSearching } = useGetSearchResults(query);
+    const [bookResults, setBookResults] = useState([]);
+    const { data: foundPassages, isLoading: isSearching } = useGetSearchResults(query);
 
     useEffect(() => {
         const scrollToTop = () => {
@@ -27,6 +29,7 @@ const SearchPage = () => {
     const handleClear = () => {
         setSearchInput("");
         setQuery(null);
+        setBookResults([]);
     };
 
     const handleSearch = useCallback(
@@ -38,13 +41,21 @@ const SearchPage = () => {
         [searchInput]
     );
 
+    useEffect(() => {
+        if (query) {
+            BookSectionMap.sections.forEach((section) => {
+                const results = section.books.filter((book) => book.title.toLowerCase().includes(query.toLowerCase()));
+                setBookResults((prev) => [...prev, ...results]);
+            });
+        }
+    }, [query]);
     const searchResultContents = useMemo(
         () =>
-            searchResults?.map((item) => ({
+            foundPassages?.map((item) => ({
                 bookTitle: item.title,
                 foundVerses: item.content.map((x) => ({ ...x })),
             })),
-        [searchResults]
+        [foundPassages]
     );
 
     const verseSummary = useMemo(
@@ -72,10 +83,6 @@ const SearchPage = () => {
         () => searchResultContents?.map((item) => ({ bookTitle: item.bookTitle, foundVerses: item.foundVerses })),
         [searchResultContents]
     );
-    const bookResults = useMemo(
-        () => [...new Set(searchResultContents?.map((item) => item.bookTitle))],
-        [searchResultContents]
-    );
 
     return (
         <Container className={styles.searchPageContainer}>
@@ -101,7 +108,7 @@ const SearchPage = () => {
                         </span>
                     ) : (
                         !!query &&
-                        searchResults?.length > 0 && (
+                        (foundPassages?.length > 0 || bookResults?.length > 0) && (
                             <span className="icon is-medium is-right">
                                 <Link to="/search" className={styles.anchorClass} onClick={handleClear}>
                                     <FontAwesomeIcon className={styles.clickableIcon} icon={faTimes} />
@@ -110,7 +117,7 @@ const SearchPage = () => {
                         )
                     )}
                 </div>
-                {!query && searchResults?.length === 0 && (
+                {!query && foundPassages?.length === 0 && (
                     <p className={`is-size-5 ${styles.previewText}`}>
                         <br />
                         <br />
@@ -122,23 +129,16 @@ const SearchPage = () => {
                 )}
             </div>
 
-            {query && searchResults && (
+            {query && foundPassages && (
                 <div className={styles.resultsContainer}>
                     {bookResults?.length > 0 && (
                         <>
                             <h4 className={`title is-4 ${styles.booksHeader}`}>Books</h4>
-
-                            {bookResults.map((bookResult, index) => {
-                                const book = getDetailsByBookTitle(bookResult);
-                                if (!book?.route) return null;
-                                return (
-                                    <Link key={index} to={book.route}>
-                                        <button className={`button input ${styles.space} is-large`}>
-                                            {book.title}
-                                        </button>
-                                    </Link>
-                                );
-                            })}
+                            {[...new Set(bookResults)].map((book, index) => (
+                                <Link key={index} to={book.route}>
+                                    <button className={`button input ${styles.space} is-large`}>{book.title}</button>
+                                </Link>
+                            ))}
                         </>
                     )}
                     {verses?.length > 0 && (
@@ -151,7 +151,7 @@ const SearchPage = () => {
                                     if (!book?.route) return null;
                                     return (
                                         <PassageCard
-                                            key={index}
+                                            key={`${item.bookTitle}-${verse.chapter}-${verse.verse}`}
                                             query={query}
                                             reference={`${book.title} ${verse.chapter}:${verse.verse}`}
                                             text={verseText[index]}
@@ -163,7 +163,7 @@ const SearchPage = () => {
                         </>
                     )}
 
-                    {query && !isSearching && searchResultContents?.length === 0 && (
+                    {query && !isSearching && bookResults?.length === 0 && searchResultContents?.length === 0 && (
                         <p className={`is-size-5 ${styles.noResult}`}>No results found.</p>
                     )}
                 </div>

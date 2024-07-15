@@ -5283,7 +5283,7 @@ export const findChaptersByBookTitle = (bookTitle) => {
 export const getDetailsByBookTitle = (bookTitle) => {
     for (const section of BookSectionMap.sections) {
         for (const book of section.books) {
-            if (book.title.toLowerCase() === bookTitle.toLowerCase()) {
+            if (book.title.toLowerCase() === bookTitle?.toLowerCase()) {
                 return book;
             }
         }
