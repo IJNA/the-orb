@@ -5281,9 +5281,15 @@ export const findChaptersByBookTitle = (bookTitle) => {
 };
 
 export const getDetailsByBookTitle = (bookTitle) => {
+    const normalizeTitle = (title) => {
+        return title
+            .toLowerCase()
+            .replace(/[^a-z0-9]/g, ''); // Remove special characters and spaces
+    };
+    const normalizedBookTitle = normalizeTitle(bookTitle);
     for (const section of BookSectionMap.sections) {
         for (const book of section.books) {
-            if (book.title.toLowerCase() === bookTitle?.toLowerCase()) {
+            if (normalizeTitle(book.title) === normalizedBookTitle) {
                 return book;
             }
         }

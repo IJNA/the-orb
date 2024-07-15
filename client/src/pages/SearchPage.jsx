@@ -57,23 +57,20 @@ const SearchPage = () => {
             })),
         [foundPassages]
     );
-
     const verseSummary = useMemo(
         () =>
-            searchResultContents?.map((content, chapterIndex) => (
-                <div key={chapterIndex}>
-                    {content.foundVerses?.map((verse, verseIndex) => (
-                        <div key={verseIndex}>
-                            <Highlighter
-                                highlightClassName={styles.boldText}
-                                searchWords={[query]}
-                                autoEscape={true}
-                                textToHighlight={verse.value}
-                            />
-                        </div>
-                    ))}
-                </div>
-            )),
+            searchResultContents?.map((content, chapterIndex) =>
+                content.foundVerses?.map((verse, verseIndex) => (
+                    <div key={`${chapterIndex}-${verseIndex}`}>
+                        <Highlighter
+                            highlightClassName={styles.boldText}
+                            searchWords={[query]}
+                            autoEscape={true}
+                            textToHighlight={verse.value}
+                        />
+                    </div>
+                ))
+            ),
         [query, searchResultContents]
     );
 
@@ -83,6 +80,7 @@ const SearchPage = () => {
         () => searchResultContents?.map((item) => ({ bookTitle: item.bookTitle, foundVerses: item.foundVerses })),
         [searchResultContents]
     );
+
 
     return (
         <Container className={styles.searchPageContainer}>
@@ -148,6 +146,7 @@ const SearchPage = () => {
                             {verses.map((item, index) =>
                                 item.foundVerses.map((verse) => {
                                     const book = getDetailsByBookTitle(item.bookTitle);
+                                    console.log(book);
                                     if (!book?.route) return null;
                                     return (
                                         <PassageCard
