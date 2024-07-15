@@ -162,7 +162,7 @@ const SearchPage = () => {
                         </>
                     )}
 
-                    {query && !isSearching && searchResultContents?.length === 0 && (
+                    {query && !isSearching && bookResults?.length === 0 && searchResultContents?.length === 0 && (
                         <p className={`is-size-5 ${styles.noResult}`}>No results found.</p>
                     )}
                 </div>
