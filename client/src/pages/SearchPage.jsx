@@ -29,6 +29,7 @@ const SearchPage = () => {
     const handleClear = () => {
         setSearchInput("");
         setQuery(null);
+        setBookResults([]);
     };
 
     const handleSearch = useCallback(
@@ -107,7 +108,7 @@ const SearchPage = () => {
                         </span>
                     ) : (
                         !!query &&
-                        foundPassages?.length > 0 && (
+                        (foundPassages?.length > 0 || bookResults?.length > 0) && (
                             <span className="icon is-medium is-right">
                                 <Link to="/search" className={styles.anchorClass} onClick={handleClear}>
                                     <FontAwesomeIcon className={styles.clickableIcon} icon={faTimes} />
@@ -133,7 +134,7 @@ const SearchPage = () => {
                     {bookResults?.length > 0 && (
                         <>
                             <h4 className={`title is-4 ${styles.booksHeader}`}>Books</h4>
-                            {([...new Set(bookResults)]).map((book, index) => (
+                            {[...new Set(bookResults)].map((book, index) => (
                                 <Link key={index} to={book.route}>
                                     <button className={`button input ${styles.space} is-large`}>{book.title}</button>
                                 </Link>
