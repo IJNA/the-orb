@@ -45,6 +45,17 @@
     margin-top: 64px;
     max-width: 600px;
     width: 100%;
+    display: flex;
+}
+
+.sectionContainer {
+    border: 2px solid red;
+    width: 256px;
+}
+
+.sectionImg {
+    height: 256px;
+    width: 256px;
 }
 
 .homePageLink, .homePageLinkContainer, .homePageButton, .homePageButtonDiv {
