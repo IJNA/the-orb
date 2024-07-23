@@ -95,7 +95,8 @@
 
 .sections {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    // grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     /* 2 columns */
     grid-template-rows: repeat(6, 1fr);
     /* 6 rows */
@@ -203,18 +204,18 @@
     color: black;
 }
 
-@media (hover: hover) and (pointer: fine) and (max-width: 680px) {
-    .sections {
-        display: flex;
-        flex-direction: column;
-        // overflow: auto;
-    }
-}
+// @media (hover: hover) and (pointer: fine) and (max-width: 680px) {
+//     .sections {
+//         display: flex;
+//         flex-direction: column;
+//         // overflow: auto;
+//     }
+// }
 
-@media (hover: none) and (pointer: coarse) and (max-width: 400px) {
-    .sections {
-        display: flex;
-        flex-direction: column;
-        // overflow: auto;
-    }
-}
+// @media (hover: none) and (pointer: coarse) and (max-width: 400px) {
+//     .sections {
+//         display: flex;
+//         flex-direction: column;
+//         // overflow: auto;
+//     }
+// }
