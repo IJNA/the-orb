@@ -7,6 +7,7 @@
     flex-direction: column;
     align-items: center;
     padding-bottom: 64px;
+    width: 100%;
 }
 
 .homePageLink,
@@ -83,6 +84,29 @@
     color: #3B6362;
 }
 
+.sections {
+    width: 100%;
+    max-width: 600px;
+}
+
+.sectionContainer {
+    width: 245px;
+}
+
+.sectionRow {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 64px;
+}
+
+.sectionRow:nth-child(odd) {
+    align-items: flex-start;
+}
+
+.sectionRow:nth-child(even) {
+    align-items: flex-end;
+}
+
 .sectionsHeader {
     font-family: Roboto Serif;
     font-size: 24px;
@@ -90,31 +114,6 @@
     line-height: 28.1px;
     margin-bottom: 12px;
     width: 260px;
-    // border: 2px solid red
-}
-
-.sections {
-    display: grid;
-    // grid-template-columns: repeat(2, 1fr);
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    /* 2 columns */
-    grid-template-rows: repeat(6, 1fr);
-    /* 6 rows */
-    column-gap: 110px;
-    margin-bottom: 64px;
-    max-width: 600px;
-}
-
-.sectionContainer img {
-    // width: 100%;
-    // height: 100%;
-    // object-fit: cover;
-    /* Maintain aspect ratio and cover entire grid cell */
-}
-
-.sectionImg {
-    height: 256px;
-    width: 256px;
 }
 
 .openSectionLinkContainer {
@@ -128,53 +127,12 @@
     letter-spacing: 0.46000000834465027px;
     color: #3B6362;
     justify-content: end;
-    margin-right: 11px;
-    // margin-bottom: 64px;
+    max-width: 245px;
 }
-
-.contributorListLink {
-    color: #3B6362;
-}
-
-
-.openSectionButton {}
 
 .arrowForwardIcon {
     margin-left: 12px;
 }
-
-// WITH BORDERS
-// .sections {
-//     display: grid;
-//     grid-template-columns: repeat(2, 12fr);
-//     /* 3 columns for the sections */
-//     gap: 20px;
-//     /* Gap between sections */
-// }
-
-// .sectionContainer {
-//     display: flex;
-//     flex-direction: column;
-//     align-items: center;
-//     justify-content: center;
-//     text-align: center;
-//     border: 1px solid #ccc;
-//     /* Example border for section containers */
-//     padding: 10px;
-//     /* Padding inside section containers */
-// }
-
-// .sectionsHeader {
-//     margin-bottom: 10px;
-//     /* Bottom margin for section headers */
-// }
-
-// .sectionImg {
-//     max-width: 100%;
-//     /* Ensure images fit within their containers */
-//     height: auto;
-//     /* Maintain aspect ratio */
-// }
 
 .smallLinksText {
     margin-bottom: 24px;
@@ -203,19 +161,3 @@
     text-decoration: underline;
     color: black;
 }
-
-// @media (hover: hover) and (pointer: fine) and (max-width: 680px) {
-//     .sections {
-//         display: flex;
-//         flex-direction: column;
-//         // overflow: auto;
-//     }
-// }
-
-// @media (hover: none) and (pointer: coarse) and (max-width: 400px) {
-//     .sections {
-//         display: flex;
-//         flex-direction: column;
-//         // overflow: auto;
-//     }
-// }

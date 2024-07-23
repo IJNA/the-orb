@@ -35,149 +35,137 @@ const HomePage = () => {
                     </div>
                 </div>
                 <div className={styles.sections}>
-                    <div className={styles.sectionContainer}>
-                        <h4 className={styles.sectionsHeader}>The Law</h4>
-                        {/* <img src="" /> */}
-                        <Link to="sections/the-law">
-                            <img
-                                className={styles.theLaw}
-                                src={theLaw}
-                                alt="Section Logo"
-                                title="Section Logo"
-                            />
-                        </Link>
-                        <Link to="sections/the-law" className={styles.openSectionLinkContainer}>
-                            OPEN SECTION
-                            <img
-                                className={`${styles.arrowForwardIcon}`}
-                                src={arrowForwardIcon}
-                                alt="Arrow Forward Icon to go to a selected section"
-                                title="Arrow Forward Icon to go to a selected section"
-                            />
-                        </Link>
+                    <div className={styles.sectionRow}>
+                        <div className={styles.sectionContainer}>
+                            <h4 className={styles.sectionsHeader}>The Law</h4>
+                            <Link to="sections/the-law">
+                                <img
+                                    className={styles.theLaw}
+                                    src={theLaw}
+                                    alt="Section Logo"
+                                    title="Section Logo"
+                                />
+                            </Link>
+                            <Link to="sections/the-law" className={styles.openSectionLinkContainer}>
+                                OPEN SECTION
+                                <img
+                                    className={`${styles.arrowForwardIcon}`}
+                                    src={arrowForwardIcon}
+                                    alt="Arrow Forward Icon to go to a selected section"
+                                    title="Arrow Forward Icon to go to a selected section"
+                                />
+                            </Link>
+                        </div>
                     </div>
-                    <div className={styles.sectionContainer}>
-                        <h4 className={styles.sectionsHeader}></h4>
+                    <div className={styles.sectionRow}>
+                        <div className={styles.sectionContainer}>
+                            <h4 className={styles.sectionsHeader}>The Prophets</h4>
+                            <Link to="sections/the-prophets">
+                                <img
+                                    className={styles.sectionImg}
+                                    src={theProphets}
+                                    alt="Section Logo"
+                                    title="Section Logo"
+                                />
+                            </Link>
+                            <Link to="sections/the-prophets" className={styles.openSectionLinkContainer}>
+                                OPEN SECTION
+                                <img
+                                    className={`${styles.arrowForwardIcon}`}
+                                    src={arrowForwardIcon}
+                                    alt="Arrow Forward Icon to go to a selected section"
+                                    title="Arrow Forward Icon to go to a selected section"
+                                />
+                            </Link>
+                        </div>
                     </div>
-                    <div className={styles.sectionContainer}>
-                        <h4 className={styles.sectionsHeader}></h4>
+                    <div className={styles.sectionRow}>
+                        <div className={styles.sectionContainer}>
+                            <h4 className={styles.sectionsHeader}>The Writings</h4>
+                            <Link to="sections/the-writings">
+                                <img
+                                    className={styles.sectionImg}
+                                    src={theWritings}
+                                    alt="Section Logo"
+                                    title="Section Logo"
+                                />
+                            </Link>
+                            <Link to="sections/the-writings" className={styles.openSectionLinkContainer}>
+                                OPEN SECTION
+                                <img
+                                    className={`${styles.arrowForwardIcon}`}
+                                    src={arrowForwardIcon}
+                                    alt="Arrow Forward Icon to go to a selected section"
+                                    title="Arrow Forward Icon to go to a selected section"
+                                />
+                            </Link>
+                        </div>
                     </div>
-                    <div className={styles.sectionContainer}>
-                        <h4 className={styles.sectionsHeader}>The Prophets</h4>
-                        {/* <img src="" /> */}
-                        <Link to="sections/the-prophets">
-                            <img
-                                className={styles.sectionImg}
-                                src={theProphets}
-                                alt="Section Logo"
-                                title="Section Logo"
-                            />
-                        </Link>
-                        <Link to="sections/the-prophets" className={styles.openSectionLinkContainer}>
-                            OPEN SECTION
-                            <img
-                                className={`${styles.arrowForwardIcon}`}
-                                src={arrowForwardIcon}
-                                alt="Arrow Forward Icon to go to a selected section"
-                                title="Arrow Forward Icon to go to a selected section"
-                            />
-                        </Link>
+                    <div className={styles.sectionRow}>
+                        <div className={styles.sectionContainer}>
+                            <h4 className={styles.sectionsHeader}>The Gospels and Acts</h4>
+                            <Link to="sections/the-gospels-and-acts">
+                                <img
+                                    className={styles.sectionImg}
+                                    src={theGospelandActs}
+                                    alt="Section Logo"
+                                    title="Section Logo"
+                                />
+                            </Link>
+                            <Link to="sections/the-gospels-and-acts" className={styles.openSectionLinkContainer}>
+                                OPEN SECTION
+                                <img
+                                    className={`${styles.arrowForwardIcon}`}
+                                    src={arrowForwardIcon}
+                                    alt="Arrow Forward Icon to go to a selected section"
+                                    title="Arrow Forward Icon to go to a selected section"
+                                />
+                            </Link>
+                        </div>
                     </div>
-                    <div className={styles.sectionContainer}>
-                        <h4 className={styles.sectionsHeader}>The Writings</h4>
-                        {/* <img src="" /> */}
-                        <Link to="sections/the-writings">
-                            <img
-                                className={styles.sectionImg}
-                                src={theWritings}
-                                alt="Section Logo"
-                                title="Section Logo"
-                            />
-                        </Link>
-                        <Link to="sections/the-writings" className={styles.openSectionLinkContainer}>
-                            OPEN SECTION
-                            <img
-                                className={`${styles.arrowForwardIcon}`}
-                                src={arrowForwardIcon}
-                                alt="Arrow Forward Icon to go to a selected section"
-                                title="Arrow Forward Icon to go to a selected section"
-                            />
-                        </Link>
+                    <div className={styles.sectionRow}>
+                        <div className={styles.sectionContainer}>
+                            <h4 className={styles.sectionsHeader}>The Letters</h4>
+                            <Link to="sections/the-letters">
+                                <img
+                                    className={styles.sectionImg}
+                                    src={theLetters}
+                                    alt="Section Logo"
+                                    title="Section Logo"
+                                />
+                            </Link>
+                            <Link to="sections/the-letters" className={styles.openSectionLinkContainer}>
+                                OPEN SECTION
+                                <img
+                                    className={`${styles.arrowForwardIcon}`}
+                                    src={arrowForwardIcon}
+                                    alt="Arrow Forward Icon to go to a selected section"
+                                    title="Arrow Forward Icon to go to a selected section"
+                                />
+                            </Link>
+                        </div>
                     </div>
-                    <div className={styles.sectionContainer}>
-                        <h4 className={styles.sectionsHeader}></h4>
-                    </div>
-                    <div className={styles.sectionContainer}>
-                        <h4 className={styles.sectionsHeader}></h4>
-                    </div>
-                    <div className={styles.sectionContainer}>
-                        <h4 className={styles.sectionsHeader}>The Gospels and Acts</h4>
-                        {/* <img src="" /> */}
-                        <Link to="sections/the-gospels-and-acts">
-                            <img
-                                className={styles.sectionImg}
-                                src={theGospelandActs}
-                                alt="Section Logo"
-                                title="Section Logo"
-                            />
-                        </Link>
-                        <Link to="sections/the-gospels-and-acts" className={styles.openSectionLinkContainer}>
-                            OPEN SECTION
-                            <img
-                                className={`${styles.arrowForwardIcon}`}
-                                src={arrowForwardIcon}
-                                alt="Arrow Forward Icon to go to a selected section"
-                                title="Arrow Forward Icon to go to a selected section"
-                            />
-                        </Link>
-                    </div>
-                    <div className={styles.sectionContainer}>
-                        <h4 className={styles.sectionsHeader}>The Letters</h4>
-                        {/* <img src="" /> */}
-                        <Link to="sections/the-letters">
-                            <img
-                                className={styles.sectionImg}
-                                src={theLetters}
-                                alt="Section Logo"
-                                title="Section Logo"
-                            />
-                        </Link>
-                        <Link to="sections/the-letters" className={styles.openSectionLinkContainer}>
-                            OPEN SECTION
-                            <img
-                                className={`${styles.arrowForwardIcon}`}
-                                src={arrowForwardIcon}
-                                alt="Arrow Forward Icon to go to a selected section"
-                                title="Arrow Forward Icon to go to a selected section"
-                            />
-                        </Link>
-                    </div>
-                    <div className={styles.sectionContainer}>
-                        <h4 className={styles.sectionsHeader}></h4>
-                    </div>
-                    <div className={styles.sectionContainer}>
-                        <h4 className={styles.sectionsHeader}></h4>
-                    </div>
-                    <div className={styles.sectionContainer}>
-                        <h4 className={styles.sectionsHeader}>The Revelation</h4>
-                        {/* <img src="" /> */}
-                        <Link to="sections/the-revelation/revelation">
-                            <img
-                                className={styles.sectionImg}
-                                src={theRevelation}
-                                alt="Section Logo"
-                                title="Section Logo"
-                            />
-                        </Link>
-                        <Link to="sections/the-revelation/revelation" className={styles.openSectionLinkContainer}>
-                            OPEN SECTION
-                            <img
-                                className={`${styles.arrowForwardIcon}`}
-                                src={arrowForwardIcon}
-                                alt="Arrow Forward Icon to go to a selected section"
-                                title="Arrow Forward Icon to go to a selected section"
-                            />
-                        </Link>
+                    <div className={styles.sectionRow}>
+                        <div className={styles.sectionContainer}>
+                            <h4 className={styles.sectionsHeader}>The Revelation</h4>
+                            <Link to="sections/the-revelation/revelation">
+                                <img
+                                    className={styles.sectionImg}
+                                    src={theRevelation}
+                                    alt="Section Logo"
+                                    title="Section Logo"
+                                />
+                            </Link>
+                            <Link to="sections/the-revelation/revelation" className={styles.openSectionLinkContainer}>
+                                OPEN SECTION
+                                <img
+                                    className={`${styles.arrowForwardIcon}`}
+                                    src={arrowForwardIcon}
+                                    alt="Arrow Forward Icon to go to a selected section"
+                                    title="Arrow Forward Icon to go to a selected section"
+                                />
+                            </Link>
+                        </div>
                     </div>
                 </div>
                 <Link to="about">
