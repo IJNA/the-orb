@@ -203,10 +203,18 @@
     color: black;
 }
 
-@media (max-width: 500px) {
-    .sections{
+@media (hover: hover) and (pointer: fine) and (max-width: 680px) {
+    .sections {
         display: flex;
         flex-direction: column;
         // overflow: auto;
     }
-  }
+}
+
+@media (hover: none) and (pointer: coarse) and (max-width: 300px) {
+    .sections {
+        display: flex;
+        flex-direction: column;
+        // overflow: auto;
+    }
+}
