@@ -7,48 +7,13 @@
     flex-direction: column;
     align-items: center;
     padding-bottom: 64px;
-}
-
-.paragraphContainer {
-    max-width: 600px;
     width: 100%;
 }
 
-.paragraph {
-    max-width: 600px;
-    margin-bottom: 24px;
-    color: #000000;
-}
-
-.paragraph p {
-    font-family: Roboto Serif;
-    font-size: 24px;
-    font-weight: 400;
-}
-
-.aboutLink {
-    font-family: Roboto;
-    font-size: 15px;
-    font-weight: 500;
-    letter-spacing: 0.46000000834465027px;
-    color: #3B6362;
-}
-
-.sectionsHeader {
-    font-family: Inter;
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 28.8px;
-    margin-bottom: 32px;
-}
-
-.sections {
-    margin-top: 64px;
-    max-width: 600px;
-    width: 100%;
-}
-
-.homePageLink, .homePageLinkContainer, .homePageButton, .homePageButtonDiv {
+.homePageLink,
+.homePageLinkContainer,
+.homePageButton,
+.homePageButtonDiv {
     max-width: 600px;
     width: 100%;
 }
@@ -76,15 +41,6 @@
     background: #E5E5E5;
 }
 
-.smallLinksText {
-    margin-bottom: 24px;
-}
-
-.smallLinks {
-    margin-top: 100px;
-    text-align: center;
-}
-
 .homePageImg {
     width: 44px;
     height: 44px;
@@ -103,8 +59,92 @@
     border-bottom: 2px solid black;
 }
 
+.paragraphContainer {
+    max-width: 600px;
+    width: 100%;
+}
+
+.paragraph {
+    max-width: 600px;
+    margin-bottom: 64px;
+    color: #000000;
+}
+
+.paragraph p {
+    font-family: Roboto Serif;
+    font-size: 24px;
+    font-weight: 400;
+}
+
+.aboutLink {
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.46000000834465027px;
+    color: #3B6362;
+}
+
+.sections {
+    width: 100%;
+    max-width: 600px;
+}
+
+.sectionContainer {
+    width: 245px;
+}
+
+.sectionRow {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 64px;
+}
+
+.sectionRow:nth-child(odd) {
+    align-items: flex-start;
+}
+
+.sectionRow:nth-child(even) {
+    align-items: flex-end;
+}
+
+.sectionsHeader {
+    font-family: Roboto Serif;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 28.1px;
+    margin-bottom: 12px;
+    width: 260px;
+}
+
+.openSectionLinkContainer {
+    display: flex;
+    align-items: center;
+    height: 42px;
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 26px;
+    letter-spacing: 0.46000000834465027px;
+    color: #3B6362;
+    justify-content: end;
+    max-width: 245px;
+}
+
+.arrowForwardIcon {
+    margin-left: 12px;
+}
+
+.smallLinksText {
+    margin-bottom: 24px;
+}
+
+.smallLinks {
+    margin-top: 100px;
+    text-align: center;
+}
+
 .ijnaLogo {
-    margin-top: 116px;
+    margin-top: 80px;
     width: 86px;
     height: 196px;
 }

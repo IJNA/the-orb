@@ -3,6 +3,14 @@ import "bulma/css/bulma.min.css";
 import styles from "./HomePage.module.scss";
 import { Link, useLocation } from "react-router-dom";
 
+import theLaw from '../images/theLaw.svg';
+import theProphets from '../images/theProphets.svg';
+import theWritings from '../images/theWritings.svg';
+import theGospelandActs from '../images/theGospelsandActs.svg';
+import theLetters from '../images/theLetters.svg';
+import theRevelation from '../images/theRevelation.svg';
+import arrowForwardIcon from '../images/ArrowForwardIcon.svg'
+
 const HomePage = () => {
     const location = useLocation();
 
@@ -27,43 +35,138 @@ const HomePage = () => {
                     </div>
                 </div>
                 <div className={styles.sections}>
-                    <h4 className={styles.sectionsHeader}>Sections of the Bible</h4>
-                    <Link to="/sections/the-law" className={styles.homePageLink}>
-                        <div className={`${styles.homePageLinkContainer}`}>
-                            <div className={`${styles.homePageButton}`}>The Law</div>
-                            <div className={`${styles.homePageButtonDiv}`}></div>
+                    <div className={styles.sectionRow}>
+                        <div className={styles.sectionContainer}>
+                            <h4 className={styles.sectionsHeader}>The Law</h4>
+                            <Link to="sections/the-law">
+                                <img
+                                    className={styles.theLaw}
+                                    src={theLaw}
+                                    alt="Section Logo"
+                                    title="Section Logo"
+                                />
+                            </Link>
+                            <Link to="sections/the-law" className={styles.openSectionLinkContainer}>
+                                OPEN SECTION
+                                <img
+                                    className={`${styles.arrowForwardIcon}`}
+                                    src={arrowForwardIcon}
+                                    alt="Arrow Forward Icon to go to a selected section"
+                                    title="Arrow Forward Icon to go to a selected section"
+                                />
+                            </Link>
                         </div>
-                    </Link>
-                    <Link to="/sections/the-prophets" className={styles.homePageLink}>
-                        <div className={`${styles.homePageLinkContainer}`}>
-                            <div className={`${styles.homePageButton}`}>The Prophets</div>
-                            <div className={`${styles.homePageButtonDiv}`}></div>
+                    </div>
+                    <div className={styles.sectionRow}>
+                        <div className={styles.sectionContainer}>
+                            <h4 className={styles.sectionsHeader}>The Prophets</h4>
+                            <Link to="sections/the-prophets">
+                                <img
+                                    className={styles.sectionImg}
+                                    src={theProphets}
+                                    alt="Section Logo"
+                                    title="Section Logo"
+                                />
+                            </Link>
+                            <Link to="sections/the-prophets" className={styles.openSectionLinkContainer}>
+                                OPEN SECTION
+                                <img
+                                    className={`${styles.arrowForwardIcon}`}
+                                    src={arrowForwardIcon}
+                                    alt="Arrow Forward Icon to go to a selected section"
+                                    title="Arrow Forward Icon to go to a selected section"
+                                />
+                            </Link>
                         </div>
-                    </Link>
-                    <Link to="/sections/the-writings" className={styles.homePageLink}>
-                        <div className={`${styles.homePageLinkContainer}`}>
-                            <div className={`${styles.homePageButton}`}>The Writings</div>
-                            <div className={`${styles.homePageButtonDiv}`}></div>
+                    </div>
+                    <div className={styles.sectionRow}>
+                        <div className={styles.sectionContainer}>
+                            <h4 className={styles.sectionsHeader}>The Writings</h4>
+                            <Link to="sections/the-writings">
+                                <img
+                                    className={styles.sectionImg}
+                                    src={theWritings}
+                                    alt="Section Logo"
+                                    title="Section Logo"
+                                />
+                            </Link>
+                            <Link to="sections/the-writings" className={styles.openSectionLinkContainer}>
+                                OPEN SECTION
+                                <img
+                                    className={`${styles.arrowForwardIcon}`}
+                                    src={arrowForwardIcon}
+                                    alt="Arrow Forward Icon to go to a selected section"
+                                    title="Arrow Forward Icon to go to a selected section"
+                                />
+                            </Link>
                         </div>
-                    </Link>
-                    <Link to="/sections/the-gospels-and-acts" className={styles.homePageLink}>
-                        <div className={`${styles.homePageLinkContainer}`}>
-                            <div className={`${styles.homePageButton}`}>The Gospels and Acts</div>
-                            <div className={`${styles.homePageButtonDiv}`}></div>
+                    </div>
+                    <div className={styles.sectionRow}>
+                        <div className={styles.sectionContainer}>
+                            <h4 className={styles.sectionsHeader}>The Gospels and Acts</h4>
+                            <Link to="sections/the-gospels-and-acts">
+                                <img
+                                    className={styles.sectionImg}
+                                    src={theGospelandActs}
+                                    alt="Section Logo"
+                                    title="Section Logo"
+                                />
+                            </Link>
+                            <Link to="sections/the-gospels-and-acts" className={styles.openSectionLinkContainer}>
+                                OPEN SECTION
+                                <img
+                                    className={`${styles.arrowForwardIcon}`}
+                                    src={arrowForwardIcon}
+                                    alt="Arrow Forward Icon to go to a selected section"
+                                    title="Arrow Forward Icon to go to a selected section"
+                                />
+                            </Link>
                         </div>
-                    </Link>
-                    <Link to="/sections/the-letters" className={styles.homePageLink}>
-                        <div className={`${styles.homePageLinkContainer}`}>
-                            <div className={`${styles.homePageButton}`}>The Letters</div>
-                            <div className={`${styles.homePageButtonDiv}`}></div>
+                    </div>
+                    <div className={styles.sectionRow}>
+                        <div className={styles.sectionContainer}>
+                            <h4 className={styles.sectionsHeader}>The Letters</h4>
+                            <Link to="sections/the-letters">
+                                <img
+                                    className={styles.sectionImg}
+                                    src={theLetters}
+                                    alt="Section Logo"
+                                    title="Section Logo"
+                                />
+                            </Link>
+                            <Link to="sections/the-letters" className={styles.openSectionLinkContainer}>
+                                OPEN SECTION
+                                <img
+                                    className={`${styles.arrowForwardIcon}`}
+                                    src={arrowForwardIcon}
+                                    alt="Arrow Forward Icon to go to a selected section"
+                                    title="Arrow Forward Icon to go to a selected section"
+                                />
+                            </Link>
                         </div>
-                    </Link>
-                    <Link to="/sections/the-revelation/revelation" className={styles.homePageLink}>
-                        <div className={`${styles.homePageLinkContainer}`}>
-                            <div className={`${styles.homePageButton}`}>The Revelation</div>
-                            <div className={`${styles.homePageButtonDiv}`}></div>
+                    </div>
+                    <div className={styles.sectionRow}>
+                        <div className={styles.sectionContainer}>
+                            <h4 className={styles.sectionsHeader}>The Revelation</h4>
+                            <Link to="sections/the-revelation/revelation">
+                                <img
+                                    className={styles.sectionImg}
+                                    src={theRevelation}
+                                    alt="Section Logo"
+                                    title="Section Logo"
+                                />
+                            </Link>
+                            <Link to="sections/the-revelation/revelation" className={styles.openSectionLinkContainer}>
+                                OPEN SECTION
+                                <img
+                                    className={`${styles.arrowForwardIcon}`}
+                                    src={arrowForwardIcon}
+                                    alt="Arrow Forward Icon to go to a selected section"
+                                    title="Arrow Forward Icon to go to a selected section"
+                                />
+                            </Link>
                         </div>
-                    </Link>
+                    </div>
                 </div>
                 <Link to="about">
                     <img
@@ -81,7 +184,7 @@ const HomePage = () => {
                         </a>
                     </span>
                 </p>
-            </div>
+            </div >
         </>
     );
 };
