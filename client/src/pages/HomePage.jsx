@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "bulma/css/bulma.min.css";
 import styles from "./HomePage.module.scss";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import theLaw from '../images/theLaw.svg';
 import theProphets from '../images/theProphets.svg';
@@ -11,7 +11,6 @@ import theLetters from '../images/theLetters.svg';
 import theRevelation from '../images/theRevelation.svg';
 
 const HomePage = () => {
-
     const location = useLocation();
 
     const url = location.pathname;
@@ -21,6 +20,7 @@ const HomePage = () => {
             window.scrollTo(0, 0);
         }, 5);
     }, [url]);
+
 
     return (
         <>
@@ -118,12 +118,14 @@ const HomePage = () => {
                 <p className={styles.openSourceParagraph}>
                     Open-source |&nbsp;
                     <span className={styles.gitHub}>
-                        <a target="_blank" rel="noreferrer" href="https://github.com/IJNA/the-orb">See Github</a>
+                        <a target="_blank" rel="noreferrer" href="https://github.com/IJNA/the-orb">
+                            See Github
+                        </a>
                     </span>
                 </p>
             </div>
         </>
     );
-}
+};
 
 export default HomePage;

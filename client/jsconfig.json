@@ -1,8 +1,10 @@
 {
     "compilerOptions": {
+      "target": "ES6",
       "jsx": "react",
       "checkJs": true,
-      "resolveJsonModule": true
+      "module": "NodeNext"
     },
     "exclude": ["node_modules", "**/node_modules/*"]
+    
   }

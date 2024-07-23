@@ -64,7 +64,7 @@ function About() {
               title="NOSTR button icon, ostrich"
             />NOSTR</button>
           </a>
-          <a className={`${styles.feedBackLink}`} href="#">
+          <a target="_blank" rel="noreferrer" className={`${styles.feedBackLink}`} href="https://formstr.app/#/fill/3548a79d48b7449bf2b2ecad7926973c9c665455a453ec76fc5f65d0523d6e1e">
             <button className={`${styles.feedBackButton}`}><img
               className={`${styles.contactButtonImg}`}
               src={bullHornIcon}

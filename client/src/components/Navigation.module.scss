@@ -2,12 +2,6 @@
     border-bottom: 1px solid #dbdbdb;
 }
 
-.bookPageContainer {
-    // border: 2px solid red;
-    overflow: hidden;
-    //padding-top: 68px;
-}
-
 .navbarBrandContainer {
     align-items: center;
 }
@@ -35,25 +29,14 @@
     margin-left: 8px;
 }
 
-.bookPageHeaderContainer {
+.headerContainer {
    margin: auto;
-   width: 800px;
-   padding: 32px 32px 0 32px;
+   width: 100%;
+   padding-top: 64px;
 }
 
-p { //! may cause styling issues on other pages
-    margin-bottom: 32px;
-}
 
 .backContainer {
     display: flex;
     cursor: pointer;
-}
-
-data {
-    margin-bottom: 32px;
-}
-
-.highlight {
-    color: #ff0000;
 }
