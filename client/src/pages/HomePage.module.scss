@@ -89,6 +89,8 @@
     font-weight: 400;
     line-height: 28.1px;
     margin-bottom: 12px;
+    width: 260px;
+    // border: 2px solid red
 }
 
 .sections {
@@ -200,3 +202,11 @@
     text-decoration: underline;
     color: black;
 }
+
+@media (max-width: 680px) {
+    .sections{
+        display: flex;
+        flex-direction: column;
+        // overflow: auto;
+    }
+  }
