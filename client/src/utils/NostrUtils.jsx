@@ -7,17 +7,17 @@ import { NostrFetcher } from "nostr-fetch";
 
 export const useGetBookChaptersByBookName = (bookName) => {
     const relayUrls = [
-        //"wss://relay.damus.io",
-        "wss://nostr.mom",
-        //"wss://nostr.slothy.win",
-        "wss://relay.stoner.com",
+        "wss://relayable.org",
+        "wss://lightningrelay.com",
+        "wss://nostr.slothy.win",
+        "wss://relay.n057r.club",
         "wss://nostr.einundzwanzig.space",
         "wss://nos.lol",
         "wss://relay.nostr.band",
         "wss://lightningrelay.com",
         "wss://nostr.bch.ninja",
     ];
-    const fetcher = useMemo(() => NostrFetcher.init(), []);
+    const fetcher = NostrFetcher.init();
     const chapters = findChaptersByBookTitle(bookName).map((chapter) => chapter.nostrId);
     const filter = {
         ids: chapters,
@@ -29,9 +29,9 @@ export const useGetBookChaptersByBookName = (bookName) => {
         queryKey: ["book", bookName],
         queryFn: async () => {
             const response = await fetcher.fetchAllEvents(relayUrls, filter, {
-                since: dateToUnix(new Date("2024-07-04")),
-                until: dateToUnix(new Date("2024-07-09")),
+                since: dateToUnix(new Date("2024-07-01")),
             });
+            console.log(response);
             return response
                 .map((event) => ({
                     ...event,
