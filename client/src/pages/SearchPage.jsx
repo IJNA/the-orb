@@ -16,7 +16,6 @@ const SearchPage = () => {
     const [searchInput, setSearchInput] = useState("");
     const [query, setQuery] = useState(null);
     const location = useLocation();
-    const [bookResults, setBookResults] = useState([]);
     const { data: searchResults, isLoading: isSearching } = useGetSearchResults(query);
 
     useEffect(() => {
@@ -29,7 +28,6 @@ const SearchPage = () => {
     const handleClear = () => {
         setSearchInput("");
         setQuery(null);
-        setBookResults([]);
     };
 
     const handleSearch = useCallback(
@@ -41,14 +39,13 @@ const SearchPage = () => {
         [searchInput]
     );
 
-    useEffect(() => {
-        if (query) {
-            BookSectionMap.sections.forEach((section) => {
-                const results = section.books.filter((book) => book.title.toLowerCase().includes(query.toLowerCase()));
-                setBookResults((prev) => [...prev, ...results]);
-            });
-        }
-    }, [query]);
+    const bookResults = useMemo(
+        () =>
+            query ? BookSectionMap.sections
+                .flatMap((section) => section.books)
+                .filter((book) => book.title.toLowerCase().includes(query.toLowerCase())) : [],
+        [query]
+    );
 
     const verseSummary = useMemo(
         () =>
@@ -124,7 +121,10 @@ const SearchPage = () => {
                     )}
                     {searchResults?.length > 0 && (
                         <>
-                            <h4 className={`title is-4 ${styles.results}`}>Passages</h4>
+                            <h4 className={`title is-4 ${styles.results}`}>
+                                Passages 
+                                {/* <small className="has-text-weight-light	">({searchResults.length})</small> */}
+                            </h4>
 
                             {searchResults.map((item, index) => {
                                 const book = getDetailsByBookTitle(item.book);
