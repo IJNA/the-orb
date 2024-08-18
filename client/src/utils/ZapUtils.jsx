@@ -1,4 +1,5 @@
-import { nip19, nip57, SimplePool } from "nostr-tools";
+import { nip19, nip57, SimplePool, finalizeEvent } from "nostr-tools";
+import { Buffer } from "buffer";
 
 const CACHE_PREFIX = "nostrZap.";
 const LIGHTNING_URI_KEY = "lightningUri";
@@ -81,36 +82,27 @@ export const listenForZapReceipt = ({ relays, invoice, onSuccess }) => {
     };
 };
 export const fetchInvoice = async ({ zapEndpoint, amount, comment, authorId, noteId, normalizedRelays }) => {
-    const zapEvent = await makeZapEvent({
+    const zapEvent = nip57.makeZapRequest({
         profile: authorId,
-        event: noteId ? nip19.decode(noteId) : undefined,
+        event: noteId,
         amount,
         relays: normalizedRelays,
         comment,
     });
-    
-    let url = `${zapEndpoint}?amount=${amount}&nostr=${encodeURIComponent(JSON.stringify(zapEvent))}`;
+    const privKey = Buffer.from('fa5b9f5f1353838ed39ec92d08d94816e2f688ee87c95f7c5674227448e20452', 'hex');
+    const signedEvent = finalizeEvent(zapEvent, privKey);
+    if (zapEvent) {
+        let url = `${zapEndpoint}?amount=${amount}&nostr=${encodeURIComponent(JSON.stringify(signedEvent))}`;
 
-    if (comment) {
-        url = `${url}&comment=${encodeURIComponent(comment)}`;
+        if (comment) {
+            url = `${url}&comment=${encodeURIComponent(comment)}`;
+        }
+
+        const res = await fetch(url);
+        const { pr: invoice } = await res.json();
+
+        return invoice;
     }
-
-    const res = await fetch(url);
-    const { pr: invoice } = await res.json();
-
-    return invoice;
-};
-
-const makeZapEvent = async ({ profile, event, amount, relays, comment }) => {
-    const zapEvent = nip57.makeZapRequest({
-        profile,
-        event,
-        amount,
-        relays,
-        comment,
-    });
-
-    return window?.nostr?.signEvent(zapEvent);
 };
 
 export const satToMsat = (msat) => msat * 1000;
