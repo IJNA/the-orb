@@ -3,8 +3,8 @@
       "target": "ES6",
       "jsx": "react",
       "checkJs": true,
-      "module": "NodeNext"
+      "module": "NodeNext",
+      "resolveJsonModule": true
     },
     "exclude": ["node_modules", "**/node_modules/*"]
-    
   }
