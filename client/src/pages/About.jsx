@@ -20,7 +20,6 @@ import {
 import { CopySimple } from "phosphor-react";
 import QRCode from "react-qr-code";
 import { Navigation } from "../components/Navigation.jsx";
-
 function About() {
     const location = useLocation();
     const url = location.pathname;
@@ -229,8 +228,8 @@ const ZapDialog = ({ pubkey, show, setShow, setInvoice, setShowInvoiceDialog }) 
                 </Modal.Card.Header>
                 <Modal.Card.Body>
                     Amount in sats
-                    <Columns>
-                        <Columns.Column>
+                    <div className="grid">
+                        <div className="cell">
                             <Button
                                 color={amount === 1000 ? "primary" : undefined}
                                 onClick={() => handleSelectAmount(1000)}
@@ -238,8 +237,8 @@ const ZapDialog = ({ pubkey, show, setShow, setInvoice, setShowInvoiceDialog }) 
                             >
                                 1k
                             </Button>
-                        </Columns.Column>
-                        <Columns.Column>
+                        </div>
+                        <div className="cell">
                             <Button
                                 color={amount === 5000 ? "primary" : undefined}
                                 onClick={() => handleSelectAmount(5000)}
@@ -247,8 +246,8 @@ const ZapDialog = ({ pubkey, show, setShow, setInvoice, setShowInvoiceDialog }) 
                             >
                                 5k
                             </Button>
-                        </Columns.Column>
-                        <Columns.Column>
+                        </div>
+                        <div className="cell">
                             <Button
                                 color={amount === 10000 ? "primary" : undefined}
                                 onClick={() => handleSelectAmount(10000)}
@@ -256,10 +255,8 @@ const ZapDialog = ({ pubkey, show, setShow, setInvoice, setShowInvoiceDialog }) 
                             >
                                 10k
                             </Button>
-                        </Columns.Column>
-                    </Columns>
-                    <Columns>
-                        <Columns.Column>
+                        </div>
+                        <div className="cell">
                             <Button
                                 color={amount === 20000 ? "primary" : undefined}
                                 onClick={() => handleSelectAmount(20000)}
@@ -267,8 +264,8 @@ const ZapDialog = ({ pubkey, show, setShow, setInvoice, setShowInvoiceDialog }) 
                             >
                                 20k
                             </Button>
-                        </Columns.Column>
-                        <Columns.Column>
+                        </div>
+                        <div className="cell">
                             <Button
                                 color={amount === 100000 ? "primary" : undefined}
                                 onClick={() => handleSelectAmount(100000)}
@@ -276,8 +273,8 @@ const ZapDialog = ({ pubkey, show, setShow, setInvoice, setShowInvoiceDialog }) 
                             >
                                 100k
                             </Button>
-                        </Columns.Column>
-                        <Columns.Column>
+                        </div>
+                        <div className="cell">
                             <Button
                                 color={amount === 500000 ? "primary" : undefined}
                                 onClick={() => handleSelectAmount(500000)}
@@ -285,8 +282,8 @@ const ZapDialog = ({ pubkey, show, setShow, setInvoice, setShowInvoiceDialog }) 
                             >
                                 500k
                             </Button>
-                        </Columns.Column>
-                    </Columns>
+                        </div>
+                    </div>
                     <textarea
                         className="textarea mb-5"
                         placeholder="Comment"
@@ -302,7 +299,7 @@ const ZapDialog = ({ pubkey, show, setShow, setInvoice, setShowInvoiceDialog }) 
 };
 
 const InvoiceDialog = ({ invoice, setInvoice, show, setShow }) => {
-    const [lightningUri, setLightningUri] = useState(getCachedLightningUri);
+    const [lightningUri, setLightningUri] = useState(null);
 
     const handleCopy = useCallback(() => {
         navigator.clipboard.writeText(invoice);
@@ -325,6 +322,7 @@ const InvoiceDialog = ({ invoice, setInvoice, show, setShow }) => {
     }, [invoice, lightningUri]);
 
     const walletOptions = [
+        { label: "Select a Wallet", value: "" },
         { label: "Default Wallet", value: "lightning:" },
         { label: "Strike", value: "strike:lightning:" },
         { label: "Cash App", value: "https://cash.app/launch/lightning/" },
@@ -339,7 +337,6 @@ const InvoiceDialog = ({ invoice, setInvoice, show, setShow }) => {
         { label: "Blixt", value: "blixtwallet:lightning:" },
         { label: "River", value: "river://" },
     ];
-
     return (
         <Modal show={show} onClose={handleClose}>
             <Modal.Card>
@@ -378,7 +375,7 @@ const InvoiceDialog = ({ invoice, setInvoice, show, setShow }) => {
                         </Form.Select>
                     </Form.Field>
 
-                    <Button color="primary" onClick={handleOpenWallet} fullwidth>
+                    <Button color="primary" onClick={handleOpenWallet} fullwidth disabled={!lightningUri}>
                         Open Wallet
                     </Button>
                 </Modal.Card.Body>

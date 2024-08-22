@@ -2,123 +2,127 @@
 
 
 .aboutContainer {
-  padding: 112px 32px 0 32px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-bottom: 64px;
-  height: 100%;
-  width: 100%;
+  padding: 112px 32px 0 32px !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  padding-bottom: 64px !important;
+  height: 100% !important;
+  width: 100% !important;
 }
 
 .ijnaLogo {
-  margin-top: 14px;
-  width: 86px;
-  height: 196px;
+  margin-top: 14px !important;
+  width: 86px !important;
+  height: 196px !important;
 }
 
 .content {
-  margin-top: 64px;
+  margin-top: 64px !important;
 }
 
 .aboutHeader {
-  font-family: Inter;
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 28.8px;
-  margin-bottom: 32px;
+  font-family: Inter !important;
+  font-size: 24px !important;
+  font-weight: 700 !important;
+  line-height: 28.8px !important;
+  margin-bottom: 32px !important;
 }
 
 .paragraphContainer {
-  max-width: 600px;
-  width: 100%;
+  max-width: 600px !important;
+  width: 100% !important;
 }
 
 .paragraph a {
-  text-decoration: underline;
-  color: black;
+  text-decoration: underline !important;
+  color: black !important;
 }
 
 .paragraph {
-  max-width: 600px;
-  margin-bottom: 24px;
+  max-width: 600px !important;
+  margin-bottom: 24px !important;
 }
 
 .paragraph p {
-  font-family: Roboto Serif;
-  font-size: 24px;
-  font-weight: 400;
+  font-family: Roboto Serif !important;
+  font-size: 24px !important;
+  font-weight: 400 !important;
 }
 
 .paragraphContainer:nth-child(2) {
-  margin-bottom: 64px;
+  margin-bottom: 64px !important;
 }
 
 .buttonContainer {
-  display: flex;
-  flex-direction: column;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 .aboutContainer button {
-  display: flex;
-  align-items: center;
-  width: 116px;
-  height: 42px;
-  border-radius: 4px;
-  border: 1px solid #3B6362;
-  color: #3B6362;
-  background-color: white;
-  font-family: Roboto;
-  font-size: 15px;
-  font-weight: 500;
-  line-height: 26px;
-  letter-spacing: 0.46000000834465027px;
-  padding: 8px 16px 8px 16px;
-  cursor: pointer;
+  display: flex !important;
+  align-items: center !important;
+  width: 116px !important;
+  height: 42px !important;
+  border-radius: 4px !important;
+  border: 1px solid #3B6362 !important;
+  color: #3B6362 !important;
+  background-color: white !important;
+  font-family: Roboto !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  line-height: 26px !important;
+  letter-spacing: 0.46000000834465027px !important;
+  padding: 8px 16px 8px 16px !important;
+  cursor: pointer !important;
 }
 
 .buttonContainer a {
-  width: 116px;
-  height: 42px;
+  width: 116px !important;
+  height: 42px !important;
   margin-bottom: 24px
 }
 
 .aboutContainer .feedBackButton,
 .aboutContainer .buttonContainer .feedBackLink {
-  width: 186px;
-  margin-bottom: 32px;
+  width: 186px !important;
+  margin-bottom: 32px !important;
 }
 
 .aboutContainer .contactButtonImg {
-  margin-right: 8px;
+  margin-right: 8px !important;
 }
 
 .aboutContainer .contributorImg {
-  margin-left: 8px;
+  margin-left: 8px !important;
 }
 
 .contributorListContainer {
-  display: flex;
-  align-items: center;
-  height: 42px;
-  font-family: Roboto;
-  font-size: 15px;
-  font-weight: 500;
-  line-height: 26px;
-  letter-spacing: 0.46000000834465027px;
-  color: #3B6362;
-  margin-bottom: 64px;
+  display: flex !important;
+  align-items: center !important;
+  height: 42px !important;
+  font-family: Roboto !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  line-height: 26px !important;
+  letter-spacing: 0.46000000834465027px !important;
+  color: #3B6362 !important;
+  margin-bottom: 64px !important;
 }
 
 .contributorListLink {
-  color: #3B6362;
+  color: #3B6362 !important;
 }
 
 .aboutContainer .supportBtn {
-  width: 140px;
+  width: 140px !important;
 }
 
 .aboutContainer .supportBtn img {
-  margin-left: 8px;
+  margin-left: 8px !important;
+}
+
+.button {
+  color: white !important;
 }
