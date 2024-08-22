@@ -1,5 +1,5 @@
 import React from "react";
-import "bulma/css/bulma.min.css";
+import "bulma/css/versions/bulma-no-dark-mode.css";
 import styles from "./Header.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";

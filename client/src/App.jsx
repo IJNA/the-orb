@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import SectionPage from "./pages/SectionPage";
-import SearchPage from "./pages/SearchPage";
-import BookPage from "./pages/BookPage";
-import About from "./pages/About";
+import HomePage from "./pages/HomePage.jsx";
+import SectionPage from "./pages/SectionPage.jsx";
+import SearchPage from "./pages/SearchPage.jsx";
+import BookPage from "./pages/BookPage.jsx";
+import About from "./pages/About.jsx";
 import "./App.css";
-import Header from "./components/Header";
+import Header from "./components/Header.jsx";
 
 function App() {
     return (
