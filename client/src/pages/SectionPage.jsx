@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import "bulma/css/bulma.min.css";
 import styles from "./SectionPage.module.scss";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useCurrentSection } from "../utils/Hooks";
-import { Navigation } from "../components/Navigation";
+import { useCurrentSection } from "../utils/Hooks.jsx";
+import { Navigation } from "../components/Navigation.jsx";
 
 const SectionPage = () => {
     const location = useLocation();
@@ -17,7 +17,7 @@ const SectionPage = () => {
 
     return (
         <div>
-            <Navigation />
+            {/* <Navigation /> */}
             <div className={styles.sectionPageContainer}>
                 <div className={`${styles.sectionContainer}`}>
                     <h2 className={`${styles.sectionHeader}`}>{currentSection.title}</h2>
