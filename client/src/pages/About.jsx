@@ -45,14 +45,14 @@ function About() {
                     <div className={styles.paragraphContainer}>
                         <div className={styles.paragraph}>
                             <p>hagah.io is a product of IJNA Design based in Plano, TX.</p>
-                            <p>
+                            {/* <p>
                                 The code is open-source and accessible on
                                 <a target="_blank" rel="noreferrer" href="https://github.com/IJNA/the-orb">
-                                    Github
+                                &nbsp;<span className={styles.gitHubLink}>Github</span>
                                 </a>
                                 .
                             </p>
-                            <p>If you're interested in getting in touch, please see our contact links below.</p>
+                            <p>If you're interested in getting in touch, please see our contact links below.</p> */}
                         </div>
                     </div>
                     <h4 className={styles.aboutHeader}>Contact</h4>
