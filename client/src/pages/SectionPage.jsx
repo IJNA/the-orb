@@ -3,7 +3,7 @@ import "bulma/css/bulma.min.css";
 import styles from "./SectionPage.module.scss";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useCurrentSection } from "../utils/Hooks.jsx";
-import { Navigation } from "../components/Navigation.jsx";
+import theLaw from "../images/theLaw.svg";
 
 const SectionPage = () => {
     const location = useLocation();
@@ -17,13 +17,15 @@ const SectionPage = () => {
 
     return (
         <div>
-            {/* <Navigation /> */}
             <div className={styles.sectionPageContainer}>
                 <div className={`${styles.sectionContainer}`}>
                     <h2 className={`${styles.sectionHeader}`}>{currentSection.title}</h2>
-                    <div className={styles.quotedTextContainer}>
-                        <p className={styles.quotedText}>{currentSection.quote}</p>
-                    </div>
+                    <img
+                        className={`${styles.sectionImg}`}
+                        src={`${process.env.PUBLIC_URL}/${currentSection.image}.svg`}
+                        alt="Arrow Forward Icon to go to a selected section"
+                        title="Arrow Forward Icon to go to a selected section"
+                    />
                     <div className={styles.buttonContainer}>
                         {currentSection.books.map((book, index) => (
                             <Link key={index} to={book.route} className={styles.sectionPageLink}>
