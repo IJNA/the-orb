@@ -26,7 +26,6 @@ function BookPage() {
 
     return (
         <>
-            {/* <Navigation /> */}
             <div className={styles.bookPageContainer}>
                 <Container
                     className={styles.bookPageHeaderContainer}
