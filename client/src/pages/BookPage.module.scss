@@ -11,8 +11,13 @@
     align-items: center !important;
 }
 
-.title {
-    color: #000000 !important;
+.header {
+    color: #000000;
+    font-family: Inter;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 57.6px;
+    text-align: left;
 }
 
 .text {
