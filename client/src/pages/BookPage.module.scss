@@ -3,26 +3,31 @@
 }
 
 .bookPageContainer {
-    // border: 2px solid red;
     overflow: hidden !important;
-    padding-top: 68px;
+    margin-bottom: 100px;
 }
 
 .navbarBrandContainer {
     align-items: center !important;
 }
+
 .text {
-    font-size: 20px !important;
+    font-family: Roboto Serif;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 36px;
+    text-align: left;
 }
 
 .button {
     margin-top: 64px !important;
     padding: 0px 24px !important;
-
+    height: 60px;
 }
+
 .center {
     text-align: center !important;
-    
+
 }
 
 .book {
@@ -36,12 +41,13 @@
 }
 
 .bookPageHeaderContainer {
-   margin: auto !important;
-   width: 800px !important;
-   padding: 32px 32px 0 32px !important;
+    margin: auto !important;
+    width: 800px !important;
+    padding: 32px 32px 0 32px !important;
 }
 
-p { //! may cause styling issues on other pages
+p {
+    //! may cause styling issues on other pages
     margin-bottom: 32px !important;
 }
 
