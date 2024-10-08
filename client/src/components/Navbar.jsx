@@ -16,7 +16,7 @@ function Navbar() {
     ];
 
     return (
-        <div className={`${styles.bottomNavbar}`}>
+        <div className={`${styles.navbar}`}>
             {navItems.map((item) => (
                 <Link
                     key={item.path}
