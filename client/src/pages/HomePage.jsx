@@ -23,7 +23,7 @@ const HomePage = () => {
 
     return (
         <>
-            <div className={styles.homePageHeader}>hagah</div>
+            {/* <div className={styles.homePageHeader}>hagah</div> */}
             <div className={styles.homePageContainer}>
                 <div className={styles.paragraphContainer}>
                     <div className={styles.paragraph}>

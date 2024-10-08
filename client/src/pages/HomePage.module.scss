@@ -17,6 +17,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 100px;
     padding-bottom: 64px;
     width: 100%;
 }
@@ -171,4 +172,10 @@
 .openSourceParagraph .gitHub a {
     text-decoration: underline;
     color: black;
+}
+
+@media (max-width: 1060px) {
+    .homePageContainer {
+        margin-top: 0;
+    }
 }
