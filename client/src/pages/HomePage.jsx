@@ -12,7 +12,7 @@ import arrowForwardIcon from "../images/ArrowForwardIcon.svg";
 import { Button } from "react-bulma-components";
 import { kinds, finalizeEvent, verifyEvent, generateSecretKey } from "nostr-tools";
 import { dateToUnix, useNostr } from "nostr-react";
-import { BookSectionMap, jsonToMarkdown } from "./BookSectionMap.jsx";
+import { BookSectionMap } from "./BookSectionMap.jsx";
 import outputJson from "../output.json";
 import { Buffer } from "buffer";
 
@@ -20,73 +20,13 @@ const HomePage = () => {
     const location = useLocation();
 
     const url = location.pathname;
-
     useEffect(() => {
         setTimeout(() => {
             window.scrollTo(0, 0);
         }, 5);
     }, [url]);
 
-    // const doSomething = () => {
-    //     const privKey = Uint8Array.from(
-    //         Buffer.from("fa5b9f5f1353838ed39ec92d08d94816e2f688ee87c95f7c5674227448e20452", "hex")
-    //     );
-    //     //const privKey = generateSecretKey();
-    //     let completeEvents = [];
-    //     let failedEvents = [];
-    //     const newBookSectionMap = BookSectionMap.sections.map((section) => ({
-    //         ...section,
-    //         books: section.books.map((book) => ({
-    //             ...book,
-    //             chapters: book.chapters.map((chapter, index) => {
-    //                 const currentChapter = index + 1;
-    //                 const sectionName = book.route.split("/")[2];
-    //                 const bookName = book.route.split("/")[3];
-    //                 const currentChapterContent = Object.entries(outputJson)
-    //                     .at(Object.keys(outputJson).indexOf(bookName))[1]
-    //                     .filter((chapterMeta) => chapterMeta.chapter === currentChapter);
-
-    //                 const event = finalizeEvent(
-    //                     {
-    //                         kind: kinds.LongFormArticle,
-    //                         content: jsonToMarkdown(currentChapterContent),
-    //                         tags: [
-    //                             ["book", bookName],
-    //                             ["section", sectionName],
-    //                             ["chapter", currentChapter.toString()],
-    //                             ["type", ]
-    //                         ],
-    //                         created_at: dateToUnix(new Date("2024-07-25 00:00:00")),
-    //                     },
-    //                     privKey
-    //                 );
-    //                 completeEvents.push(event);
-    //                 // connectedRelays.forEach(async (relay) => {
-    //                 //     if (relay.status === 2) relay.connect();
-
-    //                 //     try {
-    //                 //         const isValid = verifyEvent(event);
-
-    //                 //         if (isValid) {
-    //                 //             relay.publish(event);
-    //                 //             completeEvents.push(event);
-    //                 //         }
-                           
-    //                 //     } catch (ex) {
-    //                 //         console.error(ex);
-    //                 //         failedEvents.push(event);
-    //                 //     }
-    //                 //     relay.close();
-    //                 //     await new Promise((resolve) => setTimeout(resolve, 2000 + Math.random() * 1000));
-    //                 // });
-    //                 return { ...chapter, nostrId: event.id };
-    //             }),
-    //         })),
-    //     }));
-    //     console.log({ newBookSectionMap });
-    //     console.log({ completeEvents, failedEvents });
-    // };
-
+    
     return (
         <>
             <div className={styles.homePageContainer}>
@@ -96,7 +36,6 @@ const HomePage = () => {
                         <Link to="about" className={styles.aboutLink}>
                             ABOUT US
                         </Link>
-                        {/* <Button onClick={doSomething}>Do something</Button> */}
                     </div>
                 </div>
                 <div className={styles.sections}>
