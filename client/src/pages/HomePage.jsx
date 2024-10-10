@@ -9,12 +9,12 @@ import theGospelandActs from "../images/theGospelsandActs.svg";
 import theLetters from "../images/theLetters.svg";
 import theRevelation from "../images/theRevelation.svg";
 import arrowForwardIcon from "../images/ArrowForwardIcon.svg";
-import { Button } from "react-bulma-components";
 import { kinds, finalizeEvent, verifyEvent, generateSecretKey } from "nostr-tools";
 import { dateToUnix, useNostr } from "nostr-react";
 import { BookSectionMap } from "./BookSectionMap.jsx";
 import outputJson from "../output.json";
 import { Buffer } from "buffer";
+
 
 const HomePage = () => {
     const location = useLocation();
@@ -26,9 +26,9 @@ const HomePage = () => {
         }, 5);
     }, [url]);
 
-    
     return (
         <>
+            {/* <div className={styles.homePageHeader}>hagah</div> */}
             <div className={styles.homePageContainer}>
                 <div className={styles.paragraphContainer}>
                     <div className={styles.paragraph}>

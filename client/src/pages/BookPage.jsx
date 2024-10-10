@@ -27,7 +27,6 @@ function BookPage() {
 
     return (
         <>
-            {/* <Navigation /> */}
             <div className={styles.bookPageContainer}>
                 <Container
                     className={styles.bookPageHeaderContainer}
@@ -35,7 +34,7 @@ function BookPage() {
                     flexDirection="row"
                     alignItems="baseline"
                 >
-                    <h2 className="title is-2">{currentBook?.title}</h2>
+                    <h2 className={`${styles.header}`}>{currentBook?.title}</h2>
                     {isLoading || chapters?.length <= 0 ? <div className="loader" /> : null}
                 </Container>
                 {chapters?.length > 0 ? (

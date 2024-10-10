@@ -3,30 +3,45 @@
 }
 
 .bookPageContainer {
-    // border: 2px solid red;
-    overflow: hidden !important;
-    padding-top: 68px;
+    overflow: hidden;
+    padding-bottom: 100px;
 }
 
 .navbarBrandContainer {
     align-items: center !important;
 }
+
+.header {
+    color: #000000;
+    font-family: Inter;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 57.6px;
+    text-align: left;
+}
+
 .text {
-    font-size: 20px !important;
+    font-family: Roboto Serif;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 36px;
+    text-align: left;
+    color: #000000;
 }
 
 .button {
-    margin-top: 64px !important;
     padding: 0px 24px !important;
-
+    height: 60px !important;
 }
+
 .center {
     text-align: center !important;
-    
+
 }
 
 .book {
     margin-top: 32px !important;
+    margin-bottom: 32px !important;
     padding: 0 32px 0 32px !important;
     max-width: 800px !important;
 }
@@ -36,12 +51,13 @@
 }
 
 .bookPageHeaderContainer {
-   margin: auto !important;
-   width: 800px !important;
-   padding: 32px 32px 0 32px !important;
+    margin: auto !important;
+    width: 800px !important;
+    padding: 32px 32px 0 32px !important;
 }
 
-p { //! may cause styling issues on other pages
+p {
+    //! may cause styling issues on other pages
     margin-bottom: 32px !important;
 }
 

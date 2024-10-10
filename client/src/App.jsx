@@ -7,6 +7,8 @@ import BookPage from "./pages/BookPage.jsx";
 import About from "./pages/About.jsx";
 import "./App.css";
 import Header from "./components/Header.jsx";
+import Navbar from "./components/Navbar.jsx";
+import Account from "./components/Account.jsx"
 
 function App() {
     return (
@@ -22,7 +24,9 @@ function App() {
                     <Route path="sections/:section/:book/:selectedChapter" element={<BookPage />} />
                     <Route path="sections/:section/:book/:selectedChapter/:selectedVerse" element={<BookPage />} />
                     <Route path="about" element={<About />} />
+                    <Route path="account" element={<Account />} />
                 </Routes>
+                <Navbar />
             </Router>
         </>
     );
