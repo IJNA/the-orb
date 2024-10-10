@@ -8,21 +8,7 @@ import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const queryClient = new QueryClient();
 const relayUrls = [
-    "wss://nostr.mom",
-    "wss://nostr.slothy.win",
-    "wss://relay.stoner.com",
-    "wss://nostr.einundzwanzig.space",
-    "wss://nos.lol",
-    "wss://relay.nostr.band",
-    "wss://lightningrelay.com",
-    "wss://nostr.bch.ninja",
-    "wss://relayable.org",
-    "wss://nostr.crypticthreadz.com",
-    "wss://lightningrelay.com",
-    "wss://nostr.wine",
-    "wss://astral.ninja",
-    "wss://at.nostrworks.com",
-    "wss://brb.io",
+    "wss://relay.hagah.io",
 ];
 
 root.render(

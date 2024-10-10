@@ -2,20 +2,12 @@ import React, { useEffect, useMemo, useState } from "react";
 import { dateToUnix, useNostrEvents, useNostr } from "nostr-react";
 import { nip19, kinds } from "nostr-tools";
 import { useQuery } from "@tanstack/react-query";
-import { BookSectionMap, findChaptersByBookTitle } from "../pages/BookSectionMap";
+import { BookSectionMap, findChaptersByBookTitle } from "../pages/BookSectionMap.jsx";
 import { NostrFetcher } from "nostr-fetch";
 
 export const useGetBookChaptersByBookName = (bookName) => {
     const relayUrls = [
-        "wss://relayable.org",
-        "wss://lightningrelay.com",
-        "wss://nostr.slothy.win",
-        "wss://relay.n057r.club",
-        "wss://nostr.einundzwanzig.space",
-        "wss://nos.lol",
-        "wss://relay.nostr.band",
-        "wss://lightningrelay.com",
-        "wss://nostr.bch.ninja",
+        "wss://relay.hagah.io",
     ];
     const fetcher = NostrFetcher.init();
     const chapters = findChaptersByBookTitle(bookName).map((chapter) => chapter.nostrId);
@@ -31,7 +23,6 @@ export const useGetBookChaptersByBookName = (bookName) => {
             const response = await fetcher.fetchAllEvents(relayUrls, filter, {
                 since: dateToUnix(new Date("2024-07-01")),
             });
-            console.log(response);
             return response
                 .map((event) => ({
                     ...event,
@@ -45,8 +36,3 @@ export const useGetBookChaptersByBookName = (bookName) => {
         enabled: !!bookName,
     });
 };
-
-function canDecode(identifier) {
-    if (identifier?.length < 8 || identifier?.charAt(0) !== "n") return false;
-    return true;
-}
