@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import "bulma/css/bulma.min.css";
 import styles from "./BookPage.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,6 +8,7 @@ import { useCurrentBook, useCurrentSection } from "../utils/Hooks.jsx";
 import { Container } from "react-bulma-components";
 import { Navigation } from "../components/Navigation.jsx";
 import { useGetBookFromDatabase } from "../utils/Queries.jsx";
+import { useGetBookChaptersByBookName } from "../utils/NostrUtils.jsx";
 
 function BookPage() {
     const location = useLocation();
@@ -22,7 +23,7 @@ function BookPage() {
     const currentSection = useCurrentSection();
     const currentBook = useCurrentBook();
 
-    const { data: chapters, isLoading } = useGetBookFromDatabase(params.book);
+    const { data: chapters, isLoading } = useGetBookChaptersByBookName(params.book);
 
     return (
         <>
@@ -72,8 +73,7 @@ function BookPage() {
 }
 
 const RenderBibleText = ({ data, currentBook, selectedChapter, selectedVerse }) => {
-    //const chapters = useMemo(() => (data?.length > 0 ? data.map((d) => JSON.parse(d)) : null), [data]);
-    const bookData = data;
+    const chapters = useMemo(() => (data?.length > 0 ? data.map((d) => JSON.parse(d)) : null), [data]);
 
     const elements = [];
     let currentParagraph = [];
@@ -81,14 +81,14 @@ const RenderBibleText = ({ data, currentBook, selectedChapter, selectedVerse }) 
     const verseRefs = useRef({});
 
     useEffect(() => {
-        if (bookData?.length > 0 && selectedChapter && selectedVerse) {
+        if (chapters?.length > 0 && selectedChapter && selectedVerse) {
             const id = `${selectedChapter}-${selectedVerse}`;
             if (verseRefs.current[id]) {
                 verseRefs.current[id].scrollIntoView({ behavior: "smooth", block: "center" });
                 verseRefs.current[id].classList.add("has-background-warning");
             }
         }
-    }, [bookData?.length, selectedChapter, selectedVerse]);
+    }, [chapters?.length, selectedChapter, selectedVerse]);
 
     useEffect(() => {
         const handleUserInteraction = () => {
@@ -106,13 +106,14 @@ const RenderBibleText = ({ data, currentBook, selectedChapter, selectedVerse }) 
         };
     }, [selectedChapter, selectedVerse]);
 
-    if (bookData?.length > 0) {
-        bookData.forEach((item, index) => {
-            switch (item.type) {
-                case "paragraph start":
-                    currentParagraph = [];
-                    break;
-                case "paragraph text":
+    if (chapters?.length > 0) {
+        chapters.forEach((chapter, index) => {
+            chapter.forEach((item) => {
+                switch (item.type) {
+                    case "paragraph start":
+                        currentParagraph = [];
+                        break;
+                    case "paragraph text":
                         currentParagraph.push(
                             <span
                                 id={`${currentBook.title}-${item.chapter}-${item.verse}-${item.id}`}
@@ -123,36 +124,37 @@ const RenderBibleText = ({ data, currentBook, selectedChapter, selectedVerse }) 
                                 {item.value}
                             </span>
                         );
-                    break;
-                case "paragraph end":
-                    elements.push(
-                        <p key={`paragraph-${item.section}-${item.chapter}-${item.id}`}>{currentParagraph}</p>
-                    );
-                    break;
-                case "stanza start":
-                    currentStanza = [];
-                    break;
-                case "line text":
-                    currentStanza.push(
-                        <span key={`${item.chapter}-${item.verse}-${item.section}`}>
-                            {item.value}
-                            {item.type === "line break" ? <br /> : ""}
-                        </span>
-                    );
-                    break;
-                case "line break":
-                    currentStanza.push(<br key={`br-${item.chapter}-${index}`} />);
-                    break;
-                case "stanza end":
-                    elements.push(
-                        <div key={`stanza-${index}-${item.chapter}`} className="stanza">
-                            {currentStanza}
-                        </div>
-                    );
-                    break;
-                default:
-                    break;
-            }
+                        break;
+                    case "paragraph end":
+                        elements.push(
+                            <p key={`paragraph-${item.section}-${item.chapter}-${item.id}`}>{currentParagraph}</p>
+                        );
+                        break;
+                    case "stanza start":
+                        currentStanza = [];
+                        break;
+                    case "line text":
+                        currentStanza.push(
+                            <span key={`${item.chapter}-${item.verse}-${item.section}`}>
+                                {item.value}
+                                {item.type === "line break" ? <br /> : ""}
+                            </span>
+                        );
+                        break;
+                    case "line break":
+                        currentStanza.push(<br key={`br-${item.chapter}-${index}`} />);
+                        break;
+                    case "stanza end":
+                        elements.push(
+                            <div key={`stanza-${index}-${item.chapter}`} className="stanza">
+                                {currentStanza}
+                            </div>
+                        );
+                        break;
+                    default:
+                        break;
+                }
+            });
         });
         return <div>{elements}</div>;
     }
