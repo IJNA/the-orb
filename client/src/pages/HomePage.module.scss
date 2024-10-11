@@ -86,6 +86,7 @@
     font-family: Roboto Serif;
     font-size: 24px;
     font-weight: 400;
+    margin-bottom: 32px;
 }
 
 .aboutLink {
@@ -177,5 +178,6 @@
 @media (max-width: 1060px) {
     .homePageContainer {
         margin-top: 0;
+        padding-bottom: 172px;
     }
 }

@@ -2,18 +2,17 @@
 
 
 .aboutContainer {
-  padding: 112px 32px 0 32px !important;
+  padding: 100px 32px 0 32px;
   overflow: hidden !important;
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
-  padding-bottom: 64px !important;
+  padding-bottom: 172px !important;
   height: 100% !important;
   width: 100% !important;
 }
 
 .ijnaLogo {
-  margin-top: 14px !important;
   width: 86px !important;
   height: 196px !important;
 }
@@ -128,4 +127,11 @@
 
 .button {
   color: white !important;
+}
+
+@media (max-width: 1060px) {
+  .aboutContainer {
+      padding-bottom: 64px;
+      padding: 32px 32px 0 32px;
+  }
 }
