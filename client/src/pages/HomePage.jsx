@@ -28,11 +28,10 @@ const HomePage = () => {
 
     return (
         <>
-            {/* <div className={styles.homePageHeader}>hagah</div> */}
             <div className={styles.homePageContainer}>
                 <div className={styles.paragraphContainer}>
                     <div className={styles.paragraph}>
-                        <p>hagah is a bible app designed to help you meditate on scripture.</p>
+                        <p>A bible app designed to help you meditate on scripture.</p>
                         <Link to="about" className={styles.aboutLink}>
                             ABOUT US
                         </Link>

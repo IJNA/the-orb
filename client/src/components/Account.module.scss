@@ -7,25 +7,57 @@
     margin-top: 100px;
     padding-bottom: 64px;
     width: 100%;
+    // max-width: 600px;
 }
 
-h1 {
+.accountHeader {
     font-family: Inter;
     font-size: 32px;
     font-weight: 700;
     line-height: 38.4px;
     text-align: left;
     margin-bottom: 32px;
+    color: #000000;
 }
 
-p {
+.accountPageContainer > div > p#accountParagraph {
     font-family: Roboto Serif;
     font-size: 24px;
     font-weight: 400;
     line-height: 28.1px;
     text-align: left;
-
+    max-width: 600px;
+    margin-bottom: 64px;
+    color: #000000;
 }
+
+.accountPageContainer button {
+    display: flex !important;
+    align-items: center !important;
+    width: 116px !important;
+    height: 42px !important;
+    border-radius: 4px !important;
+    border: 1px solid #3B6362 !important;
+    color: #3B6362 !important;
+    background-color: white !important;
+    font-family: Roboto !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    line-height: 26px !important;
+    letter-spacing: 0.46000000834465027px !important;
+    padding: 8px 16px 8px 16px !important;
+    cursor: pointer !important;
+    align-self: start;
+}
+
+.accountPageContainer .supportBtn {
+    width: 140px !important;
+}
+
+.accountPageContainer .supportBtn img {
+    margin-left: 8px !important;
+}
+
 
 @media (max-width: 1060px) {
     .accountPageContainer {

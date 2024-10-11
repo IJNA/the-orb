@@ -4,7 +4,7 @@
 
 .bookPageContainer {
     overflow: hidden;
-    padding-bottom: 100px;
+    padding: 100px 0 100px 0;
 }
 
 .navbarBrandContainer {
@@ -53,12 +53,12 @@
 .bookPageHeaderContainer {
     margin: auto !important;
     width: 800px !important;
-    padding: 32px 32px 0 32px !important;
+    padding: 0 32px 0 32px !important;
 }
 
-p {
+.book p {
     //! may cause styling issues on other pages
-    margin-bottom: 32px !important;
+    margin-bottom: 32px;
 }
 
 .backContainer {
@@ -72,4 +72,10 @@ data {
 
 .highlight {
     color: #ff0000 !important;
+}
+
+@media (max-width: 1060px) {
+    .bookPageContainer {
+        padding: 32px 0 0 0;
+    }
 }

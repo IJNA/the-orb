@@ -18,7 +18,7 @@ body {
     width: 90%;
     max-width: 600px;
     align-items: center;
-    margin-top: 32px;
+    margin-top: 100px;
 }
 
 .clickableIcon {
@@ -56,4 +56,10 @@ body {
     margin-top: 50px;
     margin-left: 24px;
     color: black;
+}
+
+@media (max-width: 1060px) {
+    .searchBar {
+        margin-top: 32px;
+    }
 }

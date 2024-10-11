@@ -120,11 +120,12 @@ function About() {
                     <div className={styles.paragraphContainer}>
                         <div className={styles.paragraph}>
                             <p>
-                                Your giving helps us spend more time improving hagah while keeping it entirely free and
+                                Your giving helps us spend more time on hagah while keeping it entirely free and
                                 open-source. Thank you
                             </p>
                         </div>
                     </div>
+                    {/* !TODO: Move to seperate component */}
                     <SupportUs npub="npub1xk50nsp89sge5cs0glq9tjxm885lsp077xez6zm6g2ccjdga4enqnkmr0f" />
                 </div>
             </div>
