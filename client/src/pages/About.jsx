@@ -9,17 +9,15 @@ import openInNewIcon from "../images/openInNewIcon.svg";
 import heartIcon from "../images/heartIcon.svg";
 import { useNostr } from "nostr-react";
 import { nip19, nip57 } from "nostr-tools";
-import { Button, Modal, Columns, Container, Form } from "react-bulma-components";
+import { Button, Modal, Container, Form } from "react-bulma-components";
 import {
     getProfileMetadata,
-    getCachedLightningUri,
     cacheLightningUri,
     fetchInvoice,
     satToMsat,
 } from "../utils/ZapUtils.jsx";
 import { CopySimple } from "phosphor-react";
 import QRCode from "react-qr-code";
-import { Navigation } from "../components/Navigation.jsx";
 function About() {
     const location = useLocation();
     const url = location.pathname;
