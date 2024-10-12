@@ -6,8 +6,6 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { useCurrentBook, useCurrentSection } from "../utils/Hooks.jsx";
 import { Container } from "react-bulma-components";
-import { Navigation } from "../components/Navigation.jsx";
-import { useGetBookFromDatabase } from "../utils/Queries.jsx";
 import { useGetBookChaptersByBookName } from "../utils/NostrUtils.jsx";
 
 function BookPage() {
@@ -22,7 +20,6 @@ function BookPage() {
 
     const currentSection = useCurrentSection();
     const currentBook = useCurrentBook();
-
     const { data: chapters, isLoading } = useGetBookChaptersByBookName(params.book);
 
     return (
@@ -81,72 +78,79 @@ const RenderBibleText = ({ data, currentBook, selectedChapter, selectedVerse }) 
     const verseRefs = useRef({});
 
     useEffect(() => {
-        if (chapters?.length > 0 && selectedChapter && selectedVerse) {
-            const id = `${selectedChapter}-${selectedVerse}`;
-            if (verseRefs.current[id]) {
-                verseRefs.current[id].scrollIntoView({ behavior: "smooth", block: "center" });
-                verseRefs.current[id].classList.add("has-background-warning");
-            }
-        }
-    }, [chapters?.length, selectedChapter, selectedVerse]);
+        if (chapters?.length < 1 || !selectedChapter || !selectedVerse) return;
 
-    useEffect(() => {
+        const id = `${selectedChapter}-${selectedVerse}`;
+
+        // Check if the verseRef exists before scrolling into view and applying highlight
+        if (verseRefs.current[id]) {
+            verseRefs.current[id].scrollIntoView({ behavior: "smooth", block: "center" });
+            verseRefs.current[id].classList.add("has-background-warning");
+        }
+
+        // Function to remove the highlight on user interaction
         const handleUserInteraction = () => {
-            if (verseRefs.current[`${selectedChapter}-${selectedVerse}`]) {
-                verseRefs.current[`${selectedChapter}-${selectedVerse}`].classList.remove("has-background-warning");
+            if (verseRefs.current[id]) {
+                verseRefs.current[id].classList.remove("has-background-warning");
             }
         };
 
-        window.addEventListener("click", handleUserInteraction);
-        window.addEventListener("touchstart", handleUserInteraction);
+        // Delay attaching event listeners to avoid triggering the removal right after link navigation
+        const attachListeners = () => {
+            window.addEventListener("click", handleUserInteraction);
+            window.addEventListener("touchstart", handleUserInteraction);
+        };
+
+        // Use a small timeout to avoid immediate removal when clicking the link
+        const timeoutId = setTimeout(attachListeners, 500);
 
         return () => {
+            clearTimeout(timeoutId);
             window.removeEventListener("click", handleUserInteraction);
             window.removeEventListener("touchstart", handleUserInteraction);
         };
-    }, [selectedChapter, selectedVerse]);
+    }, [chapters?.length, selectedChapter, selectedVerse]);
 
     if (chapters?.length > 0) {
-        chapters.forEach((chapter, index) => {
-            chapter.forEach((item) => {
-                switch (item.type) {
+        chapters.forEach((chapterContent) => {
+            chapterContent.forEach((content, contentIndex) => {
+                const key = `${content.type}-${content.chapter}-${content.section}-${content?.verse ?? contentIndex}${content?.value ? `-${content.value}` : ""}`;
+                switch (content.type) {
                     case "paragraph start":
                         currentParagraph = [];
                         break;
                     case "paragraph text":
                         currentParagraph.push(
                             <span
-                                id={`${currentBook.title}-${item.chapter}-${item.verse}-${item.id}`}
-                                key={`${currentBook.title}-${item.chapter}-${item.verse}-${item.id}`}
-                                ref={(el) => (verseRefs.current[`${item.chapter}-${item.verse}`] = el)}
+                                id={`${content.chapter}-${content.verse}`}
+                                key={key}
+                                ref={(el) => (verseRefs.current[`${content.chapter}-${content.verse}`] = el)}
                             >
-                                <sup style={{ display: "none" }}>{item.verse}</sup>
-                                {item.value}
+                                <sup style={{ display: "none" }}>{content.verse}</sup>
+                                {content.value}
                             </span>
                         );
                         break;
                     case "paragraph end":
-                        elements.push(
-                            <p key={`paragraph-${item.section}-${item.chapter}-${item.id}`}>{currentParagraph}</p>
-                        );
+                        elements.push(<p key={key}>{currentParagraph}</p>);
                         break;
                     case "stanza start":
                         currentStanza = [];
                         break;
                     case "line text":
                         currentStanza.push(
-                            <span key={`${item.chapter}-${item.verse}-${item.section}`}>
-                                {item.value}
-                                {item.type === "line break" ? <br /> : ""}
+                            <span key={key}>
+                                {content.value}
+                                {content.type === "line break" ? <br /> : ""}
                             </span>
                         );
                         break;
                     case "line break":
-                        currentStanza.push(<br key={`br-${item.chapter}-${index}`} />);
+                        currentStanza.push(<br key={key} />);
                         break;
                     case "stanza end":
                         elements.push(
-                            <div key={`stanza-${index}-${item.chapter}`} className="stanza">
+                            <div key={key} className="stanza">
                                 {currentStanza}
                             </div>
                         );

@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import "bulma/css/bulma.min.css";
 import styles from "./SectionPage.module.scss";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useCurrentSection } from "../utils/Hooks.jsx";
-import theLaw from "../images/theLaw.svg";
 
 const SectionPage = () => {
     const location = useLocation();

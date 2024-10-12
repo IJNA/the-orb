@@ -5270,20 +5270,29 @@ export const BookSectionMap = {
 };
 
 export const findChaptersByBookTitle = (bookTitle) => {
+    if (!bookTitle || !BookSectionMap?.sections) {
+        console.error('Invalid bookTitle or BookSectionMap is not properly defined');
+        return null;
+    }
+    const normalizedBookTitle = normalizeTitle(bookTitle).toLowerCase();
+
     for (const section of BookSectionMap.sections) {
-        for (const book of section.books) {
-            if (book.title.toLowerCase() === bookTitle.toLowerCase()) {
-                return book.chapters;
-            }
+        const foundBook = section.books.find(book => normalizeTitle(book.title)=== normalizedBookTitle);
+
+        if (foundBook) {
+            return foundBook.chapters;
         }
     }
-    return null; // Return null if the book title is not found
+
+    console.warn(`Book title '${bookTitle}' not found in the map`);
+    return null; 
+};
+
+const normalizeTitle = (title) => {
+    return title.toLowerCase().replace(/[^a-z0-9]/g, "-"); // Remove special characters and spaces
 };
 
 export const getDetailsByBookTitle = (bookTitle) => {
-    const normalizeTitle = (title) => {
-        return title.toLowerCase().replace(/[^a-z0-9]/g, ""); // Remove special characters and spaces
-    };
     const normalizedBookTitle = normalizeTitle(bookTitle);
     for (const section of BookSectionMap.sections) {
         for (const book of section.books) {

@@ -1,7 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { BookSectionMap } from "../pages/BookSectionMap.jsx";
 
-
 export const useCurrentSection = () => {
     const location = useLocation();
     const section = BookSectionMap.sections.find((section) => location.pathname.includes(section.route));
