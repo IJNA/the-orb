@@ -85,7 +85,6 @@ const RenderScripture = ({ data }) => {
             // Use a small timeout to avoid immediate removal when clicking the link
             const timeoutId = setTimeout(attachListeners, 500);
 
-            //attachListeners();
             return () => {
                 clearTimeout(timeoutId);
                 window.removeEventListener("click", handleUserInteraction);
@@ -96,7 +95,14 @@ const RenderScripture = ({ data }) => {
                 window.scrollTo(0, 0);
                 return;
             }
-            document.getElementsByClassName(bookmarkedElement)[0]?.scrollIntoView();
+            const bookmarkedElementRef = document.getElementsByClassName(bookmarkedElement)[0];
+
+            // Scroll to the element right before the bookmark if it exists
+            if (bookmarkedElementRef?.previousElementSibling) {
+                bookmarkedElementRef?.previousElementSibling.scrollIntoView();
+            } else {
+                bookmarkedElementRef.scrollIntoView();
+            }
         }
     }, [bookTitle, bookmarkedElement, selectedChapter, selectedVerse]);
 
