@@ -3,7 +3,7 @@ import "bulma/css/bulma.min.css";
 import styles from "./BookPage.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useBookmarker, useCurrentBook, useCurrentSection } from "../utils/Hooks.jsx";
 import { Container } from "react-bulma-components";
 import { useGetBookChaptersByBookName } from "../utils/NostrUtils.jsx";
@@ -49,6 +49,7 @@ function BookPage() {
 }
 
 const RenderScripture = ({ data }) => {
+    const navigate = useNavigate();
     const { selectedChapter, selectedVerse } = useParams();
     const currentBook = useCurrentBook();
     const bookTitle = normalizeBookTitle(currentBook.title);
@@ -69,24 +70,23 @@ const RenderScripture = ({ data }) => {
                 verseRefs.current[verseId].classList.add("has-background-warning");
             }
 
-            // Function to remove the highlight on user interaction
+            // Remove the highlight after user interacts with it
             const handleUserInteraction = () => {
                 if (verseRefs.current[verseId]) {
                     verseRefs.current[verseId].classList.remove("has-background-warning");
+
+                    // May want to do this in the future - remove the linked verse from the url after interaction
+                    //navigate(currentBook.route);
                 }
             };
 
-            // Delay attaching event listeners to avoid triggering the removal right after link navigation
             const attachListeners = () => {
                 window.addEventListener("click", handleUserInteraction);
                 window.addEventListener("touchstart", handleUserInteraction);
             };
 
-            // Use a small timeout to avoid immediate removal when clicking the link
-            const timeoutId = setTimeout(attachListeners, 500);
-
+            attachListeners();
             return () => {
-                clearTimeout(timeoutId);
                 window.removeEventListener("click", handleUserInteraction);
                 window.removeEventListener("touchstart", handleUserInteraction);
             };
