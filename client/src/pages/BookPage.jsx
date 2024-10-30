@@ -3,165 +3,171 @@ import "bulma/css/bulma.min.css";
 import styles from "./BookPage.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { Link, useLocation, useParams } from "react-router-dom";
-import { useCurrentBook, useCurrentSection } from "../utils/Hooks.jsx";
+import { Link, useParams } from "react-router-dom";
+import { useBookmarker, useCurrentBook, useCurrentSection } from "../utils/Hooks.jsx";
 import { Container } from "react-bulma-components";
 import { useGetBookChaptersByBookName } from "../utils/NostrUtils.jsx";
+import { useHagahStore } from "../HagahStore.jsx";
+import { normalizeBookTitle } from "./BookSectionMap.jsx";
 
 function BookPage() {
-    const location = useLocation();
-    const url = location.pathname;
     const params = useParams();
-    useEffect(() => {
-        setTimeout(() => {
-            window.scrollTo(0, 0);
-        }, 10);
-    }, [url]);
-
+    const { data: chapters, isLoading } = useGetBookChaptersByBookName(params.book);
     const currentSection = useCurrentSection();
     const currentBook = useCurrentBook();
-    const { data: chapters, isLoading } = useGetBookChaptersByBookName(params.book);
+    const nextBookTitle = currentSection?.books.find((book) => book.route === currentBook.nextRoute)?.title;
 
     return (
-        <>
-            <div className={styles.bookPageContainer}>
-                <Container
-                    className={styles.bookPageHeaderContainer}
-                    display="flex"
-                    flexDirection="row"
-                    alignItems="baseline"
-                >
-                    <h2 className={`${styles.header}`}>{currentBook?.title}</h2>
-                    {isLoading || chapters?.length <= 0 ? <div className="loader" /> : null}
+        <div className={styles.bookPageContainer}>
+            <Container className={styles.bookPageHeaderContainer} display="flex" flexDirection="row" alignItems="baseline">
+                <h2 className={`${styles.header}`}>{currentBook?.title}</h2>
+                {isLoading || chapters?.length <= 0 ? <div className="loader" /> : null}
+            </Container>
+            {chapters?.length > 0 ? (
+                <Container>
+                    <div className={`is-flex is-flex-direction-column is-align-items-center ${styles.text}`}>
+                        <div className={styles.book}>
+                            <RenderScripture data={chapters} />
+                        </div>
+                    </div>
+                    <div className="has-text-centered mb-4">
+                        {currentBook?.nextRoute ? (
+                            <Link to={currentBook.nextRoute}>
+                                <button className={`button is-large ${styles.button}`}>
+                                    <div className={`${styles.center}`}>
+                                        {nextBookTitle}
+                                        <FontAwesomeIcon className={styles.arrowIcon} icon={faArrowRight} />
+                                    </div>
+                                </button>
+                            </Link>
+                        ) : null}
+                    </div>
                 </Container>
-                {chapters?.length > 0 ? (
-                    <Container>
-                        <div className={`is-flex is-flex-direction-column is-align-items-center ${styles.text}`}>
-                            <div className={styles.book}>
-                                <RenderBibleText
-                                    data={chapters}
-                                    selectedChapter={params?.selectedChapter}
-                                    selectedVerse={params?.selectedVerse}
-                                    currentBook={currentBook}
-                                />
-                            </div>
-                        </div>
-                        <div className="has-text-centered mb-4">
-                            {currentBook?.nextRoute ? (
-                                <Link to={currentBook.nextRoute}>
-                                    <button className={`button is-large ${styles.button}`}>
-                                        <div className={`${styles.center}`}>
-                                            {
-                                                currentSection?.books.find(
-                                                    (book) => book.route === currentBook.nextRoute
-                                                )?.title
-                                            }
-                                            <FontAwesomeIcon className={styles.arrowIcon} icon={faArrowRight} />
-                                        </div>
-                                    </button>
-                                </Link>
-                            ) : null}
-                        </div>
-                    </Container>
-                ) : null}
-            </div>
-        </>
+            ) : null}
+        </div>
     );
 }
 
-const RenderBibleText = ({ data, currentBook, selectedChapter, selectedVerse }) => {
+const RenderScripture = ({ data }) => {
+    const { selectedChapter, selectedVerse } = useParams();
+    const currentBook = useCurrentBook();
+    const bookTitle = normalizeBookTitle(currentBook.title);
     const chapters = useMemo(() => (data?.length > 0 ? data.map((d) => JSON.parse(d)) : null), [data]);
-
-    const elements = [];
-    let currentParagraph = [];
-    let currentStanza = [];
     const verseRefs = useRef({});
+    const bookmarks = useHagahStore((state) => state.bookmarks);
+    const bookmarkedElement = useMemo(() => bookmarks[bookTitle], [bookmarks, bookTitle]);
+
+    useBookmarker();
 
     useEffect(() => {
-        if (chapters?.length < 1 || !selectedChapter || !selectedVerse) return;
+        if (selectedChapter && selectedVerse) {
+            const verseId = `${bookTitle}-${selectedChapter}-${selectedVerse}`;
 
-        const id = `${selectedChapter}-${selectedVerse}`;
-
-        // Check if the verseRef exists before scrolling into view and applying highlight
-        if (verseRefs.current[id]) {
-            verseRefs.current[id].scrollIntoView({ behavior: "smooth", block: "center" });
-            verseRefs.current[id].classList.add("has-background-warning");
-        }
-
-        // Function to remove the highlight on user interaction
-        const handleUserInteraction = () => {
-            if (verseRefs.current[id]) {
-                verseRefs.current[id].classList.remove("has-background-warning");
+            // Check if the verseRef exists before scrolling into view and applying highlight
+            if (verseRefs.current[verseId]) {
+                verseRefs.current[verseId].scrollIntoView({ behavior: "smooth", block: "center" });
+                verseRefs.current[verseId].classList.add("has-background-warning");
             }
-        };
 
-        // Delay attaching event listeners to avoid triggering the removal right after link navigation
-        const attachListeners = () => {
-            window.addEventListener("click", handleUserInteraction);
-            window.addEventListener("touchstart", handleUserInteraction);
-        };
-
-        // Use a small timeout to avoid immediate removal when clicking the link
-        const timeoutId = setTimeout(attachListeners, 500);
-
-        return () => {
-            clearTimeout(timeoutId);
-            window.removeEventListener("click", handleUserInteraction);
-            window.removeEventListener("touchstart", handleUserInteraction);
-        };
-    }, [chapters?.length, selectedChapter, selectedVerse]);
-
-    if (chapters?.length > 0) {
-        chapters.forEach((chapterContent) => {
-            chapterContent.forEach((content, contentIndex) => {
-                const key = `${content.type}-${content.chapter}-${content.section}-${content?.verse ?? contentIndex}${content?.value ? `-${content.value}` : ""}`;
-                switch (content.type) {
-                    case "paragraph start":
-                        currentParagraph = [];
-                        break;
-                    case "paragraph text":
-                        currentParagraph.push(
-                            <span
-                                id={`${content.chapter}-${content.verse}`}
-                                key={key}
-                                ref={(el) => (verseRefs.current[`${content.chapter}-${content.verse}`] = el)}
-                            >
-                                <sup style={{ display: "none" }}>{content.verse}</sup>
-                                {content.value}
-                            </span>
-                        );
-                        break;
-                    case "paragraph end":
-                        elements.push(<p key={key}>{currentParagraph}</p>);
-                        break;
-                    case "stanza start":
-                        currentStanza = [];
-                        break;
-                    case "line text":
-                        currentStanza.push(
-                            <span key={key}>
-                                {content.value}
-                                {content.type === "line break" ? <br /> : ""}
-                            </span>
-                        );
-                        break;
-                    case "line break":
-                        currentStanza.push(<br key={key} />);
-                        break;
-                    case "stanza end":
-                        elements.push(
-                            <div key={key} className="stanza">
-                                {currentStanza}
-                            </div>
-                        );
-                        break;
-                    default:
-                        break;
+            // Function to remove the highlight on user interaction
+            const handleUserInteraction = () => {
+                if (verseRefs.current[verseId]) {
+                    verseRefs.current[verseId].classList.remove("has-background-warning");
                 }
-            });
-        });
-        return <div>{elements}</div>;
-    }
+            };
+
+            // Delay attaching event listeners to avoid triggering the removal right after link navigation
+            const attachListeners = () => {
+                window.addEventListener("click", handleUserInteraction);
+                window.addEventListener("touchstart", handleUserInteraction);
+            };
+
+            // Use a small timeout to avoid immediate removal when clicking the link
+            const timeoutId = setTimeout(attachListeners, 500);
+
+            //attachListeners();
+            return () => {
+                clearTimeout(timeoutId);
+                window.removeEventListener("click", handleUserInteraction);
+                window.removeEventListener("touchstart", handleUserInteraction);
+            };
+        } else {
+            if (!bookmarkedElement) {
+                window.scrollTo(0, 0);
+                return;
+            }
+            document.getElementsByClassName(bookmarkedElement)[0]?.scrollIntoView();
+        }
+    }, [bookTitle, bookmarkedElement, selectedChapter, selectedVerse]);
+
+    return (
+        <div className={`book ${normalizeBookTitle(currentBook.title)}`}>
+            {chapters?.map((chapterContent, index) => (
+                <BookChapter bookTitle={normalizeBookTitle(currentBook.title)} chapterContent={chapterContent} key={index} index={index} verseRefs={verseRefs} />
+            ))}
+        </div>
+    );
+};
+
+const BookChapter = ({ bookTitle, chapterContent, index, verseRefs }) => {
+    const chapterNumber = index + 1;
+
+    const passages = chapterContent.reduce((acc, content) => {
+        // If we encounter a "start," we either close the previous passage or start a new one
+        if (content.type.includes("start")) {
+            // If there's an open passage, mark it as complete
+            if (acc.length > 0 && acc[acc.length - 1].length > 0) {
+                acc.push([]); // Create a new empty passage for the new "start"
+            } else {
+                acc.push([content]); // Start new passage with the current "start" content
+            }
+        } else if (content.type.includes("text") || content.type.includes("end")) {
+            // If passage is open, add text or end to it
+            if (acc.length === 0) {
+                acc.push([]); // Create a new passage if none exists
+            }
+            acc[acc.length - 1].push(content);
+
+            // If it's an "end," finalize the current passage
+            if (content.type.includes("end")) {
+                acc.push([]); // Prepare for the next potential passage
+            }
+        }
+        return acc;
+    }, []);
+
+    // Going to hold on to this in case we decide to indent lines in the future
+    const shouldIndent = (passage, verse, verseIndex) => {
+        const isLineText = verse.type === "line text";
+        const prevVerse = verseIndex > 0 ? passage[verseIndex - 1] : null;
+
+        // Check if this is the second "line text" in a sequence
+        const isSecondLineText = isLineText && verseIndex === 1;
+
+        // Indent based on specified rules after the second "line text"
+        const otherIndentRules = isLineText && verse.value[0] !== "“" && verse.section !== 1 && prevVerse?.value && (/[.!?]$/.test(prevVerse.value.trim()) || verse.value[0] === verse.value[0].toLowerCase());
+
+        return false;
+    };
+
+    return (
+        <div>
+            {passages.map((passage, index) => (
+                <div className={styles.passage} key={index}>
+                    {passage.map((verse, passageIndex) => {
+                        const verseId = `${bookTitle}-${chapterNumber}-${verse.verse}`;
+                        return verse?.value?.trim() ? (
+                            <div key={passageIndex}>
+                                <span ref={(el) => (verseRefs.current[verseId] = el)} className={`verse ${verseId}`}>
+                                    {verse.value}
+                                </span>
+                            </div>
+                        ) : null;
+                    })}
+                </div>
+            ))}
+        </div>
+    );
 };
 
 export default BookPage;

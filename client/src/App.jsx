@@ -8,7 +8,7 @@ import About from "./pages/About.jsx";
 import "./App.css";
 import Header from "./components/Header.jsx";
 import Navbar from "./components/Navbar.jsx";
-import Account from "./components/Account.jsx"
+import Account from "./components/Account.jsx";
 
 function App() {
     return (
@@ -26,6 +26,7 @@ function App() {
                     <Route path="about" element={<About />} />
                     <Route path="account" element={<Account />} />
                 </Routes>
+
                 <Navbar />
             </Router>
         </>
