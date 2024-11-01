@@ -7,16 +7,12 @@ import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const queryClient = new QueryClient();
-const relayUrls = [
-    "wss://relay.hagah.io",
-];
+const relayUrls = ["wss://relay.hagah.io"];
 
 root.render(
-    <React.StrictMode>
-        <NostrProvider relayUrls={relayUrls}>
-            <QueryClientProvider client={queryClient}>
-                <App />
-            </QueryClientProvider>
-        </NostrProvider>
-    </React.StrictMode>
+    <NostrProvider relayUrls={relayUrls}>
+        <QueryClientProvider client={queryClient}>
+            <App />
+        </QueryClientProvider>
+    </NostrProvider>
 );
