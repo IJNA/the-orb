@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { BookSectionMap } from "../pages/BookSectionMap.jsx";
+import { BookSectionMap } from "../utils/BookSectionMap.jsx";
 
 export const useCurrentSection = () => {
     const location = useLocation();

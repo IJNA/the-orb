@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
 import { useHagahStore } from "../HagahStore.jsx";
-import { normalizeBookTitle } from "../pages/BookSectionMap.jsx";
+import { normalizeBookTitle } from "../utils/BookSectionMap.jsx";
 import { useCurrentBook } from "./BookMapHooks.jsx";
 
 export const useBookmarker = () => {
@@ -8,6 +8,7 @@ export const useBookmarker = () => {
     const setBookmarks = useHagahStore((state) => state.setBookmarks);
     const currentBook = useCurrentBook();
     const isIos = navigator.userAgent.match(/ipad|iphone/i);
+    const isScrollbarAtTop = window.scrollY === 0;
 
     useEffect(() => {
         const saveBookmark = () => {
@@ -16,7 +17,7 @@ export const useBookmarker = () => {
             if (bookmarkedPassageClassName) {
                 setBookmarks((prevBookmarks) => ({
                     ...prevBookmarks,
-                    [normalizeBookTitle(currentBook.title)]: bookmarkedPassageClassName,
+                    [normalizeBookTitle(currentBook.title)]: isScrollbarAtTop ? null : bookmarkedPassageClassName, // If the scrollbar is at the top, don't bookmark anything
                 }));
             }
         };
@@ -32,7 +33,7 @@ export const useBookmarker = () => {
         };
 
         const observer = new IntersectionObserver(observerCallback, {
-            threshold: 0.5, // 50% of the element should be visible
+            threshold: 1, // 50% of the element should be visible
         });
 
         const passageElements = document.querySelectorAll(".verse");
@@ -46,7 +47,7 @@ export const useBookmarker = () => {
             window.removeEventListener(isIos ? "pagehide" : "beforeunload", saveBookmark);
             saveBookmark();
         };
-    }, [currentBook.title, isIos, setBookmarks]);
+    }, [currentBook.title, isIos, isScrollbarAtTop, setBookmarks]);
 
     // This could return the visible elements if needed but persisting bookmarks with the store is enough for now
     return;

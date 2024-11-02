@@ -8,7 +8,7 @@ import { useCurrentBook, useCurrentSection } from "../hooks/BookMapHooks.jsx";
 import { Container } from "react-bulma-components";
 import { useGetBookChaptersByBookName } from "../utils/NostrUtils.jsx";
 import { useHagahStore } from "../HagahStore.jsx";
-import { normalizeBookTitle } from "./BookSectionMap.jsx";
+import { normalizeBookTitle } from "../utils/BookSectionMap.jsx";
 import { useBookmarker } from "../hooks/Bookmarker.jsx";
 
 function BookPage() {
