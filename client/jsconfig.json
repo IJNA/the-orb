@@ -4,7 +4,7 @@
       "jsx": "react",
       "checkJs": true,
       "module": "NodeNext",
-      "resolveJsonModule": true,
+      "resolveJsonModule": true
     },
     "exclude": ["node_modules", "**/node_modules/*"]
   }
