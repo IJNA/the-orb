@@ -1,34 +1,23 @@
-import { useLocation } from "react-router-dom";
-import { BookSectionMap, normalizeBookTitle } from "../pages/BookSectionMap.jsx";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useMemo } from "react";
 import { useHagahStore } from "../HagahStore.jsx";
-
-export const useCurrentSection = () => {
-    const location = useLocation();
-    const section = BookSectionMap.sections?.find((section) => location.pathname.includes(section.route));
-    return section;
-};
-
-export const useCurrentBook = () => {
-    const location = useLocation();
-    const currentSection = useCurrentSection();
-    if (!currentSection?.books) return;
-    return currentSection.books.find((book) => location.pathname.includes(book.route));
-};
+import { normalizeBookTitle } from "../utils/BookSectionMap.jsx";
+import { useCurrentBook } from "./BookMapHooks.jsx";
 
 export const useBookmarker = () => {
     const visibleElementsRef = useRef(new Set());
     const setBookmarks = useHagahStore((state) => state.setBookmarks);
     const currentBook = useCurrentBook();
+    const isIos = navigator.userAgent.match(/ipad|iphone/i);
 
     useEffect(() => {
         const saveBookmark = () => {
+            const isScrollbarAtTop =  window.scrollY === 0;
             const bookmarkedPassageClassName = visibleElementsRef.current.size > 0 ? [...visibleElementsRef.current][0].className : null;
 
             if (bookmarkedPassageClassName) {
                 setBookmarks((prevBookmarks) => ({
                     ...prevBookmarks,
-                    [normalizeBookTitle(currentBook.title)]: bookmarkedPassageClassName,
+                    [normalizeBookTitle(currentBook.title)]: isScrollbarAtTop ? null : bookmarkedPassageClassName, // If the scrollbar is at the top, don't bookmark anything
                 }));
             }
         };
@@ -44,21 +33,21 @@ export const useBookmarker = () => {
         };
 
         const observer = new IntersectionObserver(observerCallback, {
-            threshold: 0.5, // 50% of the element should be visible
+            threshold: 1,
         });
 
         const passageElements = document.querySelectorAll(".verse");
         passageElements.forEach((element) => observer.observe(element));
 
-        window.addEventListener("beforeunload", saveBookmark);
+        window.addEventListener(isIos ? "pagehide" : "beforeunload", saveBookmark);
 
         return () => {
             observer.disconnect();
             // We need to save their spot in the page only when this component unmounts or they close the tab
-            window.removeEventListener("beforeunload", saveBookmark);
+            window.removeEventListener(isIos ? "pagehide" : "beforeunload", saveBookmark);
             saveBookmark();
         };
-    }, [currentBook.title, setBookmarks]);
+    }, [currentBook.title, isIos, setBookmarks]);
 
     // This could return the visible elements if needed but persisting bookmarks with the store is enough for now
     return;

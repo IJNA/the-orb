@@ -7,10 +7,10 @@ import { Link, useLocation } from "react-router-dom";
 import { PassageCard } from "../components/PassageCard.jsx";
 import { Container } from "react-bulma-components";
 import { useGetSearchResults } from "../utils/Queries.jsx";
-import { getDetailsByBookTitle } from "./BookSectionMap.jsx";
+import { getDetailsByBookTitle } from "../utils/BookSectionMap.jsx";
 import Highlighter from "react-highlight-words";
 import { faTimes } from "../../node_modules/@fortawesome/free-solid-svg-icons/index.js";
-import { BookSectionMap } from "./BookSectionMap.jsx";
+import { BookSectionMap } from "../utils/BookSectionMap.jsx";
 
 const SearchPage = () => {
     const [searchInput, setSearchInput] = useState("");
@@ -39,24 +39,13 @@ const SearchPage = () => {
         [searchInput]
     );
 
-    const bookResults = useMemo(
-        () =>
-            query ? BookSectionMap.sections
-                .flatMap((section) => section.books)
-                .filter((book) => book.title.toLowerCase().includes(query.toLowerCase())) : [],
-        [query]
-    );
+    const bookResults = useMemo(() => (query ? BookSectionMap.sections.flatMap((section) => section.books).filter((book) => book.title.toLowerCase().includes(query.toLowerCase())) : []), [query]);
 
     const verseSummary = useMemo(
         () =>
             searchResults?.map((item) => (
                 <div key={`${item.id}`}>
-                    <Highlighter
-                        highlightClassName={styles.boldText}
-                        searchWords={[query]}
-                        autoEscape={true}
-                        textToHighlight={item.value}
-                    />
+                    <Highlighter highlightClassName={styles.boldText} searchWords={[query]} autoEscape={true} textToHighlight={item.value} />
                 </div>
             )),
         [query, searchResults]
@@ -66,14 +55,7 @@ const SearchPage = () => {
         <Container className={styles.searchPageContainer}>
             <div className={`field ${styles.searchBar}`}>
                 <div className="control has-icons-left has-icons-right">
-                    <input
-                        type="text"
-                        className="input is-large is-rounded"
-                        onKeyDown={handleSearch}
-                        placeholder="Search"
-                        value={searchInput}
-                        onChange={(e) => setSearchInput(e.target.value)}
-                    />
+                    <input type="text" className="input is-large is-rounded" onKeyDown={handleSearch} placeholder="Search" value={searchInput} onChange={(e) => setSearchInput(e.target.value)} />
                     <span className="icon is-medium is-left">
                         <Link to="/" className={styles.anchorClass}>
                             <FontAwesomeIcon className={styles.clickableIcon} icon={faArrowLeft} />
@@ -122,7 +104,7 @@ const SearchPage = () => {
                     {searchResults?.length > 0 && (
                         <>
                             <h4 className={`title is-4 ${styles.results}`}>
-                                Passages 
+                                Passages
                                 {/* <small className="has-text-weight-light	">({searchResults.length})</small> */}
                             </h4>
 
@@ -142,9 +124,7 @@ const SearchPage = () => {
                         </>
                     )}
 
-                    {query && !isSearching && bookResults?.length === 0 && searchResults?.length === 0 && (
-                        <p className={`is-size-5 ${styles.noResult}`}>No results found.</p>
-                    )}
+                    {query && !isSearching && bookResults?.length === 0 && searchResults?.length === 0 && <p className={`is-size-5 ${styles.noResult}`}>No results found.</p>}
                 </div>
             )}
         </Container>

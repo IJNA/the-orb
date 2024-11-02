@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "bulma/css/bulma.min.css";
 import styles from "./SectionPage.module.scss";
 import { Link, useLocation } from "react-router-dom";
-import { useCurrentSection } from "../utils/Hooks.jsx";
+import { useCurrentSection } from "../hooks/BookMapHooks.jsx";
 
 const SectionPage = () => {
     const location = useLocation();

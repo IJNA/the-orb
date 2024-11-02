@@ -14,6 +14,6 @@ export const useHagahStore = create(
             setBookmarks: (fn) => set((state) => ({ bookmarks: fn(state.bookmarks) })),
         }),
         // use localstorage to persist beyond this session
-        { name: "hagah-bookmark", storage: createJSONStorage(() => localStorage) }
+        { name: "hagah-bookmark", storage: createJSONStorage(() => localStorage), partialize: (state) => ({ bookmarks: state.bookmarks }) }
     )
 );

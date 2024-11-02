@@ -5269,6 +5269,18 @@ export const BookSectionMap = {
     ],
 };
 
+export const normalizeBookTitle = (title) => {
+    return title.toLowerCase().replace(/[^a-z0-9]/g, "-"); // Remove special characters and spaces
+};
+
+// Create a map of books on init for quicker access
+const bookMap = new Map();
+for (const section of BookSectionMap.sections) {
+    for (const book of section.books) {
+        bookMap.set(normalizeBookTitle(book.title), book);
+    }
+}
+
 export const findChaptersByBookTitle = (bookTitle) => {
     if (!bookTitle || !BookSectionMap?.sections) {
         console.error("Invalid bookTitle or BookSectionMap is not properly defined");
@@ -5276,39 +5288,17 @@ export const findChaptersByBookTitle = (bookTitle) => {
     }
     const normalizedBookTitle = normalizeBookTitle(bookTitle).toLowerCase();
 
-    for (const section of BookSectionMap.sections) {
-        const foundBook = section.books.find((book) => normalizeBookTitle(book.title) === normalizedBookTitle);
+    const foundBook = bookMap.get(normalizedBookTitle);
 
-        if (foundBook) {
-            return foundBook.chapters;
-        }
+    if (foundBook) {
+        return foundBook.chapters;
     }
 
     console.warn(`Book title '${bookTitle}' not found in the map`);
     return null;
 };
 
-export const normalizeBookTitle = (title) => {
-    return title.toLowerCase().replace(/[^a-z0-9]/g, "-"); // Remove special characters and spaces
-};
-
 export const getDetailsByBookTitle = (bookTitle) => {
     const normalizedBookTitle = normalizeBookTitle(bookTitle);
-    for (const section of BookSectionMap.sections) {
-        for (const book of section.books) {
-            if (normalizeBookTitle(book.title) === normalizedBookTitle) {
-                return book;
-            }
-        }
-    }
-    return null; // Return null if the book title is not found
+    return bookMap.get(normalizedBookTitle);
 };
-
-export function jsonToMarkdown(json) {
-    const keys = Object.keys(json[0]);
-    const header = keys.join(" | ");
-    const separator = keys.map(() => "---").join(" | ");
-    const rows = json.map((row) => keys.map((key) => row[key]).join(" | "));
-
-    return [`| ${header} |`, `| ${separator} |`, ...rows.map((row) => `| ${row} |`)].join("\n");
-}

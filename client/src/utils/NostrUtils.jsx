@@ -1,7 +1,7 @@
 import { dateToUnix, useNostr } from "nostr-react";
 import { kinds } from "nostr-tools";
 import { useQuery } from "@tanstack/react-query";
-import { findChaptersByBookTitle } from "../pages/BookSectionMap.jsx";
+import { findChaptersByBookTitle } from "./BookSectionMap.jsx";
 // @ts-ignore
 import { NostrFetcher } from "nostr-fetch";
 
@@ -15,17 +15,20 @@ export const useGetBookChaptersByBookName = (bookName) => {
     return useQuery({
         queryKey: ["book", bookName, relayUrls],
         queryFn: async () => {
-            const response = relayUrls.length > 0 ? await fetcher.fetchAllEvents(
-                relayUrls,
-                {
-                    ids: chapterIds,
-                    kinds: [kinds.LongFormArticle],
-                    authors: ["957966b656723845d6d63f102715203e17a2865efe270591400407ee2d4fe6b7"],
-                },
-                {
-                    since: dateToUnix(new Date("2024-07-01")),
-                }
-            ) : [];
+            const response =
+                relayUrls.length > 0
+                    ? await fetcher.fetchAllEvents(
+                          relayUrls,
+                          {
+                              ids: chapterIds,
+                              kinds: [kinds.LongFormArticle],
+                              authors: ["957966b656723845d6d63f102715203e17a2865efe270591400407ee2d4fe6b7"],
+                          },
+                          {
+                              since: dateToUnix(new Date("2024-07-01")),
+                          }
+                      )
+                    : [];
             return response
                 .map((event) => ({
                     ...event,
