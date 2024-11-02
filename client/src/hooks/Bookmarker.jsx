@@ -33,7 +33,7 @@ export const useBookmarker = () => {
         };
 
         const observer = new IntersectionObserver(observerCallback, {
-            threshold: 1, // 50% of the element should be visible
+            threshold: 1,
         });
 
         const passageElements = document.querySelectorAll(".verse");
