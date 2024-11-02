@@ -4,11 +4,12 @@ import styles from "./BookPage.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useBookmarker, useCurrentBook, useCurrentSection } from "../utils/Hooks.jsx";
+import { useCurrentBook, useCurrentSection } from "../hooks/BookMapHooks.jsx";
 import { Container } from "react-bulma-components";
 import { useGetBookChaptersByBookName } from "../utils/NostrUtils.jsx";
 import { useHagahStore } from "../HagahStore.jsx";
 import { normalizeBookTitle } from "./BookSectionMap.jsx";
+import { useBookmarker } from "../hooks/Bookmarker.jsx";
 
 function BookPage() {
     const params = useParams();
@@ -49,7 +50,6 @@ function BookPage() {
 }
 
 const RenderScripture = ({ data }) => {
-    const navigate = useNavigate();
     const { selectedChapter, selectedVerse } = useParams();
     const currentBook = useCurrentBook();
     const bookTitle = normalizeBookTitle(currentBook.title);
@@ -76,7 +76,7 @@ const RenderScripture = ({ data }) => {
                     verseRefs.current[verseId].classList.remove("has-background-warning");
 
                     // May want to do this in the future - remove the linked verse from the url after interaction
-                    //navigate(currentBook.route);
+                    // navigate(currentBook.route);
                 }
             };
 
