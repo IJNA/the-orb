@@ -3,7 +3,7 @@ import "bulma/css/bulma.min.css";
 import styles from "./BookPage.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useCurrentBook, useCurrentSection } from "../hooks/BookMapHooks.jsx";
 import { Container } from "react-bulma-components";
 import { useGetBookChaptersByBookName } from "../utils/NostrUtils.jsx";
