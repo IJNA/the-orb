@@ -11,12 +11,15 @@ import { getDetailsByBookTitle } from "../utils/BookSectionMap.jsx";
 import Highlighter from "react-highlight-words";
 import { faTimes } from "../../node_modules/@fortawesome/free-solid-svg-icons/index.js";
 import { BookSectionMap } from "../utils/BookSectionMap.jsx";
+import { useHagahStore } from "../HagahStore.jsx";
 
 const SearchPage = () => {
     const [searchInput, setSearchInput] = useState("");
     const [query, setQuery] = useState(null);
     const location = useLocation();
     const { data: searchResults, isLoading: isSearching } = useGetSearchResults(query);
+    const { triggerSearchFocus, setSearchFocus } = useHagahStore();
+    const searchInputRed = useRef(null);
 
     useEffect(() => {
         const scrollToTop = () => {
@@ -24,6 +27,12 @@ const SearchPage = () => {
         };
         setTimeout(scrollToTop, 10);
     }, [location.pathname]);
+
+    useEffect(() => {
+        if (triggerSearchFocus && searchInputRed.current) {
+            searchInputRed.current.focus();
+        }
+    }, [triggerSearchFocus]);
 
     const handleClear = () => {
         setSearchInput("");
@@ -33,6 +42,7 @@ const SearchPage = () => {
     const handleSearch = useCallback(
         (e) => {
             if (e.key === "Enter") {
+                searchInputRed.current.blur();
                 setQuery(searchInput);
             }
         },
@@ -55,7 +65,7 @@ const SearchPage = () => {
         <Container className={styles.searchPageContainer}>
             <div className={`field ${styles.searchBar}`}>
                 <div className="control has-icons-left has-icons-right">
-                    <input type="text" className="input is-large is-rounded" onKeyDown={handleSearch} placeholder="Search" value={searchInput} onChange={(e) => setSearchInput(e.target.value)} />
+                    <input ref={searchInputRed} type="text" className="input is-large is-rounded" onKeyDown={handleSearch} placeholder="Search" value={searchInput} onChange={(e) => setSearchInput(e.target.value)} />
                     <span className="icon is-medium is-left">
                         <Link to="/" className={styles.anchorClass}>
                             <FontAwesomeIcon className={styles.clickableIcon} icon={faArrowLeft} />

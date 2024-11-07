@@ -4,12 +4,18 @@ import { createJSONStorage, persist } from "zustand/middleware";
 export const useHagahStore = create(
     persist(
         (set) => ({
+            // initial state
             nostrExtension: window?.nostr,
             signedInAs: null,
             preferredRelays: [],
+            bookmarks: [],
+            triggerSearchFocus: false,
+            // set functions
             setPreferredRelays: (preferredRelays) => set({ preferredRelays }),
             setSignedInAs: (signedInAs) => set({ signedInAs }),
-            bookmarks: [],
+            setSearchFocus: (triggerSearchFocus) => {
+                set({ triggerSearchFocus })
+            },
             // pass a function with existing bookmarks to mimic setState
             setBookmarks: (fn) => set((state) => ({ bookmarks: fn(state.bookmarks) })),
         }),
