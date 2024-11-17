@@ -6,14 +6,31 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { Link, useParams } from "react-router-dom";
 import { useCurrentBook, useCurrentSection } from "../hooks/BookMapHooks.jsx";
 import { Container } from "react-bulma-components";
-import { useGetBookChaptersByBookName } from "../utils/NostrUtils.jsx";
+import { formatChapterEvents } from "../utils/NostrUtils.jsx";
 import { useHagahStore } from "../HagahStore.jsx";
-import { normalizeBookTitle } from "../utils/BookSectionMap.jsx";
+import { findChaptersByBookTitle, normalizeBookTitle } from "../utils/BookSectionMap.jsx";
 import { useBookmarker } from "../hooks/Bookmarker.jsx";
+import { kinds } from "nostr-tools";
+import { HAGAH_PUBKEY, HAGAH_RELAY } from "../Constants.jsx";
+import { useSubscribe } from "nostr-hooks";
 
 function BookPage() {
     const params = useParams();
-    const { data: chapters, isLoading } = useGetBookChaptersByBookName(params.book);
+
+    const ids = useMemo(() => {
+        const chapters = findChaptersByBookTitle(params.book);
+        return chapters.map((chapter) => chapter.nostrId)
+    }, [params.book]);
+
+    const filters = useMemo(() => [{
+        ids,
+        authors: [HAGAH_PUBKEY],
+        kinds: [kinds.LongFormArticle],
+    }], [ids]);
+
+    const relays = useMemo(() => [HAGAH_RELAY], []);
+    const { events } = useSubscribe({ filters, relays });
+    const chapters = useMemo(() => formatChapterEvents(events), [events]);
     const currentSection = useCurrentSection();
     const currentBook = useCurrentBook();
     const nextBookTitle = currentSection?.books.find((book) => book.route === currentBook.nextRoute)?.title;
@@ -22,7 +39,7 @@ function BookPage() {
         <div className={styles.bookPageContainer}>
             <Container className={styles.bookPageHeaderContainer} display="flex" flexDirection="row" alignItems="baseline">
                 <h2 className={`${styles.header}`}>{currentBook?.title}</h2>
-                {isLoading || chapters?.length <= 0 ? <div className="loader" /> : null}
+                {chapters?.length <= 0 ? <div className="loader" /> : null}
             </Container>
             {chapters?.length > 0 ? (
                 <Container>
