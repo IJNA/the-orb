@@ -18,15 +18,13 @@ function BookPage() {
     const { book } = useParams();
     const currentBook = useCurrentBook();
     const currentSection = useCurrentSection();
-    const nextBookTitle = currentSection?.books.find((book) => book.route === currentBook.nextRoute)?.title;\
+    const nextBookTitle = currentSection?.books.find((book) => book.route === currentBook.nextRoute)?.title;
 
-    // Generate IDs for the chapters of the current book
     const ids = useMemo(() => {
         const chapters = findChaptersByBookTitle(book);
         return chapters.map((chapter) => chapter.nostrId);
     }, [book]);
 
-    // Memoize subscription filters
     const filters = useMemo(() => [{
         ids,
         authors: [HAGAH_PUBKEY],
@@ -37,11 +35,10 @@ function BookPage() {
 
     const [booksCache, setBooksCache] = useHagahStore((state) => [state.booksCache, state.setBooksCache]);
     const [bufferedEvents, setBufferedEvents] = useState([]);
-    const isBookCached = Boolean(booksCache?.[book]);
-    const enabled = !isBookCached;
 
-    // Subscribe to events
-    const { events } = useSubscribe({ filters, relays, enabled });
+    const isBookCached = useMemo(() => Boolean(booksCache?.[book]?.length >= ids.length), [booksCache, ids]);
+
+    const { events } = useSubscribe({ filters, relays, enabled: !isBookCached });
 
     // Buffer incoming events
     useEffect(() => {
@@ -55,7 +52,7 @@ function BookPage() {
 
     // Cache events once they stabilize
     useEffect(() => {
-        if (!isBookCached && bufferedEvents.length > 0) {
+        if (!isBookCached) {
             setBooksCache((prevState) => ({
                 ...prevState,
                 [book]: formatChapterEvents(bufferedEvents),
@@ -69,9 +66,9 @@ function BookPage() {
         <div className={styles.bookPageContainer}>
             <Container className={styles.bookPageHeaderContainer} display="flex" flexDirection="row" alignItems="baseline">
                 <h2 className={`${styles.header}`}>{currentBook?.title}</h2>
-                {chapters?.length <= 0 ? <div className="loader" /> : null}
+                {!isBookCached ? <div className="loader" /> : null}
             </Container>
-            {chapters?.length > 0 ? (
+            {isBookCached && chapters?.length > 0 ? (
                 <Container>
                     <div className={`is-flex is-flex-direction-column is-align-items-center ${styles.text}`}>
                         <div className={styles.book}>
