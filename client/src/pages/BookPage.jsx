@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import "bulma/css/bulma.min.css";
 import styles from "./BookPage.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,13 +15,18 @@ import { HAGAH_PUBKEY, HAGAH_RELAY } from "../Constants.jsx";
 import { useSubscribe } from "nostr-hooks";
 
 function BookPage() {
-    const params = useParams();
+    const { book } = useParams();
+    const currentBook = useCurrentBook();
+    const currentSection = useCurrentSection();
+    const nextBookTitle = currentSection?.books.find((book) => book.route === currentBook.nextRoute)?.title;\
 
+    // Generate IDs for the chapters of the current book
     const ids = useMemo(() => {
-        const chapters = findChaptersByBookTitle(params.book);
-        return chapters.map((chapter) => chapter.nostrId)
-    }, [params.book]);
+        const chapters = findChaptersByBookTitle(book);
+        return chapters.map((chapter) => chapter.nostrId);
+    }, [book]);
 
+    // Memoize subscription filters
     const filters = useMemo(() => [{
         ids,
         authors: [HAGAH_PUBKEY],
@@ -29,11 +34,36 @@ function BookPage() {
     }], [ids]);
 
     const relays = useMemo(() => [HAGAH_RELAY], []);
-    const { events } = useSubscribe({ filters, relays });
-    const chapters = useMemo(() => formatChapterEvents(events), [events]);
-    const currentSection = useCurrentSection();
-    const currentBook = useCurrentBook();
-    const nextBookTitle = currentSection?.books.find((book) => book.route === currentBook.nextRoute)?.title;
+
+    const [booksCache, setBooksCache] = useHagahStore((state) => [state.booksCache, state.setBooksCache]);
+    const [bufferedEvents, setBufferedEvents] = useState([]);
+    const isBookCached = Boolean(booksCache?.[book]);
+    const enabled = !isBookCached;
+
+    // Subscribe to events
+    const { events } = useSubscribe({ filters, relays, enabled });
+
+    // Buffer incoming events
+    useEffect(() => {
+        if (events) {
+            setBufferedEvents((prevEvents) => {
+                const newEvents = [...prevEvents, ...events];
+                return [...new Map(newEvents.map((e) => [e.id, e])).values()]; 
+            });
+        }
+    }, [events]);
+
+    // Cache events once they stabilize
+    useEffect(() => {
+        if (!isBookCached && bufferedEvents.length > 0) {
+            setBooksCache((prevState) => ({
+                ...prevState,
+                [book]: formatChapterEvents(bufferedEvents),
+            }));
+        }
+    }, [bufferedEvents, isBookCached, book, setBooksCache]);
+
+    const chapters = useMemo(() => booksCache?.[book] || [], [booksCache, book]);
 
     return (
         <div className={styles.bookPageContainer}>
