@@ -4,11 +4,9 @@ import { useMemo } from "react";
 
 export const useCurrentSection = () => {
     const location = useLocation();
-    return useMemo(() => {
-        return BookSectionMap.sections?.find((section) =>
-            location.pathname.includes(section.route)
-        );
-    }, [location.pathname]);
+    return useMemo(() => BookSectionMap.sections?.find((section) =>
+        location.pathname.includes(section.route)
+    ), [location.pathname]);
 };
 
 export const useCurrentBook = () => {
