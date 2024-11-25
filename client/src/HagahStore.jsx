@@ -8,12 +8,12 @@ export const useHagahStore = create(
             nostrExtension: window?.nostr,
             signedInAs: null,
             preferredRelays: [],
+            booksCache: {},
             bookmarks: [],
             triggerSearchFocus: false,
             // set functions
             setPreferredRelays: (preferredRelays) => set({ preferredRelays }),
             setSignedInAs: (signedInAs) => set({ signedInAs }),
-            booksCache: {},
             setSearchFocus: (triggerSearchFocus) => {
                 set({ triggerSearchFocus })
             },
