@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bulma/css/versions/bulma-no-dark-mode.css";
 import styles from "./Navbar.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faHome, faSearch, faUser, faBookOpen } from "@fortawesome/free-solid-svg-icons";
 import { Link, useLocation } from "react-router-dom";
+import { useHagahStore } from "../HagahStore.jsx";
 
 function Navbar() {
-    const location = useLocation();
-    
+    const { pathname } = useLocation();
+    const { triggerSearchFocus, setSearchFocus } = useHagahStore();
     // Set default active item to 'Bible'
     const [activeItem, setActiveItem] = useState('/');
 
@@ -17,8 +18,15 @@ function Navbar() {
         { path: '/account', icon: faUser, label: 'You' },
     ];
 
+    useEffect(() => {
+        setSearchFocus(false)
+    }, [triggerSearchFocus]);
+
     const handleNavClick = (path) => {
         setActiveItem(path);
+        if (pathname === '/search') {
+            setSearchFocus(true)
+        }
     };
 
     return (
