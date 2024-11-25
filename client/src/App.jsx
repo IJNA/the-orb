@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage.jsx";
 import SectionPage from "./pages/SectionPage.jsx";
@@ -9,27 +9,26 @@ import "./App.css";
 import Header from "./components/Header.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Account from "./components/Account.jsx";
+import { useNostrHooks } from "nostr-hooks";
 
 function App() {
+    useNostrHooks();
     return (
-        <>
-            <Router>
-                <Header />
-                <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="sections" element={<HomePage />} />
-                    <Route path="sections/:section" element={<SectionPage />} />
-                    <Route path="search" element={<SearchPage />} />
-                    <Route path="sections/:section/:book" element={<BookPage />} />
-                    <Route path="sections/:section/:book/:selectedChapter" element={<BookPage />} />
-                    <Route path="sections/:section/:book/:selectedChapter/:selectedVerse" element={<BookPage />} />
-                    <Route path="about" element={<About />} />
-                    <Route path="account" element={<Account />} />
-                </Routes>
-
-                <Navbar />
-            </Router>
-        </>
+        <Router>
+            <Header />
+            <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="sections" element={<HomePage />} />
+                <Route path="sections/:section" element={<SectionPage />} />
+                <Route path="search" element={<SearchPage />} />
+                <Route path="sections/:section/:book" element={<BookPage />} />
+                <Route path="sections/:section/:book/:selectedChapter" element={<BookPage />} />
+                <Route path="sections/:section/:book/:selectedChapter/:selectedVerse" element={<BookPage />} />
+                <Route path="about" element={<About />} />
+                <Route path="account" element={<Account />} />
+            </Routes>
+            <Navbar />
+        </Router>
     );
 }
 

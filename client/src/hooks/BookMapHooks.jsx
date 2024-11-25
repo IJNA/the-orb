@@ -1,15 +1,21 @@
 import { useLocation } from "react-router-dom";
 import { BookSectionMap } from "../utils/BookSectionMap.jsx";
+import { useMemo } from "react";
 
 export const useCurrentSection = () => {
     const location = useLocation();
-    const section = BookSectionMap.sections?.find((section) => location.pathname.includes(section.route));
-    return section;
+    return useMemo(() => BookSectionMap.sections?.find((section) =>
+        location.pathname.includes(section.route)
+    ), [location.pathname]);
 };
 
 export const useCurrentBook = () => {
     const location = useLocation();
     const currentSection = useCurrentSection();
-    if (!currentSection?.books) return;
-    return currentSection.books.find((book) => location.pathname.includes(book.route));
+    return useMemo(() => {
+        if (!currentSection?.books) return;
+        return currentSection.books.find((book) =>
+            location.pathname.includes(book.route)
+        );
+    }, [location.pathname, currentSection]);
 };
