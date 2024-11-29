@@ -1,4 +1,25 @@
-export const BookSectionMap = {
+type Chapter = {
+    title: string;
+    nostrId: string;
+}
+type Book = {
+    route: string;
+    title: string;
+    chapters: Chapter[];
+    nextRoute: string;
+};
+type Section = {
+    route: string;
+    title: string;
+    quote: string;
+    image: string;
+    books: Book[]
+}
+interface NostrBookMapReference {
+    sections: Section[]
+}
+
+export const BookSectionMap: NostrBookMapReference = {
     sections: [
         {
             route: "/sections/the-law",
@@ -5269,19 +5290,19 @@ export const BookSectionMap = {
     ],
 };
 
-export const normalizeBookTitle = (title) => {
+export const normalizeBookTitle = (title: string) => {
     return title.toLowerCase().replace(/[^a-z0-9]/g, "-"); // Remove special characters and spaces
 };
 
 // Create a map of books on init for quicker access
-const bookMap = new Map();
+const bookMap = new Map<string, Book>();
 for (const section of BookSectionMap.sections) {
     for (const book of section.books) {
         bookMap.set(normalizeBookTitle(book.title), book);
     }
 }
 
-export const findChaptersByBookTitle = (bookTitle) => {
+export const findChaptersByBookTitle = (bookTitle: string) => {
     if (!bookTitle || !BookSectionMap?.sections) {
         console.error("Invalid bookTitle or BookSectionMap is not properly defined");
         return null;
@@ -5298,7 +5319,7 @@ export const findChaptersByBookTitle = (bookTitle) => {
     return null;
 };
 
-export const getDetailsByBookTitle = (bookTitle) => {
+export const getDetailsByBookTitle = (bookTitle: string) => {
     const normalizedBookTitle = normalizeBookTitle(bookTitle);
     return bookMap.get(normalizedBookTitle);
 };

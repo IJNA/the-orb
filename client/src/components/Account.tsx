@@ -1,11 +1,7 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useState, useCallback } from "react";
+import "bulma/css/versions/bulma-no-dark-mode.css";
+import styles from "./Account.module.scss";
 import "bulma/css/bulma.min.css";
-import styles from "./About.module.scss";
-import { useLocation } from "react-router-dom";
-import mailIcon from "../images/mailIcon.svg";
-import nostrIcon from "../images/nostrIcon.svg";
-import bullHornIcon from "../images/bullHornIcon.svg";
-import openInNewIcon from "../images/openInNewIcon.svg";
 import heartIcon from "../images/heartIcon.svg";
 import { useNostr } from "nostr-react";
 import { nip19, nip57 } from "nostr-tools";
@@ -15,121 +11,23 @@ import {
     cacheLightningUri,
     fetchInvoice,
     satToMsat,
-} from "../utils/ZapUtils.jsx";
+} from "../utils/ZapUtils";
 import { CopySimple } from "phosphor-react";
 import QRCode from "react-qr-code";
-function About() {
-    const location = useLocation();
-    const url = location.pathname;
 
-    useEffect(() => {
-        setTimeout(() => {
-            window.scrollTo(0, 0);
-        }, 5);
-    }, [url]);
+function Account() {
 
     return (
-        <>
-            {/* <Navigation /> */}
-            <div className={styles.aboutContainer}>
-                <img
-                    className={styles.ijnaLogo}
-                    src="/images/IJNA_logo.png"
-                    alt="IJNA logo which is a blue window with a star on the bottom right"
-                    title="IJNA logo which is a blue window with a star on the bottom right"
-                />
-                <div className={styles.content}>
-                    <h4 className={styles.aboutHeader}>Who we are</h4>
-                    <div className={styles.paragraphContainer}>
-                        <div className={styles.paragraph}>
-                            <p>hagah.io is a product of IJNA Design based in Plano, TX.</p>
-                            {/* <p>
-                                The code is open-source and accessible on
-                                <a target="_blank" rel="noreferrer" href="https://github.com/IJNA/the-orb">
-                                &nbsp;<span className={styles.gitHubLink}>Github</span>
-                                </a>
-                                .
-                            </p>
-                            <p>If you're interested in getting in touch, please see our contact links below.</p> */}
-                        </div>
-                    </div>
-                    <h4 className={styles.aboutHeader}>Contact</h4>
-                    <div className={styles.buttonContainer}>
-                        <a target="_blank" rel="noreferrer" href="mailto:jbasallaje@gmail.com">
-                            <button>
-                                <img
-                                    className={styles.contactButtonImg}
-                                    src={mailIcon}
-                                    alt="Email button icon, evelope"
-                                    title="Email button icon, evelope"
-                                />
-                                EMAIL
-                            </button>
-                        </a>
-                        <a
-                            target="_blank"
-                            rel="noreferrer"
-                            href="http://primal.net/p/npub1j4ukddjkwguyt4kk8ugzw9fq8ct69pj7lcnsty2qqsr7ut20u6mshfllhh"
-                        >
-                            <button>
-                                <img
-                                    className={styles.contactButtonImg}
-                                    src={nostrIcon}
-                                    alt="NOSTR button icon, ostrich"
-                                    title="NOSTR button icon, ostrich"
-                                />
-                                NOSTR
-                            </button>
-                        </a>
-                        <a
-                            target="_blank"
-                            rel="noreferrer"
-                            className={`${styles.feedBackLink}`}
-                            href="https://formstr.app/#/fill/3548a79d48b7449bf2b2ecad7926973c9c665455a453ec76fc5f65d0523d6e1e"
-                        >
-                            <button className={styles.feedBackButton}>
-                                <img
-                                    className={`${styles.contactButtonImg}`}
-                                    src={bullHornIcon}
-                                    alt="Give Feedback button icon, bullhorn"
-                                    title="Give Feedback button icon, bullhorn"
-                                />
-                                GIVE FEEDBACK
-                            </button>
-                        </a>
-                    </div>
-                    <div className={styles.contributorListContainer}>
-                        <a
-                            target="_blank"
-                            rel="noreferrer"
-                            href="https://github.com/IJNA/the-orb/graphs/contributors"
-                            className={styles.contributorListLink}
-                        >
-                            SEE CONTRIBUTOR LIST
-                        </a>
-                        <img
-                            className={`${styles.contributorImg}`}
-                            src={openInNewIcon}
-                            alt="Open link in new tab icon, square with arrow comming out"
-                            title="Open link in new tab icon, square with arrow comming out"
-                        />
-                    </div>
-                    <h4 className={styles.aboutHeader}>Support</h4>
-                    <div className={styles.paragraphContainer}>
-                        <div className={styles.paragraph}>
-                            <p>
-                                Your giving helps us spend more time on hagah while keeping it entirely free and
-                                open-source. Thank you
-                            </p>
-                        </div>
-                    </div>
-                    {/* !TODO: Move to seperate component */}
-                    <SupportUs npub="npub1xk50nsp89sge5cs0glq9tjxm885lsp077xez6zm6g2ccjdga4enqnkmr0f" />
-                </div>
+        <div className={styles.accountPageContainer}>
+            <div>
+                <h1 className={styles.accountHeader}>Work in progress :)</h1>
+                <p id={styles.accountParagraph} className={styles.accountParagraph}>Come back to see personalized settings, saved passages, and more here soon!</p>
+                <SupportUs npub="npub1xk50nsp89sge5cs0glq9tjxm885lsp077xez6zm6g2ccjdga4enqnkmr0f" />
             </div>
-        </>
+        </div>
     );
 }
+
 const SupportUs = ({ npub }) => {
     const pubkey = nip19.decode(npub)?.data;
     const [showZapModal, setShowZapModal] = useState(false);
@@ -383,4 +281,4 @@ const InvoiceDialog = ({ invoice, setInvoice, show, setShow }) => {
     );
 };
 
-export default About;
+export default Account;

@@ -1,10 +1,10 @@
 import { useRef, useEffect, useMemo } from "react";
-import { useHagahStore } from "../HagahStore.jsx";
-import { normalizeBookTitle } from "../utils/BookSectionMap.jsx";
-import { useCurrentBook } from "./BookMapHooks.jsx";
+import { useHagahStore } from "../HagahStore";
+import { normalizeBookTitle } from "../utils/BookSectionMap";
+import { useCurrentBook } from "./BookMapHooks";
 
 export const useBookmarker = () => {
-    const visibleElementsRef = useRef(new Set());
+    const visibleElementsRef = useRef<Set<HTMLElement>>(new Set());
     const setBookmarks = useHagahStore((state) => state.setBookmarks);
     const currentBook = useCurrentBook();
     const isIos = navigator.userAgent.match(/ipad|iphone/i);
@@ -14,7 +14,7 @@ export const useBookmarker = () => {
             const isScrollbarAtTop =  window.scrollY === 0;
             const bookmarkedPassageClassName = visibleElementsRef.current.size > 0 ? [...visibleElementsRef.current][0].className : null;
 
-            if (bookmarkedPassageClassName) {
+            if (currentBook && bookmarkedPassageClassName) {
                 setBookmarks((prevBookmarks) => ({
                     ...prevBookmarks,
                     [normalizeBookTitle(currentBook.title)]: isScrollbarAtTop ? null : bookmarkedPassageClassName, // If the scrollbar is at the top, don't bookmark anything
@@ -47,7 +47,7 @@ export const useBookmarker = () => {
             window.removeEventListener(isIos ? "pagehide" : "beforeunload", saveBookmark);
             saveBookmark();
         };
-    }, [currentBook.title, isIos, setBookmarks]);
+    }, [currentBook?.title, isIos, setBookmarks]);
 
     // This could return the visible elements if needed but persisting bookmarks with the store is enough for now
     return;

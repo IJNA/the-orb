@@ -4,7 +4,7 @@ import styles from "./Navbar.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faHome, faSearch, faUser, faBookOpen } from "@fortawesome/free-solid-svg-icons";
 import { Link, useLocation } from "react-router-dom";
-import { useHagahStore } from "../HagahStore.jsx";
+import { useHagahStore } from "../HagahStore";
 
 function Navbar() {
     const { pathname } = useLocation();
