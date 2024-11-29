@@ -4,22 +4,22 @@ import styles from "./SearchPage.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { Link, useLocation } from "react-router-dom";
-import { PassageCard } from "../components/PassageCard.jsx";
+import { PassageCard } from "../components/PassageCard";
 import { Container } from "react-bulma-components";
-import { useGetSearchResults } from "../utils/Queries.jsx";
-import { getDetailsByBookTitle } from "../utils/BookSectionMap.jsx";
+import { useGetSearchResults } from "../utils/Queries";
+import { getDetailsByBookTitle } from "../utils/BookSectionMap";
 import Highlighter from "react-highlight-words";
-import { faTimes } from "../../node_modules/@fortawesome/free-solid-svg-icons/index.js";
-import { BookSectionMap } from "../utils/BookSectionMap.jsx";
-import { useHagahStore } from "../HagahStore.jsx";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { BookSectionMap } from "../utils/BookSectionMap";
+import { useHagahStore } from "../HagahStore";
 
 const SearchPage = () => {
     const [searchInput, setSearchInput] = useState("");
-    const [query, setQuery] = useState(null);
+    const [query, setQuery] = useState<string | null>(null);
     const location = useLocation();
     const { data: searchResults, isLoading: isSearching } = useGetSearchResults(query);
     const { triggerSearchFocus, setSearchFocus } = useHagahStore();
-    const searchInputRed = useRef(null);
+    const searchInputRed = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         const scrollToTop = () => {
@@ -41,7 +41,7 @@ const SearchPage = () => {
 
     const handleSearch = useCallback(
         (e) => {
-            if (e.key === "Enter") {
+            if (searchInputRed?.current && e.key === "Enter") {
                 searchInputRed.current.blur();
                 setQuery(searchInput);
             }
@@ -53,7 +53,7 @@ const SearchPage = () => {
 
     const verseSummary = useMemo(
         () =>
-            searchResults?.map((item) => (
+            query && searchResults?.map((item) => (
                 <div key={`${item.id}`}>
                     <Highlighter highlightClassName={styles.boldText} searchWords={[query]} autoEscape={true} textToHighlight={item.value} />
                 </div>

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "bulma/css/bulma.min.css";
 import styles from "./SectionPage.module.scss";
 import { Link, useLocation } from "react-router-dom";
-import { useCurrentSection } from "../hooks/BookMapHooks.jsx";
+import { useCurrentSection } from "../hooks/BookMapHooks";
 
 const SectionPage = () => {
     const location = useLocation();
@@ -16,7 +16,7 @@ const SectionPage = () => {
 
     return (
         <div>
-            <div className={styles.sectionPageContainer}>
+            {currentSection && <div className={styles.sectionPageContainer}>
                 <div className={`${styles.sectionContainer}`}>
                     <h2 className={`${styles.sectionHeader}`}>{currentSection.title}</h2>
                     <img
@@ -36,7 +36,7 @@ const SectionPage = () => {
                         ))}
                     </div>
                 </div>
-            </div>
+            </div>}
         </div>
     );
 };

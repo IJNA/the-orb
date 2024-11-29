@@ -1,30 +1,67 @@
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { Suspense, useEffect, useMemo, useRef, useState, type MutableRefObject } from "react";
 import "bulma/css/bulma.min.css";
 import styles from "./BookPage.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { Link, useParams } from "react-router-dom";
-import { useCurrentBook, useCurrentSection } from "../hooks/BookMapHooks.jsx";
+import { useCurrentBook, useCurrentSection } from "../hooks/BookMapHooks";
 import { Container } from "react-bulma-components";
-import { useGetBookChaptersByBookName } from "../utils/NostrUtils.jsx";
-import { useHagahStore } from "../HagahStore.jsx";
-import { normalizeBookTitle } from "../utils/BookSectionMap.jsx";
-import { useBookmarker } from "../hooks/Bookmarker.jsx";
+import { formatChapterEvents } from "../utils/NostrUtils";
+import { useHagahStore } from "../HagahStore";
+import { findChaptersByBookTitle, normalizeBookTitle } from "../utils/BookSectionMap";
+import { useBookmarker } from "../hooks/Bookmarker";
+import { kinds } from "nostr-tools";
+import { HAGAH_PUBKEY, HAGAH_RELAY } from "../Constants";
+import { useSubscribe } from "nostr-hooks";
 
 function BookPage() {
-    const params = useParams();
-    const { data: chapters, isLoading } = useGetBookChaptersByBookName(params.book);
-    const currentSection = useCurrentSection();
+    const { book } = useParams();
     const currentBook = useCurrentBook();
-    const nextBookTitle = currentSection?.books.find((book) => book.route === currentBook.nextRoute)?.title;
+    const currentSection = useCurrentSection();
+    const nextBookTitle = currentSection?.books.find((book) => book.route === currentBook?.nextRoute)?.title;
+
+    const ids = useMemo(() => {
+        if (!book) return [];
+        const chapters = findChaptersByBookTitle(book);
+        return chapters?.map((chapter) => chapter.nostrId);
+    }, [book]);
+
+    const filters = useMemo(() => [{
+        ids,
+        authors: [HAGAH_PUBKEY],
+        kinds: [kinds.LongFormArticle],
+    }], [ids]);
+
+    const relays = useMemo(() => [HAGAH_RELAY], []);
+    const [booksCache, setBooksCache] = useHagahStore((state) => [state.booksCache, state.setBooksCache]);
+    const isBookCached = useMemo(() => ids && book && booksCache?.[book]?.length && booksCache[book].length >= ids.length, [booksCache, ids?.length]);
+    const { events } = useSubscribe({ filters, relays, enabled: !isBookCached });
+
+    useEffect(() => {
+        function cacheOnExit() {
+            if (ids && book && !isBookCached && events.length >= ids.length) {
+                setBooksCache((prevState) => ({
+                    ...prevState,
+                    [book]: formatChapterEvents(events),
+                }));
+            }
+        };
+        return () => cacheOnExit();
+    }, [isBookCached, book, ids, events]);
+
+    const chapters = useMemo(() => {
+        return book && isBookCached ? booksCache[book] : formatChapterEvents(events)
+    }, [booksCache, book, events]);
+
+    if (chapters && ids && chapters?.length < ids?.length) return <div className="loader" />;
 
     return (
         <div className={styles.bookPageContainer}>
             <Container className={styles.bookPageHeaderContainer} display="flex" flexDirection="row" alignItems="baseline">
                 <h2 className={`${styles.header}`}>{currentBook?.title}</h2>
-                {isLoading || chapters?.length <= 0 ? <div className="loader" /> : null}
+                {!chapters ? <div className="loader" /> : null}
             </Container>
-            {chapters?.length > 0 ? (
+            {chapters && chapters.length > 0 ? (
                 <Container>
                     <div className={`is-flex is-flex-direction-column is-align-items-center ${styles.text}`}>
                         <div className={styles.book}>
@@ -49,12 +86,12 @@ function BookPage() {
     );
 }
 
-const RenderScripture = ({ data }) => {
+const RenderScripture = ({ data }: { data: string[] }) => {
     const { selectedChapter, selectedVerse } = useParams();
     const currentBook = useCurrentBook();
-    const bookTitle = normalizeBookTitle(currentBook.title);
+    const bookTitle = currentBook ? normalizeBookTitle(currentBook?.title) : "";
     const chapters = useMemo(() => (data?.length > 0 ? data.map((d) => JSON.parse(d)) : null), [data]);
-    const verseRefs = useRef({});
+    const verseRefs = useRef<{ [x: string]: HTMLElement }>({});
     const bookmarks = useHagahStore((state) => state.bookmarks);
     const bookmarkedElement = useMemo(() => bookmarks[bookTitle], [bookmarks, bookTitle]);
 
@@ -66,7 +103,7 @@ const RenderScripture = ({ data }) => {
 
             // Check if the verseRef exists before scrolling into view and applying highlight
             if (verseRefs.current[verseId]) {
-                verseRefs.current[verseId].scrollIntoView({ behavior: "smooth", block: "center" });
+                verseRefs.current[verseId]?.scrollIntoView({ behavior: "smooth", block: "center" });
                 verseRefs.current[verseId].classList.add("has-background-warning");
             }
 
@@ -101,13 +138,13 @@ const RenderScripture = ({ data }) => {
             if (bookmarkedElementRef?.previousElementSibling) {
                 bookmarkedElementRef?.previousElementSibling.scrollIntoView();
             } else {
-                bookmarkedElementRef.scrollIntoView();
+                bookmarkedElementRef?.scrollIntoView();
             }
         }
     }, [bookTitle, bookmarkedElement, selectedChapter, selectedVerse]);
 
     return (
-        <div className={`book ${normalizeBookTitle(currentBook.title)}`}>
+        currentBook && <div className={`book ${normalizeBookTitle(currentBook.title)}`}>
             {chapters?.map((chapterContent, index) => (
                 <BookChapter bookTitle={normalizeBookTitle(currentBook.title)} chapterContent={chapterContent} key={index} index={index} verseRefs={verseRefs} />
             ))}
@@ -115,10 +152,16 @@ const RenderScripture = ({ data }) => {
     );
 };
 
-const BookChapter = ({ bookTitle, chapterContent, index, verseRefs }) => {
+type ChapterItem = {
+    type: string;
+    verse: string;
+    value: string;
+}
+
+const BookChapter = ({ bookTitle, chapterContent, index, verseRefs }: { bookTitle: string; chapterContent: ChapterItem[]; index: number; verseRefs: MutableRefObject<{ [x: string]: any }> }) => {
     const chapterNumber = index + 1;
 
-    const passages = chapterContent.reduce((acc, content) => {
+    const passages = chapterContent.reduce((acc: any[], content: ChapterItem) => {
         // If we encounter a "start," we either close the previous passage or start a new one
         if (content.type.includes("start")) {
             // If there's an open passage, mark it as complete
@@ -142,25 +185,11 @@ const BookChapter = ({ bookTitle, chapterContent, index, verseRefs }) => {
         return acc;
     }, []);
 
-    // Going to hold on to this in case we decide to indent lines in the future
-    const shouldIndent = (passage, verse, verseIndex) => {
-        const isLineText = verse.type === "line text";
-        const prevVerse = verseIndex > 0 ? passage[verseIndex - 1] : null;
-
-        // Check if this is the second "line text" in a sequence
-        const isSecondLineText = isLineText && verseIndex === 1;
-
-        // Indent based on specified rules after the second "line text"
-        const otherIndentRules = isLineText && verse.value[0] !== "“" && verse.section !== 1 && prevVerse?.value && (/[.!?]$/.test(prevVerse.value.trim()) || verse.value[0] === verse.value[0].toLowerCase());
-
-        return false;
-    };
-
     return (
         <div>
             {passages.map((passage, index) => (
                 <div className={styles.passage} key={index}>
-                    {passage.map((verse, passageIndex) => {
+                    {passage.map((verse: { verse: string; value: string }, passageIndex: number) => {
                         const verseId = `${bookTitle}-${chapterNumber}-${verse.verse}`;
                         return verse?.value?.trim() ? (
                             <div key={passageIndex}>
