@@ -5270,6 +5270,7 @@ export const BookSectionMap = {
 };
 
 export const normalizeBookTitle = (title) => {
+    if (!title) return null;
     return title.toLowerCase().replace(/[^a-z0-9]/g, "-"); // Remove special characters and spaces
 };
 
@@ -5302,3 +5303,5 @@ export const getDetailsByBookTitle = (bookTitle) => {
     const normalizedBookTitle = normalizeBookTitle(bookTitle);
     return bookMap.get(normalizedBookTitle);
 };
+
+export const getBookTitles = () => Array.from(bookMap.keys());
