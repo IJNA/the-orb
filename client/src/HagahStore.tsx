@@ -1,7 +1,22 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-export const useHagahStore = create(
+
+interface IHagahStore {
+    nostrExtension: any;
+    signedInAs: string | null;
+    preferredRelays: string[];
+    booksCache: { [x: string]: string[] };
+    bookmarks: { [x: string]: string };
+    triggerSearchFocus: boolean;
+    setPreferredRelays: (preferredRelays: string[]) => void;
+    setSignedInAs: (signedInAs: string) => void;
+    setSearchFocus: (setSearchFocus: boolean) => void;
+    setBookmarks: (fn: (bookmarks: { [x: string]: string }) => { [x: string]: string }) => void;
+    setBooksCache: (fn: (booksCache: { [x: string]: string[] }) => { [x: string]: string[] }) => void;
+};
+
+export const useHagahStore = create<IHagahStore>()(
     persist(
         (set) => ({
             // initial state
@@ -9,7 +24,7 @@ export const useHagahStore = create(
             signedInAs: null,
             preferredRelays: [],
             booksCache: {},
-            bookmarks: [],
+            bookmarks: {},
             triggerSearchFocus: false,
             // set functions
             setPreferredRelays: (preferredRelays) => set({ preferredRelays }),

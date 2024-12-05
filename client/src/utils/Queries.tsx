@@ -7,7 +7,7 @@ import { getBookTitles, normalizeBookTitle } from "./BookSectionMap.jsx";
 
 const url = process.env.REACT_APP_API_URL;
 
-export const useGetNostrSearchResults = (query) => {
+export const useGetNostrSearchResults = (query: string) => {
     const { searchingTitle, searchingChapter, searchingVerse, queryString } = parseQuery(query);
     const [isLoading, setIsLoading] = useState(true);
     const [isQueryEnabled, setIsQueryEnabled] = useState(!!queryString && query?.length > 0);
@@ -62,7 +62,7 @@ export const useGetNostrSearchResults = (query) => {
     return { data: searchResults, isLoading };
 };
 
-export const useGetSearchResults = (query) => {
+export const useGetSearchResults = (query: string) => {
     const { searchingTitle, searchingChapter, searchingVerse, queryString } = parseQuery(query);
 
     return useQuery({

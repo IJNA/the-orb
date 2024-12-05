@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    /* Base Options: */
+    "esModuleInterop": true,
+    "jsx": "react",
+    "skipLibCheck": true,
+    "target": "ESNext",
+    "allowJs": true,
+    "moduleResolution": "bundler",
+    "moduleDetection": "auto",
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    /* Strictness */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+
+    /* If transpiling with TypeScript: */
+    "module": "ESNext",
+    "outDir": "dist",
+    "sourceMap": true,
+
+    /* If your code runs in the DOM: */
+    "lib": ["es2022", "dom", "dom.iterable"]
+  }
+}
