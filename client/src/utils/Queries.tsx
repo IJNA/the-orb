@@ -5,9 +5,7 @@ import { HAGAH_PUBKEY, HAGAH_RELAY } from "../Constants";
 import { useSubscribe } from "nostr-hooks";
 import { getBookTitles, normalizeBookTitle } from "./BookSectionMap";
 
-const url = process.env.REACT_APP_API_URL;
-
-export const useGetNostrSearchResults = (query) => {
+export const useGetNostrSearchResults = (query: string) => {
     const { searchingTitle, searchingChapter, searchingVerse, queryString } = parseQuery(query);
     const [isLoading, setIsLoading] = useState(true);
     const [isQueryEnabled, setIsQueryEnabled] = useState(!!queryString && query?.length > 0);
@@ -62,37 +60,7 @@ export const useGetNostrSearchResults = (query) => {
     return { data: searchResults, isLoading };
 };
 
-export const useGetSearchResults = (query) => {
-    const { searchingTitle, searchingChapter, searchingVerse, queryString } = parseQuery(query);
-
-    return useQuery({
-        queryKey: ["search", queryString],
-        queryFn: async () => {
-            if (searchingTitle && searchingChapter && searchingVerse) {
-                const response = await axios.get(`${url}/bible/${searchingTitle}/${searchingChapter}/${searchingVerse}`);
-                return response.data ? response.data.sort((a, b) => Number(a.chapter) - Number(b.chapter)) : null;
-            }
-            const response = await axios.get(`${url}/bible/search/${query}`);
-            return response.data ? response.data.sort((a, b) => Number(a.chapter) - Number(b.chapter)) : null;
-        },
-        staleTime: Infinity,
-        enabled: !!query,
-    });
-};
-
-export const useGetBookFromDatabase = (bookName) => {
-    return useQuery({
-        queryKey: ["book", bookName],
-        queryFn: async () => {
-            const response = await axios.get(`${url}/bible/${bookName}`);
-            return response.data ? response.data.sort((a, b) => Number(a.chapter) - Number(b.chapter)) : null;
-        },
-        staleTime: Infinity,
-        enabled: !!bookName,
-    });
-};
-
-const parseQuery = (query) => {
+function parseQuery(query: string) {
     if (!query) return { type: "invalid", searchingTitle: null, searchingChapter: null, searchingVerse: null, queryString: null };
 
     const bookNames = getBookTitles();
@@ -152,4 +120,4 @@ const parseQuery = (query) => {
         searchingVerse: null,
         queryString: JSON.stringify({ text: query }),
     };
-};
+}

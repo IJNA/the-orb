@@ -6,7 +6,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { Link, useLocation } from "react-router-dom";
 import { PassageCard } from "../components/PassageCard";
 import { Container } from "react-bulma-components";
-import { useGetSearchResults } from "../utils/Queries";
+import { useGetNostrSearchResults } from "../utils/Queries";
 import { getDetailsByBookTitle } from "../utils/BookSectionMap";
 import Highlighter from "react-highlight-words";
 import { faTimes } from "../../node_modules/@fortawesome/free-solid-svg-icons/index.js";
@@ -15,11 +15,11 @@ import { useHagahStore } from "../HagahStore";
 
 const SearchPage = () => {
     const [searchInput, setSearchInput] = useState("");
-    const [query, setQuery] = useState(null);
+    const [query, setQuery] = useState("");
     const location = useLocation();
-    const { data: searchResults, isLoading: isSearching } = useGetSearchResults(query);
+    const { data: searchResults, isLoading: isSearching } = useGetNostrSearchResults(query);
     const { triggerSearchFocus, setSearchFocus } = useHagahStore();
-    const searchInputRed = useRef(null);
+    const searchInputRef = useRef(null);
 
     useEffect(() => {
         const scrollToTop = () => {
@@ -29,30 +29,32 @@ const SearchPage = () => {
     }, [location.pathname]);
 
     useEffect(() => {
-        if (triggerSearchFocus && searchInputRed.current) {
-            searchInputRed.current.focus();
+        if (triggerSearchFocus && searchInputRef.current) {
+            searchInputRef.current.focus();
         }
     }, [triggerSearchFocus]);
 
     const handleClear = () => {
         setSearchInput("");
-        setQuery(null);
+        setQuery("");
     };
 
     const handleSearch = useCallback(
         (e) => {
-            if (e.key === "Enter") {
-                searchInputRed.current.blur();
+            if (searchInputRef?.current && e.key === "Enter") {
+                searchInputRef.current.blur();
                 setQuery(searchInput);
             }
         },
         [searchInput]
     );
 
+    useEffect(() => console.log({ searchResults }), [searchResults]);
     const bookResults = useMemo(() => (query ? BookSectionMap.sections.flatMap((section) => section.books).filter((book) => book.title.toLowerCase().includes(query.toLowerCase())) : []), [query]);
 
     const verseSummary = useMemo(
         () =>
+            query &&
             searchResults?.map((item) => (
                 <div key={`${item.id}`}>
                     <Highlighter highlightClassName={styles.boldText} searchWords={[query]} autoEscape={true} textToHighlight={item.value} />
@@ -66,7 +68,7 @@ const SearchPage = () => {
             <div className={`field ${styles.searchBar}`}>
                 <div className="control has-icons-left has-icons-right">
                     <input
-                        ref={searchInputRed}
+                        ref={searchInputRef}
                         type="text"
                         className="input is-large is-rounded"
                         onKeyDown={handleSearch}
@@ -121,13 +123,10 @@ const SearchPage = () => {
                     )}
                     {searchResults?.length > 0 && (
                         <>
-                            <h4 className={`title is-4 ${styles.results}`}>
-                                Passages
-                                {/* <small className="has-text-weight-light	">({searchResults.length})</small> */}
-                            </h4>
+                            <h4 className={`title is-4 ${styles.results}`}>Passages</h4>
 
                             {searchResults.map((item, index) => {
-                                const book = getDetailsByBookTitle(item.book);
+                                const book = getDetailsByBookTitle(item.title);
                                 if (!book?.route) return null;
                                 return (
                                     <PassageCard
