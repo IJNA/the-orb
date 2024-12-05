@@ -1,25 +1,6 @@
-type Chapter = {
-    title: string;
-    nostrId: string;
-}
-type Book = {
-    route: string;
-    title: string;
-    chapters: Chapter[];
-    nextRoute: string;
-};
-type Section = {
-    route: string;
-    title: string;
-    quote: string;
-    image: string;
-    books: Book[]
-}
-interface NostrBookMapReference {
-    sections: Section[]
-}
+import type { Book } from "../HagahTypes";
 
-export const BookSectionMap: NostrBookMapReference = {
+export const BookSectionMap = {
     sections: [
         {
             route: "/sections/the-law",
@@ -5291,6 +5272,7 @@ export const BookSectionMap: NostrBookMapReference = {
 };
 
 export const normalizeBookTitle = (title: string) => {
+    if (!title) return null;
     return title.toLowerCase().replace(/[^a-z0-9]/g, "-"); // Remove special characters and spaces
 };
 
@@ -5307,7 +5289,7 @@ export const findChaptersByBookTitle = (bookTitle: string) => {
         console.error("Invalid bookTitle or BookSectionMap is not properly defined");
         return null;
     }
-    const normalizedBookTitle = normalizeBookTitle(bookTitle).toLowerCase();
+    const normalizedBookTitle = normalizeBookTitle(bookTitle)?.toLowerCase() ?? "";
 
     const foundBook = bookMap.get(normalizedBookTitle);
 
@@ -5320,6 +5302,8 @@ export const findChaptersByBookTitle = (bookTitle: string) => {
 };
 
 export const getDetailsByBookTitle = (bookTitle: string) => {
-    const normalizedBookTitle = normalizeBookTitle(bookTitle);
+    const normalizedBookTitle = normalizeBookTitle(bookTitle) ?? "";
     return bookMap.get(normalizedBookTitle);
 };
+
+export const getBookTitles = () => Array.from(bookMap.keys());
