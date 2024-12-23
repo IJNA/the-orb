@@ -17,7 +17,7 @@ const SearchPage = () => {
     const [searchInput, setSearchInput] = useState("");
     const [query, setQuery] = useState("");
     const location = useLocation();
-    const { data: searchResults, isLoading: isSearching } = useGetNostrSearchResults(query);
+    const { data: searchResults, isLoading: isSearching, searchTimeout } = useGetNostrSearchResults(query);
     const { triggerSearchFocus, setSearchFocus } = useHagahStore();
     const searchInputRef = useRef(null);
 
@@ -124,7 +124,6 @@ const SearchPage = () => {
                     {searchResults?.length > 0 && (
                         <>
                             <h4 className={`title is-4 ${styles.results}`}>Passages</h4>
-
                             {searchResults.map((item, index) => {
                                 const book = getDetailsByBookTitle(item.title);
                                 if (!book?.route) return null;
@@ -142,6 +141,8 @@ const SearchPage = () => {
                     )}
 
                     {query && !isSearching && bookResults?.length === 0 && searchResults?.length === 0 && <p className={`is-size-5 ${styles.noResult}`}>No results found.</p>}
+
+                    {searchTimeout && <p className="is-size-5">Showing top 10 results.</p>}
                 </div>
             )}
         </Container>
