@@ -20,7 +20,7 @@ const SearchPage = () => {
     const { data: searchResults, isLoading: isSearching, searchTimeout } = useGetNostrSearchResults(query);
     const { triggerSearchFocus, setSearchFocus } = useHagahStore();
     const searchInputRef = useRef(null);
-
+    const endSearch = useMemo(() => searchTimeout || searchResults?.length >= 10, [searchTimeout, searchResults]);
     useEffect(() => {
         const scrollToTop = () => {
             window.scrollTo(0, 0);
@@ -49,7 +49,6 @@ const SearchPage = () => {
         [searchInput]
     );
 
-    useEffect(() => console.log({ searchResults }), [searchResults]);
     const bookResults = useMemo(() => (query ? BookSectionMap.sections.flatMap((section) => section.books).filter((book) => book.title.toLowerCase().includes(query.toLowerCase())) : []), [query]);
 
     const verseSummary = useMemo(
@@ -82,7 +81,7 @@ const SearchPage = () => {
                         </Link>
                     </span>
 
-                    {!!query && isSearching ? (
+                    {!!query && (isSearching && !endSearch)? (
                         <span className="icon is-medium is-right">
                             <div className="loader" />
                         </span>
@@ -142,7 +141,7 @@ const SearchPage = () => {
 
                     {query && !isSearching && bookResults?.length === 0 && searchResults?.length === 0 && <p className={`is-size-5 ${styles.noResult}`}>No results found.</p>}
 
-                    {searchTimeout && <p className="is-size-5">Showing top 10 results.</p>}
+                    {endSearch && <p className="is-size-5 my-2 has-text-centered">Showing top 10 results.</p>}
                 </div>
             )}
         </Container>
