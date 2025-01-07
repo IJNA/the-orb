@@ -4,7 +4,8 @@ import { BookSectionMap, getBookTitles } from "./BookSectionMap";
 import { useHagahRelay } from "../hooks/useHagahRelay";
 
 export const useGetNostrSearchResults = (query: string) => {
-    const { searchingTitle, searchingChapter, searchingVerse, queryString } = parseQuery(query);
+    const trimmedQuery = query.trim();
+    const { searchingTitle, searchingChapter, searchingVerse, queryString } = parseQuery(trimmedQuery);
     const [searchResults, setSearchResults] = useState<{
         title: string;
         value: string;
@@ -14,7 +15,7 @@ export const useGetNostrSearchResults = (query: string) => {
     }[]>([]);
     const [searchState, setSearchState] = useState({
         isLoading: true,
-        isQueryEnabled: !!queryString && query?.length > 0,
+        isQueryEnabled: !!queryString && trimmedQuery?.length > 0,
         searchTimeout: false,
     });
 
@@ -54,7 +55,7 @@ export const useGetNostrSearchResults = (query: string) => {
             
             const filteredContent = content.filter((item: { type: string; value: string; verse: number }) => {
                 if (item.type !== "paragraph text") return false;
-                if (!searchingVerse) return new RegExp(query, "i").test(item.value);
+                if (!searchingVerse) return new RegExp(trimmedQuery, "i").test(item.value);
                 return item.verse.toString() === searchingVerse;
             })[0];
 
@@ -63,7 +64,7 @@ export const useGetNostrSearchResults = (query: string) => {
             const result = {
                 title,
                 ...filteredContent,
-                isPerfectMatch: isPerfectMatch(filteredContent.value, query),
+                isPerfectMatch: isPerfectMatch(filteredContent.value, trimmedQuery),
                 bookOrder: getBookOrder(title ?? ""),
             };
 
@@ -90,7 +91,7 @@ export const useGetNostrSearchResults = (query: string) => {
         return () => {
             clearTimeout(timeout);
         };
-    }, [queryString, hagahRelay, filters, query, searchingVerse, searchingTitle, searchingChapter]);
+    }, [queryString, hagahRelay, filters, trimmedQuery, searchingVerse, searchingTitle, searchingChapter]);
 
     return {
         data: searchResults,
