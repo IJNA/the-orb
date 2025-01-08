@@ -56,7 +56,7 @@ const SearchPage = () => {
             query &&
             searchResults?.map((item) => (
                 <div key={`${item.id}`}>
-                    <Highlighter highlightClassName={styles.boldText} searchWords={[query]} autoEscape={true} textToHighlight={item.value} />
+                    <Highlighter highlightClassName={styles.boldText} searchWords={[query.trim()]} autoEscape={true} textToHighlight={item.value} />
                 </div>
             )),
         [query, searchResults]
