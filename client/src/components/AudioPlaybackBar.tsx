@@ -122,8 +122,8 @@ export const AudioPlaybackBar = () => {
             const visibleVerse = verses[findVisibleVerseIndex()];
             const currentVerse = verses[currentVerseIndex];
 
-            if (verses.length > 0 && (currentVerse !== undefined || visibleVerse !== undefined)) {
-                startReadingFromVerse((currentVerse || visibleVerse)!);
+            if (verses.length > 0 && (visibleVerse !== undefined)) {
+                startReadingFromVerse(visibleVerse);
             }
         }
     };
