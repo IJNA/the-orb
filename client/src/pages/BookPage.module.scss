@@ -87,3 +87,76 @@ data {
         padding: 32px 0 172px 0;
     }
 }
+
+.selectionContent {
+    transform-origin: var(--selection-popover-content-transform-origin);
+    animation: scaleIn 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+.toolbarRoot {
+	display: flex;
+	width: 100%;
+	min-width: max-content;
+	border-radius: 6px;
+	background-color: white;
+	box-shadow: 0px 4px 10px 4px #00000026;
+}
+.toolbarSeparator {
+	width: 1px;
+	background-color: #00000026;
+	margin: 0 10px;
+}
+.toolbarToggleItem,
+.toolbarLink,
+.toolbarButton {
+	flex: 0 0 auto;
+	color: black;
+	height: 25px;
+	padding: 0 5px;
+	border-radius: 4px;
+	display: inline-flex;
+	font-size: 13px;
+	line-height: 1;
+	align-items: center;
+	justify-content: center;
+}
+.toolbarToggleItem:hover,
+.toolbarLink:hover,
+.toolbarButton:hover {
+	background-color: var(--violet-3);
+	color: black;
+}
+.toolbarToggleItem:focus,
+.toolbarLink:focus,
+.toolbarButton:focus {
+	position: relative;
+	box-shadow: 0 0 0 2px black;
+}
+
+@media (min-width: 520px) {
+	.ToolbarLink {
+		display: inline-flex;
+	}
+}
+
+.toolbarButton {
+	padding-left: 10px;
+	padding-right: 10px;
+	color: black;
+	background-color: white;
+}
+.toolbarButton:hover {
+	background-color: gray;
+	color: white;
+}

@@ -10,11 +10,13 @@ import Header from "./components/Header";
 import Navbar from "./components/Navbar";
 import Account from "./components/Account";
 import { useNostrHooks } from "nostr-hooks";
+import { ToastContainer } from "react-toastify";
 
 function App() {
     useNostrHooks();
     return (
         <Router>
+            <ToastContainer />
             <Header />
             <Routes>
                 <Route path="/" element={<HomePage />} />
