@@ -48,3 +48,6 @@ amplifytools.xcconfig
 .secret-*
 **.sample
 #amplify-do-not-edit-end
+client/certificates/localhost+2-key.pem
+client/certificates/localhost+2-key.pem
+client/certificates/localhost+2.pem

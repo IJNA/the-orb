@@ -1,19 +1,25 @@
-import React, { Suspense, useEffect, useMemo, useRef, useState, type MutableRefObject } from 'react';
-import 'bulma/css/bulma.min.css';
-import styles from './BookPage.module.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { Link, useParams } from 'react-router-dom';
-import { useCurrentBook, useCurrentSection } from '../hooks/BookMapHooks';
-import { Container } from 'react-bulma-components';
-import { formatChapterEvents } from '../utils/NostrUtils';
-import { useHagahStore } from '../HagahStore';
-import { findChaptersByBookTitle, normalizeBookTitle } from '../utils/BookSectionMap';
-import { useBookmarker } from '../hooks/Bookmarker';
-import { kinds } from 'nostr-tools';
-import { HAGAH_PUBKEY, HAGAH_RELAY } from '../Constants';
-import { useSubscribe } from 'nostr-hooks';
-import { AudioPlaybackBar } from '../components/AudioPlaybackBar';
+import React, { useCallback, useEffect, useMemo, useRef, type MutableRefObject, useState } from "react";
+import "bulma/css/bulma.min.css";
+import styles from "./BookPage.module.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight, faShareFromSquare, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { Link, useParams } from "react-router-dom";
+import { useCurrentBook, useCurrentSection } from "../hooks/BookMapHooks";
+import { Button, Container } from "react-bulma-components";
+import { formatChapterEvents } from "../utils/NostrUtils";
+import { useHagahStore } from "../HagahStore";
+import { findChaptersByBookTitle, normalizeBookTitle } from "../utils/BookSectionMap";
+import { useBookmarker } from "../hooks/Bookmarker";
+import { kinds } from "nostr-tools";
+import { HAGAH_PUBKEY, HAGAH_RELAY } from "../Constants";
+import { useSubscribe } from "nostr-hooks";
+import { AudioPlaybackBar } from "../components/AudioPlaybackBar";
+import { useTextSelection } from "../hooks/useTextSelection";
+import * as Selection from "selection-popover";
+import * as Toolbar from "@radix-ui/react-toolbar";
+import { shareContent } from "../utils/ShareHandler";
+import { isMobile } from "../utils/DeviceDetection";
+import { toast } from "react-toastify";
 
 function BookPage() {
     const { book } = useParams();
@@ -110,7 +116,7 @@ function BookPage() {
 const RenderScripture = ({ data }: { data: string[] }) => {
     const { selectedChapter, selectedVerse } = useParams();
     const currentBook = useCurrentBook();
-    const bookTitle = currentBook ? normalizeBookTitle(currentBook?.title) : '';
+    const bookTitle = currentBook ? normalizeBookTitle(currentBook?.title) ?? "" : "";
     const chapters = useMemo(() => (data?.length > 0 ? data.map((d) => JSON.parse(d)) : null), [data]);
     const verseRefs = useRef<{ [x: string]: HTMLElement }>({});
     const bookmarks = useHagahStore((state) => state.bookmarks);
@@ -198,6 +204,43 @@ const BookChapter = ({
     index: number;
     verseRefs: MutableRefObject<{ [x: string]: any }>;
 }) => {
+    const { textSelection } = useTextSelection(currentBook ?? "");
+    const [copiedSuccess, setCopiedSuccess] = useState(false);
+    const [showMobileToolbar, setShowMobileToolbar] = useState(false);
+
+    const handleShare = useCallback(async () => {
+        if (!textSelection) return;
+
+        try {
+            await shareContent(textSelection);
+            setCopiedSuccess(true);
+
+            setTimeout(() => {
+                setCopiedSuccess(false);
+                if (isMobile) setShowMobileToolbar(false);
+            }, 1500);
+        } catch (err) {
+            console.error("Share error:", err);
+            toast.error("Failed to share passage");
+        }
+    }, [textSelection]);
+
+    useEffect(() => {
+        if (isMobile) {
+            const handleSelectionChange = () => {
+                const selection = window.getSelection();
+                if (selection && selection.toString().trim()) {
+                    setShowMobileToolbar(true);
+                } else {
+                    setShowMobileToolbar(false);
+                }
+            };
+
+            document.addEventListener("selectionchange", handleSelectionChange);
+            return () => document.removeEventListener("selectionchange", handleSelectionChange);
+        }
+    }, []);
+
     const chapterNumber = index + 1;
 
     const passages = chapterContent.reduce((acc: any[], content: ChapterItem) => {
@@ -225,22 +268,68 @@ const BookChapter = ({
     }, []);
 
     return (
-        <div>
-            {passages.map((passage, index) => (
-                <div className={styles.passage} key={index}>
-                    {passage.map((verse: { verse: string; value: string }, passageIndex: number) => {
-                        const verseId = `${bookTitle}-${chapterNumber}-${verse.verse}`;
-                        return verse?.value?.trim() ? (
-                            <div key={passageIndex}>
-                                <span ref={(el) => (verseRefs.current[verseId] = el)} className={`verse ${verseId}`}>
-                                    {verse.value}
-                                </span>
+        <>
+            {!isMobile ? (
+                <Selection.Root>
+                    <Selection.Trigger>
+                        {passages.map((passage, index) => (
+                            <div className={styles.passage} key={index}>
+                                {passage.map((verse: { verse: string; value: string }, passageIndex: number) => {
+                                    const verseId = `${bookTitle}-${chapterNumber}-${verse.verse}`;
+                                    return verse?.value?.trim() ? (
+                                        <div key={passageIndex}>
+                                            <span ref={(el) => (verseRefs.current[verseId] = el)} className={`verse ${verseId}`}>
+                                                {verse.value}
+                                            </span>
+                                        </div>
+                                    ) : null;
+                                })}
                             </div>
-                        ) : null;
-                    })}
-                </div>
-            ))}
-        </div>
+                        ))}
+                    </Selection.Trigger>
+                    <Selection.Portal>
+                        <Selection.Content className={styles.selectionContent}>
+                            <Toolbar.Root className={styles.toolbarRoot}>
+                                <span className={styles.toolbarText}>{textSelection?.passage}</span>
+
+                                <Toolbar.Separator className={styles.toolbarSeparator} />
+                                <Toolbar.Button onClick={handleShare} style={{ border: "none", boxShadow: "none" }}>
+                                    <FontAwesomeIcon fontSize="14px" className={`${styles.toolbarIcon} ${copiedSuccess ? styles.success : ""}`} icon={copiedSuccess ? faCheck : faShareFromSquare} />
+                                </Toolbar.Button>
+                            </Toolbar.Root>
+                            <Selection.Arrow style={{ fill: "white" }} />
+                        </Selection.Content>
+                    </Selection.Portal>
+                </Selection.Root>
+            ) : (
+                <>
+                    {passages.map((passage, index) => (
+                        <div className={styles.passage} key={index}>
+                            {passage.map((verse: { verse: string; value: string }, passageIndex: number) => {
+                                const verseId = `${bookTitle}-${chapterNumber}-${verse.verse}`;
+                                return verse?.value?.trim() ? (
+                                    <div key={passageIndex}>
+                                        <span ref={(el) => (verseRefs.current[verseId] = el)} className={`verse ${verseId}`}>
+                                            {verse.value}
+                                        </span>
+                                    </div>
+                                ) : null;
+                            })}
+                        </div>
+                    ))}
+
+                    {/* Mobile toolbar*/}
+                    {showMobileToolbar && textSelection && (
+                        <div className={styles.mobileToolbar}>
+                            <span className={styles.toolbarText}>{textSelection.passage}</span>
+                            <button onClick={handleShare} className={styles.mobileShareButton}>
+                                <FontAwesomeIcon className={`${styles.toolbarIcon} ${copiedSuccess ? styles.success : ""}`} icon={copiedSuccess ? faCheck : faShareFromSquare} />
+                            </button>
+                        </div>
+                    )}
+                </>
+            )}
+        </>
     );
 };
 

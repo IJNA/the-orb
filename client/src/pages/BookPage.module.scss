@@ -87,3 +87,124 @@ data {
         padding: 32px 0 172px 0;
     }
 }
+
+.selectionContent {
+    transform-origin: var(--selection-popover-content-transform-origin);
+    animation: scaleIn 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+.toolbarRoot {
+	display: flex;
+    padding: 10px;
+	width: 100%;
+	min-width: max-content;
+	border-radius: 6px;
+	background-color: white;
+	box-shadow: 0px 4px 10px 4px #00000026;
+}
+.toolbarSeparator {
+	width: 1px;
+	background-color: #00000026;
+	margin: 0 10px;
+}
+.toolbarToggleItem,
+.toolbarText,
+.toolbarButton {
+	flex: 0 0 auto;
+	color: black;
+	height: 25px;
+	padding: 0 5px;
+	border-radius: 4px;
+	display: inline-flex;
+	font-size: 14px;
+	line-height: 1;
+	align-items: center;
+	justify-content: center;
+}
+.toolbarToggleItem:hover,
+.toolbarLink:hover,
+.toolbarButton:hover {
+	background-color: var(--violet-3);
+	color: black;
+}
+.toolbarToggleItem:focus,
+.toolbarLink:focus,
+.toolbarButton:focus {
+	position: relative;
+	box-shadow: 0 0 0 2px black;
+}
+
+@media (min-width: 520px) {
+	.toolbarText {
+		display: inline-flex;
+	}
+}
+
+.toolbarButton {
+	padding-left: 10px;
+	padding-right: 10px;
+	color: black;
+	background-color: white;
+}
+.toolbarButton:hover {
+	background-color: gray;
+	color: white;
+}
+
+.toolbarIcon {
+  transition: all 0.3s ease;
+  
+  &.success {
+    color: #48c774;
+    transform: scale(1.1);
+  }
+}
+
+.mobileToolbar {
+  position: fixed;
+  bottom: 75px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 96%;
+  background-color: white;
+  border: 2px solid black !important;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  z-index: 1000;
+  animation: slideUp 0.3s ease-out;
+}
+
+.mobileShareButton {
+  background: none;
+  border: none;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translate(-50%, 100%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
