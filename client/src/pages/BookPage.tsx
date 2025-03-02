@@ -46,10 +46,7 @@ function BookPage() {
 
     const relays = useMemo(() => [HAGAH_RELAY], []);
     const [booksCache, setBooksCache] = useHagahStore((state) => [state.booksCache, state.setBooksCache]);
-    const isBookCached = useMemo(
-        () => ids && book && booksCache?.[book]?.length && booksCache[book].length >= ids.length,
-        [booksCache, ids?.length]
-    );
+    const isBookCached = useMemo(() => ids && book && booksCache?.[book]?.length && booksCache[book].length >= ids.length, [booksCache, ids?.length]);
     const { events } = useSubscribe({ filters, relays, enabled: !isBookCached });
 
     useEffect(() => {
@@ -68,19 +65,14 @@ function BookPage() {
         return book && isBookCached ? booksCache[book] : formatChapterEvents(events);
     }, [booksCache, book, events]);
 
-    if (chapters && ids && chapters?.length < ids?.length) return <div className='loader' />;
+    if (chapters && ids && chapters?.length < ids?.length) return <div className="loader" />;
 
     return (
         <div>
             <div className={styles.bookPageContainer}>
-                <Container
-                    className={styles.bookPageHeaderContainer}
-                    display='flex'
-                    flexDirection='row'
-                    alignItems='baseline'
-                >
+                <Container className={styles.bookPageHeaderContainer} display="flex" flexDirection="row" alignItems="baseline">
                     <h2 className={`${styles.header}`}>{currentBook?.title}</h2>
-                    {!chapters ? <div className='loader' /> : null}
+                    {!chapters ? <div className="loader" /> : null}
                 </Container>
                 {chapters && chapters.length > 0 ? (
                     <Container>
@@ -89,7 +81,7 @@ function BookPage() {
                                 <RenderScripture data={chapters} />
                             </div>
                         </div>
-                        <div className='has-text-centered mb-4'>
+                        <div className="has-text-centered mb-4">
                             {currentBook?.nextRoute ? (
                                 <Link to={currentBook.nextRoute}>
                                     <button className={`button is-large ${styles.button}`}>
@@ -124,35 +116,48 @@ const RenderScripture = ({ data }: { data: string[] }) => {
 
     useBookmarker();
 
+    // useEffect(() => {
+    //     // Add share button to iOS selection menu
+    //     if (isMobile) {
+    //         const addShareButton = async () => {
+    //             if (textSelection && navigator.canShare()) {
+    //                 await navigator.share({
+    //                     text: `"${textSelection.text}"\n\n${textSelection.url}`,
+    //                 });
+    //             }
+    //         };
+
+    //         document.addEventListener("selectionchange", addShareButton);
+    //         return () => document.removeEventListener("selectionchange", addShareButton);
+    //     }
+    // }, [textSelection]);
+
     useEffect(() => {
         if (selectedChapter && selectedVerse) {
             const verseId = `${bookTitle}-${selectedChapter}-${selectedVerse}`;
 
             // Check if the verseRef exists before scrolling into view and applying highlight
             if (verseRefs.current[verseId]) {
-                verseRefs.current[verseId]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                verseRefs.current[verseId].classList.add('has-background-warning');
+                verseRefs.current[verseId]?.scrollIntoView({ behavior: "smooth", block: "center" });
+                verseRefs.current[verseId].classList.add("has-background-warning");
             }
 
             // Remove the highlight after user interacts with it
             const handleUserInteraction = () => {
                 if (verseRefs.current[verseId]) {
-                    verseRefs.current[verseId].classList.remove('has-background-warning');
-
-                    // May want to do this in the future - remove the linked verse from the url after interaction
-                    // navigate(currentBook.route);
+                    verseRefs.current[verseId].classList.remove("has-background-warning");
                 }
             };
 
             const attachListeners = () => {
-                window.addEventListener('click', handleUserInteraction);
-                window.addEventListener('touchstart', handleUserInteraction);
+                window.addEventListener("click", handleUserInteraction);
+                window.addEventListener("touchstart", handleUserInteraction);
             };
 
             attachListeners();
             return () => {
-                window.removeEventListener('click', handleUserInteraction);
-                window.removeEventListener('touchstart', handleUserInteraction);
+                window.removeEventListener("click", handleUserInteraction);
+                window.removeEventListener("touchstart", handleUserInteraction);
             };
         } else {
             if (!bookmarkedElement) {
@@ -172,15 +177,9 @@ const RenderScripture = ({ data }: { data: string[] }) => {
 
     return (
         currentBook && (
-            <div className={`book ${normalizeBookTitle(currentBook.title)}`}>
+            <div onContextMenu={(e) => e.preventDefault()} className={`book ${normalizeBookTitle(currentBook.title)}`}>
                 {chapters?.map((chapterContent, index) => (
-                    <BookChapter
-                        bookTitle={normalizeBookTitle(currentBook.title)}
-                        chapterContent={chapterContent}
-                        key={index}
-                        index={index}
-                        verseRefs={verseRefs}
-                    />
+                    <BookChapter currentBook={currentBook} bookTitle={normalizeBookTitle(currentBook?.title) ?? ""} chapterContent={chapterContent} key={index} index={index} verseRefs={verseRefs} />
                 ))}
             </div>
         )
@@ -194,11 +193,13 @@ type ChapterItem = {
 };
 
 const BookChapter = ({
+    currentBook,
     bookTitle,
     chapterContent,
     index,
     verseRefs,
 }: {
+    currentBook: { route: string; title: string };
     bookTitle: string;
     chapterContent: ChapterItem[];
     index: number;
@@ -245,14 +246,14 @@ const BookChapter = ({
 
     const passages = chapterContent.reduce((acc: any[], content: ChapterItem) => {
         // If we encounter a "start," we either close the previous passage or start a new one
-        if (content.type.includes('start')) {
+        if (content.type.includes("start")) {
             // If there's an open passage, mark it as complete
             if (acc.length > 0 && acc[acc.length - 1].length > 0) {
                 acc.push([]); // Create a new empty passage for the new "start"
             } else {
                 acc.push([content]); // Start new passage with the current "start" content
             }
-        } else if (content.type.includes('text') || content.type.includes('end')) {
+        } else if (content.type.includes("text") || content.type.includes("end")) {
             // If passage is open, add text or end to it
             if (acc.length === 0) {
                 acc.push([]); // Create a new passage if none exists
@@ -260,7 +261,7 @@ const BookChapter = ({
             acc[acc.length - 1].push(content);
 
             // If it's an "end," finalize the current passage
-            if (content.type.includes('end')) {
+            if (content.type.includes("end")) {
                 acc.push([]); // Prepare for the next potential passage
             }
         }
