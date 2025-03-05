@@ -8,10 +8,11 @@ export interface ShareData {
 }
 
 export const shareContent = async ({ passage, text, url }: ShareData) => {
+    // Format with quoted text, two line breaks, then URL
     const formattedContent = `"${text}"\n\n${url}`;
 
     try {
-        // Try native sharing first if available (mobile devices)
+        // On mobile, use native share sheet
         if (isMobile && navigator.share) {
             try {
                 await navigator.share({
@@ -21,13 +22,13 @@ export const shareContent = async ({ passage, text, url }: ShareData) => {
                 return;
             } catch (err) {
                 if (err instanceof Error && err.name === "AbortError") {
-                    return;
+                    return; // User cancelled sharing
                 }
                 console.error("Native share failed, falling back to clipboard");
             }
         }
 
-        // Clipboard fallback
+        // Clipboard fallback for desktop or if native sharing fails
         await navigator.clipboard.writeText(formattedContent);
         toast.success("Passage copied to clipboard!");
     } catch (err) {

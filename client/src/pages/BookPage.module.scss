@@ -106,6 +106,7 @@ data {
 
 .toolbarRoot {
 	display: flex;
+    padding: 10px;
 	width: 100%;
 	min-width: max-content;
 	border-radius: 6px;
@@ -118,7 +119,7 @@ data {
 	margin: 0 10px;
 }
 .toolbarToggleItem,
-.toolbarLink,
+.toolbarText,
 .toolbarButton {
 	flex: 0 0 auto;
 	color: black;
@@ -126,7 +127,7 @@ data {
 	padding: 0 5px;
 	border-radius: 4px;
 	display: inline-flex;
-	font-size: 13px;
+	font-size: 14px;
 	line-height: 1;
 	align-items: center;
 	justify-content: center;
@@ -145,7 +146,7 @@ data {
 }
 
 @media (min-width: 520px) {
-	.ToolbarLink {
+	.toolbarText {
 		display: inline-flex;
 	}
 }
@@ -159,4 +160,51 @@ data {
 .toolbarButton:hover {
 	background-color: gray;
 	color: white;
+}
+
+.toolbarIcon {
+  transition: all 0.3s ease;
+  
+  &.success {
+    color: #48c774;
+    transform: scale(1.1);
+  }
+}
+
+.mobileToolbar {
+  position: fixed;
+  bottom: 75px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 96%;
+  background-color: white;
+  border: 2px solid black !important;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  z-index: 1000;
+  animation: slideUp 0.3s ease-out;
+}
+
+.mobileShareButton {
+  background: none;
+  border: none;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translate(-50%, 100%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
 }

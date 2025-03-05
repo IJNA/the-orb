@@ -21,9 +21,11 @@ export const useTextSelection = (currentBook: { route: string; title: string }) 
                 const [, chapterId, verseId] = verseElement?.classList.item(1)?.split("-") ?? [];
 
                 if (chapterId && verseId) {
+                    const shareUrl = `${window.location.origin}${currentBook.route}/${chapterId}/${verseId}`;
+
                     setTextSelection({
-                        text: selectedText,
-                        url: `${window.location.origin}${currentBook.route}/${chapterId}/${verseId}`,
+                        text: selectedText.length < (verseElement?.textContent?.length ?? 0) ? verseElement?.textContent ?? "" : selectedText,
+                        url: shareUrl,
                         passage: `${currentBook.title} ${chapterId}:${verseId}`,
                     });
                 }
@@ -37,7 +39,7 @@ export const useTextSelection = (currentBook: { route: string; title: string }) 
         return () => {
             document.removeEventListener("selectionchange", handleSelection);
         };
-    }, [currentBook, textSelection]);
+    }, [currentBook]);
 
     return { textSelection };
 };

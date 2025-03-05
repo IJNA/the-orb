@@ -81,7 +81,7 @@ const SearchPage = () => {
                         </Link>
                     </span>
 
-                    {!!query && (isSearching && !endSearch)? (
+                    {!!query && isSearching && !endSearch ? (
                         <span className="icon is-medium is-right">
                             <div className="loader" />
                         </span>
@@ -131,8 +131,9 @@ const SearchPage = () => {
                                         key={`${item.id}`}
                                         query={query}
                                         reference={`${book.title} ${item.chapter}:${item.verse}`}
-                                        text={verseSummary[index]}
+                                        textElement={verseSummary[index]}
                                         route={`${book.route}/${item.chapter}/${item.verse}`}
+                                        text={item.value}
                                     />
                                 );
                             })}
