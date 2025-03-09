@@ -11,7 +11,7 @@ export const useBookmarker = () => {
 
     useEffect(() => {
         const saveBookmark = () => {
-            const isScrollbarAtTop =  window.scrollY === 0;
+            const isScrollbarAtTop = window.scrollY === 0;
             const bookmarkedPassageClassName = visibleElementsRef.current.size > 0 ? [...visibleElementsRef.current][0].className : null;
 
             if (currentBook && bookmarkedPassageClassName) {

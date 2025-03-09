@@ -9,7 +9,7 @@ export interface ShareData {
 
 export const shareContent = async ({ passage, text, url }: ShareData) => {
     // Format with quoted text, two line breaks, then URL
-    const formattedContent = `"${text}"\n\n${url}`;
+    const formattedContent = `"${text}"\n\nShared from:\n${url}`;
 
     try {
         // On mobile, use native share sheet
