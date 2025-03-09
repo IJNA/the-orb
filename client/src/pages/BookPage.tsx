@@ -20,6 +20,7 @@ import * as Toolbar from "@radix-ui/react-toolbar";
 import { shareContent } from "../utils/ShareHandler";
 import { isMobile } from "../utils/DeviceDetection";
 import { toast } from "react-toastify";
+import { useVerseNavigation } from "../hooks/useVerseNavigation";
 
 function BookPage() {
     const { book } = useParams();
@@ -106,80 +107,17 @@ function BookPage() {
 }
 
 const RenderScripture = ({ data }: { data: string[] }) => {
-    const { selectedChapter, selectedVerse } = useParams();
     const currentBook = useCurrentBook();
     const bookTitle = currentBook ? normalizeBookTitle(currentBook?.title) ?? "" : "";
     const chapters = useMemo(() => (data?.length > 0 ? data.map((d) => JSON.parse(d)) : null), [data]);
-    const verseRefs = useRef<{ [x: string]: HTMLElement }>({});
-    const bookmarks = useHagahStore((state) => state.bookmarks);
-    const bookmarkedElement = useMemo(() => bookmarks[bookTitle], [bookmarks, bookTitle]);
 
     useBookmarker();
-
-    // useEffect(() => {
-    //     // Add share button to iOS selection menu
-    //     if (isMobile) {
-    //         const addShareButton = async () => {
-    //             if (textSelection && navigator.canShare()) {
-    //                 await navigator.share({
-    //                     text: `"${textSelection.text}"\n\n${textSelection.url}`,
-    //                 });
-    //             }
-    //         };
-
-    //         document.addEventListener("selectionchange", addShareButton);
-    //         return () => document.removeEventListener("selectionchange", addShareButton);
-    //     }
-    // }, [textSelection]);
-
-    useEffect(() => {
-        if (selectedChapter && selectedVerse) {
-            const verseId = `${bookTitle}-${selectedChapter}-${selectedVerse}`;
-
-            // Check if the verseRef exists before scrolling into view and applying highlight
-            if (verseRefs.current[verseId]) {
-                verseRefs.current[verseId]?.scrollIntoView({ behavior: "smooth", block: "center" });
-                verseRefs.current[verseId].classList.add("has-background-warning");
-            }
-
-            // Remove the highlight after user interacts with it
-            const handleUserInteraction = () => {
-                if (verseRefs.current[verseId]) {
-                    verseRefs.current[verseId].classList.remove("has-background-warning");
-                }
-            };
-
-            const attachListeners = () => {
-                window.addEventListener("click", handleUserInteraction);
-                window.addEventListener("touchstart", handleUserInteraction);
-            };
-
-            attachListeners();
-            return () => {
-                window.removeEventListener("click", handleUserInteraction);
-                window.removeEventListener("touchstart", handleUserInteraction);
-            };
-        } else {
-            if (!bookmarkedElement) {
-                window.scrollTo(0, 0);
-                return;
-            }
-            const bookmarkedElementRef = document.getElementsByClassName(bookmarkedElement)[0];
-
-            // Scroll to the element right before the bookmark if it exists
-            if (bookmarkedElementRef?.previousElementSibling) {
-                bookmarkedElementRef?.previousElementSibling.scrollIntoView();
-            } else {
-                bookmarkedElementRef?.scrollIntoView();
-            }
-        }
-    }, [bookTitle, bookmarkedElement, selectedChapter, selectedVerse]);
 
     return (
         currentBook && (
             <div onContextMenu={(e) => e.preventDefault()} className={`book ${normalizeBookTitle(currentBook.title)}`}>
                 {chapters?.map((chapterContent, index) => (
-                    <BookChapter currentBook={currentBook} bookTitle={normalizeBookTitle(currentBook?.title) ?? ""} chapterContent={chapterContent} key={index} index={index} verseRefs={verseRefs} />
+                    <BookChapter currentBook={currentBook} bookTitle={bookTitle} chapterContent={chapterContent} key={index} index={index} />
                 ))}
             </div>
         )
@@ -192,22 +130,22 @@ type ChapterItem = {
     value: string;
 };
 
-const BookChapter = ({
-    currentBook,
-    bookTitle,
-    chapterContent,
-    index,
-    verseRefs,
-}: {
-    currentBook: { route: string; title: string };
-    bookTitle: string;
-    chapterContent: ChapterItem[];
-    index: number;
-    verseRefs: MutableRefObject<{ [x: string]: any }>;
-}) => {
+const BookChapter = ({ currentBook, bookTitle, chapterContent, index }: { currentBook: { route: string; title: string }; bookTitle: string; chapterContent: ChapterItem[]; index: number }) => {
     const { textSelection } = useTextSelection(currentBook ?? "");
     const [copiedSuccess, setCopiedSuccess] = useState(false);
     const [showMobileToolbar, setShowMobileToolbar] = useState(false);
+    const { selectedChapter, selectedVerse } = useParams();
+    const bookmarks = useHagahStore((state) => state.bookmarks);
+    const bookmarkedElement = useMemo(() => bookmarks[bookTitle], [bookmarks, bookTitle]);
+    const verseRefs = useRef<{ [x: string]: HTMLElement }>({});
+
+    useVerseNavigation({
+        bookTitle,
+        selectedChapter: selectedChapter ?? "",
+        selectedVerse: selectedVerse ?? "",
+        verseRefs,
+        bookmarkedElement,
+    });
 
     const handleShare = useCallback(async () => {
         if (!textSelection) return;
@@ -244,29 +182,33 @@ const BookChapter = ({
 
     const chapterNumber = index + 1;
 
-    const passages = chapterContent.reduce((acc: any[], content: ChapterItem) => {
-        // If we encounter a "start," we either close the previous passage or start a new one
-        if (content.type.includes("start")) {
-            // If there's an open passage, mark it as complete
-            if (acc.length > 0 && acc[acc.length - 1].length > 0) {
-                acc.push([]); // Create a new empty passage for the new "start"
-            } else {
-                acc.push([content]); // Start new passage with the current "start" content
-            }
-        } else if (content.type.includes("text") || content.type.includes("end")) {
-            // If passage is open, add text or end to it
-            if (acc.length === 0) {
-                acc.push([]); // Create a new passage if none exists
-            }
-            acc[acc.length - 1].push(content);
+    const passages = useMemo(
+        () =>
+            chapterContent.reduce((acc: any[], content: ChapterItem) => {
+                // If we encounter a "start," we either close the previous passage or start a new one
+                if (content.type.includes("start")) {
+                    // If there's an open passage, mark it as complete
+                    if (acc.length > 0 && acc[acc.length - 1].length > 0) {
+                        acc.push([]); // Create a new empty passage for the new "start"
+                    } else {
+                        acc.push([content]); // Start new passage with the current "start" content
+                    }
+                } else if (content.type.includes("text") || content.type.includes("end")) {
+                    // If passage is open, add text or end to it
+                    if (acc.length === 0) {
+                        acc.push([]); // Create a new passage if none exists
+                    }
+                    acc[acc.length - 1].push(content);
 
-            // If it's an "end," finalize the current passage
-            if (content.type.includes("end")) {
-                acc.push([]); // Prepare for the next potential passage
-            }
-        }
-        return acc;
-    }, []);
+                    // If it's an "end," finalize the current passage
+                    if (content.type.includes("end")) {
+                        acc.push([]); // Prepare for the next potential passage
+                    }
+                }
+                return acc;
+            }, []),
+        [chapterContent]
+    );
 
     return (
         <>
@@ -279,7 +221,7 @@ const BookChapter = ({
                                     const verseId = `${bookTitle}-${chapterNumber}-${verse.verse}`;
                                     return verse?.value?.trim() ? (
                                         <div key={passageIndex}>
-                                            <span ref={(el) => (verseRefs.current[verseId] = el)} className={`verse ${verseId}`}>
+                                            <span ref={(el) => (verseRefs.current[verseId] = el as HTMLElement)} className={`verse ${verseId}`}>
                                                 {verse.value}
                                             </span>
                                         </div>
@@ -310,7 +252,7 @@ const BookChapter = ({
                                 const verseId = `${bookTitle}-${chapterNumber}-${verse.verse}`;
                                 return verse?.value?.trim() ? (
                                     <div key={passageIndex}>
-                                        <span ref={(el) => (verseRefs.current[verseId] = el)} className={`verse ${verseId}`}>
+                                        <span ref={(el) => (verseRefs.current[verseId] = el as HTMLElement)} className={`verse ${verseId}`}>
                                             {verse.value}
                                         </span>
                                     </div>
