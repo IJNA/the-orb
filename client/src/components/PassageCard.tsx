@@ -29,7 +29,7 @@ export const PassageCard = ({ reference, textElement, route, text }: { reference
                 </div>
                 <div className="content">{textElement}</div>
             </Card.Content>
-            <Card.Footer id="cardReadContainer">
+            <Card.Footer className={styles.passageCardFooter}>
                 <Card.Footer.Item>
                     <Link to={route}>Read</Link>
                 </Card.Footer.Item>

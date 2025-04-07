@@ -1,0 +1,134 @@
+body {
+    font-family: "Roboto", Arial, sans-serif;
+}
+
+.searchHeader {
+    width: 90.9vw;
+    max-width: 600px;
+    font-family: Inter;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 38.4px;
+    text-align: center;
+    color: #000000;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    margin-bottom: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+    background-color: white;
+    padding: 10px 0;
+}
+
+.searchPageContainer {
+    width: 100%;
+    margin-top: 52px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative; /* For absolute positioning of children */
+    overflow: visible; /* Allow sticky elements to work properly */
+}
+
+.searchHeaderText {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.resultsContainer {
+    width: 90vw;
+    max-width: 600px;
+    align-items: center;
+    margin-top: 10px;
+    overflow-y: auto;
+    position: relative;
+    margin-bottom: 56px;
+}
+
+.tabGroup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    position: relative;
+
+}
+
+.tabList {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    width: 90.9vw;
+    max-width: 600px;
+    gap: 5px;
+    overflow: auto;
+    padding: 10px;
+    position: sticky;
+    top: 50px;
+    z-index: 999;
+    background-color: white;
+    padding-bottom: 5px;
+}
+
+.boldText {
+    font-weight: bold;
+    background-color: transparent;
+    font-style: italic;
+}
+
+.searchContentContainer {
+
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    margin-bottom: 20px; 
+}
+
+.loadingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.tabButton {
+    border-radius: 0;
+}
+
+.tabButton:hover {
+    background-color: #444444 !important;
+    color: #ffffff !important;
+}
+
+.tabButton:focus {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.tabButton:focus-visible {
+    border: none !important;
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Add styles for TabPanel */
+:global([role="tabpanel"]) {
+    overflow-y: auto;
+    padding-bottom: 20px;
+    position: relative;
+}
+
+
