@@ -10,22 +10,22 @@ function Navbar() {
     const { pathname } = useLocation();
     const { triggerSearchFocus, setSearchFocus } = useHagahStore();
     // Set default active item to 'Bible'
-    const [activeItem, setActiveItem] = useState('/');
+    const [activeItem, setActiveItem] = useState("/");
 
     const navItems = [
-        { path: '/', icon: faBookOpen, label: 'Bible' },
-        { path: '/search', icon: faMagnifyingGlass, label: 'Discover' },
-        { path: '/account', icon: faUser, label: 'You' },
+        { path: "/", icon: faBookOpen, label: "Bible" },
+        { path: "/search", icon: faMagnifyingGlass, label: "Discover" },
+        { path: "/account", icon: faUser, label: "You" },
     ];
 
     useEffect(() => {
-        setSearchFocus(false)
+        setSearchFocus(false);
     }, [triggerSearchFocus]);
 
     const handleNavClick = (path) => {
         setActiveItem(path);
-        if (pathname === '/search') {
-            setSearchFocus(true)
+        if (pathname === "/search") {
+            setSearchFocus(true);
         }
     };
 
@@ -36,7 +36,7 @@ function Navbar() {
                     key={item.path}
                     to={item.path}
                     onClick={() => handleNavClick(item.path)} // Update active item on click
-                    className={`${styles.navItem} ${activeItem === item.path ? styles.active : ''}`}
+                    className={`${styles.navItem} ${activeItem === item.path ? styles.active : ""}`}
                 >
                     <FontAwesomeIcon icon={item.icon} className={`${styles.navIcon}`} />
                     <span className={`${styles.navText}`}>{item.label}</span>

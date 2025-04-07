@@ -3,7 +3,7 @@ import "bulma/css/bulma.min.css";
 import styles from "./SearchPage.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { PassageCard } from "../components/PassageCard";
 import { Container } from "react-bulma-components";
 import { useGetNostrSearchResults } from "../utils/Queries";
@@ -12,6 +12,7 @@ import Highlighter from "react-highlight-words";
 import { faTimes } from "../../node_modules/@fortawesome/free-solid-svg-icons/index.js";
 import { BookSectionMap } from "../utils/BookSectionMap";
 import { useHagahStore } from "../HagahStore";
+import { ArrowRight } from "phosphor-react";
 
 const SearchPage = () => {
     const [searchInput, setSearchInput] = useState("");
@@ -21,6 +22,8 @@ const SearchPage = () => {
     const { triggerSearchFocus, setSearchFocus } = useHagahStore();
     const searchInputRef = useRef(null);
     const endSearch = useMemo(() => searchTimeout || searchResults?.length >= 10, [searchTimeout, searchResults]);
+    const truncatedResults = useMemo(() => searchResults?.slice(0, 10), [searchResults]);
+
     useEffect(() => {
         const scrollToTop = () => {
             window.scrollTo(0, 0);
@@ -54,8 +57,8 @@ const SearchPage = () => {
     const verseSummary = useMemo(
         () =>
             query &&
-            searchResults?.map((item) => (
-                <div key={`${item.id}`}>
+            searchResults?.map((item, index) => (
+                <div key={index}>
                     <Highlighter highlightClassName={styles.boldText} searchWords={[query.trim()]} autoEscape={true} textToHighlight={item.value} />
                 </div>
             )),
@@ -108,7 +111,7 @@ const SearchPage = () => {
                 )}
             </div>
 
-            {query && searchResults && (
+            {query && truncatedResults && (
                 <div className={styles.resultsContainer}>
                     {bookResults?.length > 0 && (
                         <>
@@ -120,16 +123,15 @@ const SearchPage = () => {
                             ))}
                         </>
                     )}
-                    {searchResults?.length > 0 && (
+                    {truncatedResults?.length > 0 && (
                         <>
                             <h4 className={`title is-4 ${styles.results}`}>Passages</h4>
-                            {searchResults.map((item, index) => {
+                            {truncatedResults.map((item, index) => {
                                 const book = getDetailsByBookTitle(item.title);
                                 if (!book?.route) return null;
                                 return (
                                     <PassageCard
-                                        key={`${item.id}`}
-                                        query={query}
+                                        key={index}
                                         reference={`${book.title} ${item.chapter}:${item.verse}`}
                                         textElement={verseSummary[index]}
                                         route={`${book.route}/${item.chapter}/${item.verse}`}
@@ -140,9 +142,16 @@ const SearchPage = () => {
                         </>
                     )}
 
-                    {query && !isSearching && bookResults?.length === 0 && searchResults?.length === 0 && <p className={`is-size-5 ${styles.noResult}`}>No results found.</p>}
+                    {query && !isSearching && bookResults?.length === 0 && truncatedResults?.length === 0 && <p className={`is-size-5 ${styles.noResult}`}>No results found.</p>}
+                    <Container>{endSearch && <p className="is-size-5 my-5">Showing top 10 results.</p>}</Container>
 
-                    {endSearch && <p className="is-size-5 my-2 has-text-centered">Showing top 10 results.</p>}
+                    {searchResults.length > 10 && !isSearching ? (
+                        <Container className="my-5 ">
+                            <Link className="is-size-5 is-flex is-align-items-center" to={`/search/all?q=${query}`}>
+                                See full results ({searchResults.length})<ArrowRight fontSize={24} />
+                            </Link>
+                        </Container>
+                    ) : null}
                 </div>
             )}
         </Container>

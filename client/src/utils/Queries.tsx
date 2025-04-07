@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { HAGAH_PUBKEY } from "../Constants";
 import { BookSectionMap, getBookTitles } from "./BookSectionMap";
 import { useHagahRelay } from "../hooks/useHagahRelay";
@@ -6,18 +6,24 @@ import { useHagahRelay } from "../hooks/useHagahRelay";
 export const useGetNostrSearchResults = (query: string) => {
     const trimmedQuery = query.trim();
     const { searchingTitle, searchingChapter, searchingVerse, queryString } = parseQuery(trimmedQuery);
-    const [searchResults, setSearchResults] = useState<{
-        title: string;
-        value: string;
-        verse: string;
-        isPerfectMatch: boolean;
-        bookOrder: number;
-    }[]>([]);
+    const [searchResults, setSearchResults] = useState<
+        {
+            title: string;
+            chapter?: string;
+            value: string;
+            verse: string;
+            isPerfectMatch: boolean;
+            bookOrder: number;
+        }[]
+    >([]);
     const [searchState, setSearchState] = useState({
         isLoading: true,
         isQueryEnabled: !!queryString && trimmedQuery?.length > 0,
         searchTimeout: false,
     });
+
+    // Create a ref to track unique results by a composite key
+    const uniqueResultsRef = useRef<Set<string>>(new Set());
 
     const hagahRelay = useHagahRelay();
 
@@ -33,26 +39,26 @@ export const useGetNostrSearchResults = (query: string) => {
     useEffect(() => {
         if (!queryString || !hagahRelay) return;
 
-        // Reset search state
+        // Reset search state and unique results tracking
         setSearchResults([]);
-        setSearchState(prev => ({ 
-            ...prev, 
-            isLoading: true, 
-            isQueryEnabled: true, 
-            searchTimeout: false 
+        uniqueResultsRef.current = new Set();
+        setSearchState((prev) => ({
+            ...prev,
+            isLoading: true,
+            isQueryEnabled: true,
+            searchTimeout: false,
         }));
 
         const subscription = hagahRelay.subscribe(filters, { closeOnEose: true });
 
         subscription.on("event", (event) => {
-            if (searchingTitle && searchingChapter && 
-                (event.tags[0]?.[1] !== searchingTitle || event.tags[2]?.[1] !== searchingChapter)) {
+            if (searchingTitle && searchingChapter && (event.tags[0]?.[1] !== searchingTitle || event.tags[2]?.[1] !== searchingChapter)) {
                 return;
             }
 
             const title = event.tags[0]?.[1];
             const content = JSON.parse(event.content);
-            
+
             const filteredContent = content.filter((item: { type: string; value: string; verse: number }) => {
                 if (item.type !== "paragraph text") return false;
                 if (!searchingVerse) return new RegExp(trimmedQuery, "i").test(item.value);
@@ -61,6 +67,17 @@ export const useGetNostrSearchResults = (query: string) => {
 
             if (!filteredContent) return;
 
+            // Create a unique key for this result
+            const uniqueKey = `${title}-${filteredContent.verse}`;
+
+            // Skip if we've already seen this result
+            if (uniqueResultsRef.current.has(uniqueKey)) {
+                return;
+            }
+
+            // Add to our set of seen results
+            uniqueResultsRef.current.add(uniqueKey);
+
             const result = {
                 title,
                 ...filteredContent,
@@ -68,24 +85,22 @@ export const useGetNostrSearchResults = (query: string) => {
                 bookOrder: getBookOrder(title ?? ""),
             };
 
-            setSearchResults(prev => {
-                const newResults = [...prev, result]
-                    .sort((a, b) => {
-                        if (a.isPerfectMatch && !b.isPerfectMatch) return -1;
-                        if (!a.isPerfectMatch && b.isPerfectMatch) return 1;
-                        return a.bookOrder - b.bookOrder;
-                    })
-                    .slice(0, 10);
+            setSearchResults((prev) => {
+                const newResults = [...prev, result].sort((a, b) => {
+                    if (a.isPerfectMatch && !b.isPerfectMatch) return -1;
+                    if (!a.isPerfectMatch && b.isPerfectMatch) return 1;
+                    return a.bookOrder - b.bookOrder;
+                });
                 return newResults;
             });
         });
 
         subscription.on("eose", () => {
-            setSearchState(prev => ({ ...prev, isLoading: false }));
+            setSearchState((prev) => ({ ...prev, isLoading: false }));
         });
 
         const timeout = setTimeout(() => {
-            setSearchState(prev => ({ ...prev, searchTimeout: true, isLoading: false }));
+            setSearchState((prev) => ({ ...prev, searchTimeout: true, isLoading: false }));
         }, 30000);
 
         return () => {
@@ -101,13 +116,14 @@ export const useGetNostrSearchResults = (query: string) => {
 };
 
 function parseQuery(query: string) {
-    if (!query) return { 
-        type: "invalid", 
-        searchingTitle: null, 
-        searchingChapter: null, 
-        searchingVerse: null, 
-        queryString: null 
-    };
+    if (!query)
+        return {
+            type: "invalid",
+            searchingTitle: null,
+            searchingChapter: null,
+            searchingVerse: null,
+            queryString: null,
+        };
 
     const bookNames = getBookTitles();
     const lowerQuery = query.toLowerCase().trim();
@@ -118,11 +134,9 @@ function parseQuery(query: string) {
 
     if (match) {
         const [_, bookPart, chapter, verse] = match;
-        const normalizedBookName = bookPart?.replace(/^(\d+)\s*/, '$1 ').toLowerCase();
-       
-        const matchedBook = bookNames.find(book => 
-            book.toLowerCase().replace('-', ' ') === normalizedBookName
-        );
+        const normalizedBookName = bookPart?.replace(/^(\d+)\s*/, "$1 ").toLowerCase();
+
+        const matchedBook = bookNames.find((book) => book.toLowerCase().replace("-", " ") === normalizedBookName);
 
         if (matchedBook) {
             return {
@@ -130,10 +144,10 @@ function parseQuery(query: string) {
                 searchingTitle: matchedBook.replace(/-/g, " "),
                 searchingChapter: chapter,
                 searchingVerse: verse,
-                queryString: JSON.stringify({ 
-                    book: matchedBook.replace(/-/g, " "), 
-                    chapter, 
-                    verse 
+                queryString: JSON.stringify({
+                    book: matchedBook.replace(/-/g, " "),
+                    chapter,
+                    verse,
                 }),
             };
         }
@@ -152,7 +166,7 @@ function parseQuery(query: string) {
 function getBookOrder(bookTitle: string): number {
     const bookOrder = BookSectionMap.sections.flatMap((section) => section.books.map((book) => book.title));
     return bookOrder.indexOf(bookTitle);
-};
+}
 
 function isPerfectMatch(text: string, query: string): boolean {
     const normalizedText = text.toLowerCase();
@@ -165,4 +179,4 @@ function isPerfectMatch(text: string, query: string): boolean {
     }
 
     return words.some((word) => word === normalizedQuery);
-};
+}

@@ -11,6 +11,7 @@ import Navbar from "./components/Navbar";
 import Account from "./components/Account";
 import { useNostrHooks } from "nostr-hooks";
 import { ToastContainer } from "react-toastify";
+import { FullSearchPage } from "./pages/FullSearchPage";
 
 function App() {
     useNostrHooks();
@@ -23,6 +24,7 @@ function App() {
                 <Route path="sections" element={<HomePage />} />
                 <Route path="sections/:section" element={<SectionPage />} />
                 <Route path="search" element={<SearchPage />} />
+                <Route path="search/all" element={<FullSearchPage />} />
                 <Route path="sections/:section/:book" element={<BookPage />} />
                 <Route path="sections/:section/:book/:selectedChapter" element={<BookPage />} />
                 <Route path="sections/:section/:book/:selectedChapter/:selectedVerse" element={<BookPage />} />
