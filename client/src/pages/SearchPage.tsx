@@ -3,7 +3,7 @@ import "bulma/css/bulma.min.css";
 import styles from "./SearchPage.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { Link, useLocation, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useSearchParams, useNavigate } from "react-router-dom";
 import { PassageCard } from "../components/PassageCard";
 import { Container } from "react-bulma-components";
 import { useGetNostrSearchResults } from "../utils/Queries";
@@ -18,11 +18,21 @@ const SearchPage = () => {
     const [searchInput, setSearchInput] = useState("");
     const [query, setQuery] = useState("");
     const location = useLocation();
+    const navigate = useNavigate();
     const { data: searchResults, isLoading: isSearching, searchTimeout } = useGetNostrSearchResults(query);
     const { triggerSearchFocus, setSearchFocus } = useHagahStore();
-    const searchInputRef = useRef(null);
+    const searchInputRef = useRef<HTMLInputElement>(null);
     const endSearch = useMemo(() => searchTimeout || searchResults?.length >= 10, [searchTimeout, searchResults]);
     const truncatedResults = useMemo(() => searchResults?.slice(0, 10), [searchResults]);
+
+    useEffect(() => {
+        const searchParams = new URLSearchParams(location.search);
+        const urlQuery = searchParams.get("q");
+        if (urlQuery) {
+            setSearchInput(urlQuery);
+            setQuery(urlQuery);
+        }
+    }, [location.search]);
 
     useEffect(() => {
         const scrollToTop = () => {
@@ -40,16 +50,18 @@ const SearchPage = () => {
     const handleClear = () => {
         setSearchInput("");
         setQuery("");
+        navigate("/search", { replace: true });
     };
 
     const handleSearch = useCallback(
-        (e) => {
+        (e: React.KeyboardEvent<HTMLInputElement>) => {
             if (searchInputRef?.current && e.key === "Enter") {
                 searchInputRef.current.blur();
                 setQuery(searchInput);
+                navigate(`/search?q=${encodeURIComponent(searchInput)}`, { replace: true });
             }
         },
-        [searchInput]
+        [searchInput, navigate]
     );
 
     const bookResults = useMemo(() => (query ? BookSectionMap.sections.flatMap((section) => section.books).filter((book) => book.title.toLowerCase().includes(query.toLowerCase())) : []), [query]);

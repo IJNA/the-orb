@@ -5,6 +5,7 @@ export const BookSectionMap = {
         {
             route: "/sections/the-law",
             title: "The Law (Torah)",
+            name: "Law",
             quote: "The first part of the Hebrew scriptures, sometimes translated as “the instruction,” is comprised of the first five books of the Bible.",
             image: "imageThe_Law",
             books: [
@@ -796,6 +797,7 @@ export const BookSectionMap = {
         {
             route: "/sections/the-prophets",
             title: "The Prophets (Nevi'im)",
+            name: "Prophets",
             quote: "This section of the Hebrew scriptures contains writings and prophetic literature primarily describing the period of the kings in Israel.",
             image: "imageThe_Prophets",
             books: [
@@ -2471,6 +2473,7 @@ export const BookSectionMap = {
         {
             route: "/sections/the-writings",
             title: "The Writings (Ketuvim)",
+            name: "Writings",
             quote: "This section of the Hebrew scriptures contains diverse writing styles and modes including foundational wisdom literature, poetry, and song.",
             image: "imageThe_Writings",
             books: [
@@ -4018,6 +4021,7 @@ export const BookSectionMap = {
         {
             route: "/sections/the-gospels-and-acts",
             title: "The Gospels and Acts",
+            name: "Gospels and Acts",
             quote: "There are here four different accounts of the life of Jesus each given with unique perspective and emphases. The book of Acts describes the period following Jesus’ resurrection and ascension.",
             image: "imageThe_Gospels_and_Acts",
             books: [
@@ -4529,6 +4533,7 @@ export const BookSectionMap = {
         {
             route: "/sections/the-letters",
             title: "The Letters",
+            name: "Letters",
             quote: "Leaders in the early Christian church wrote letters to groups of Jesus’ followers and also to individuals. These contain personal messages, teaching, and poetry.",
             image: "imageThe_Letters",
             books: [
@@ -5167,7 +5172,8 @@ export const BookSectionMap = {
         },
         {
             route: "/sections/the-revelation",
-            title: "",
+            title: "Revelation",
+            name: "Revelation",
             quote: "",
             image: "",
             books: [
@@ -5307,3 +5313,8 @@ export const getDetailsByBookTitle = (bookTitle: string) => {
 };
 
 export const getBookTitles = () => Array.from(bookMap.keys());
+
+export const getSectionByBookTitle = (bookTitle: string) => {
+    const normalizedBookTitle = normalizeBookTitle(bookTitle) ?? "";
+    return BookSectionMap.sections.find((section) => section.books.some((book) => normalizeBookTitle(book.title) === normalizedBookTitle));
+};

@@ -13,9 +13,13 @@ export const FullSearchPage = () => {
     const [searchParams] = useSearchParams();
     const query = searchParams.get("q");
     const { data: results, isLoading: isSearching } = useGetNostrSearchResults(query ?? "");
-    const groupedResults = useMemo(() => groupBy(results, "title") ?? [], [results]);
+    const groupedResults = useMemo(() => groupBy(results, "sectionName") ?? [], [results]);
     const [activeTab, setActiveTab] = useState(0);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [query, activeTab]);
 
     return (
         <div className={styles.searchPageContainer}>
@@ -32,15 +36,11 @@ export const FullSearchPage = () => {
             ) : (
                 <TabGroup className={styles.tabGroup} selectedIndex={activeTab} onChange={setActiveTab}>
                     <TabList className={styles.tabList}>
-                        {groupedResults?.map((result, index) => {
-                            const book = getDetailsByBookTitle(result[0]);
-                            if (!book) return null;
-                            return (
-                                <Tab key={index} as={TabButton}>
-                                    {book.title} ({result[1].length})
-                                </Tab>
-                            );
-                        })}
+                        {groupedResults?.map((result, index) => (
+                            <Tab key={index} as={TabButton}>
+                                {result[0]} ({result[1].length})
+                            </Tab>
+                        ))}
                     </TabList>
                     <TabPanels className={styles.resultsContainer}>
                         {groupedResults?.map((group) => (
@@ -67,7 +67,7 @@ export const FullSearchPage = () => {
     );
 };
 
-const groupBy = <T extends { verse: string; chapter?: string; title: string }, K extends keyof T>(items: T[], key: K) => {
+const groupBy = <T extends { verse: string; chapter?: string; sectionName: string; title: string }, K extends keyof T>(items: T[], key: K) => {
     const uniqueItems = new Map<string, T>();
 
     items.forEach((item) => {
@@ -80,35 +80,38 @@ const groupBy = <T extends { verse: string; chapter?: string; title: string }, K
     });
 
     const uniqueItemsArray = Array.from(uniqueItems.values());
+    const groupedItems = uniqueItemsArray.reduce(
+        (result, item) => ({
+            ...result,
+            [String(item[key])]: [...(result[String(item[key])] || []), item],
+        }),
+        {} as Record<string, T[]>
+    );
 
-    return Object.entries(
-        uniqueItemsArray.reduce(
-            (result, item) => ({
-                ...result,
-                [String(item[key])]: [...(result[String(item[key])] || []), item],
-            }),
-            {} as Record<string, T[]>
-        )
-    )
-        .sort((a, b) => {
-            const lengthDiff = b[1].length - a[1].length;
-            if (lengthDiff !== 0) return lengthDiff;
-            return a[0].localeCompare(b[0]);
-        })
-        .map(([title, items]) => [
-            title,
-            items.sort((a, b) => {
-                const chapterA = parseInt(a.chapter || "0");
-                const chapterB = parseInt(b.chapter || "0");
-                const chapterDiff = chapterA - chapterB;
-                if (chapterDiff !== 0) return chapterDiff;
-                return parseInt(a.verse) - parseInt(b.verse);
-            }),
-        ]) as [string, T[]][];
-};
+    const sortedGroupedItems = Object.entries(groupedItems).sort((a, b) => {
+        const lengthDiff = b[1].length - a[1].length;
+        if (lengthDiff !== 0) return lengthDiff;
+        return a[0].localeCompare(b[0]);
+    });
 
-const toProperCase = (str: string) => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+    return sortedGroupedItems.map(([sectionName, items]) => [
+        sectionName,
+        items.sort((a, b) => {
+            //sort by book title
+            const bookA = getDetailsByBookTitle(a.title);
+            const bookB = getDetailsByBookTitle(b.title);
+            if (bookA && bookB) {
+                return bookA.title.localeCompare(bookB.title);
+            }
+
+            //sort by chapter
+            const chapterA = parseInt(a.chapter || "0");
+            const chapterB = parseInt(b.chapter || "0");
+            const chapterDiff = chapterA - chapterB;
+            if (chapterDiff !== 0) return chapterDiff;
+            return parseInt(a.verse) - parseInt(b.verse);
+        }),
+    ]) as [string, T[]][];
 };
 
 const TabButton = forwardRef((props: any, ref: any) => {

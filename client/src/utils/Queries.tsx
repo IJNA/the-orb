@@ -1,13 +1,15 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { HAGAH_PUBKEY } from "../Constants";
-import { BookSectionMap, getBookTitles } from "./BookSectionMap";
+import { BookSectionMap, getBookTitles, getSectionByBookTitle } from "./BookSectionMap";
 import { useHagahRelay } from "../hooks/useHagahRelay";
+import { useSearchCache } from "./SearchCache";
 
 export const useGetNostrSearchResults = (query: string) => {
     const trimmedQuery = query.trim();
     const { searchingTitle, searchingChapter, searchingVerse, queryString } = parseQuery(trimmedQuery);
     const [searchResults, setSearchResults] = useState<
         {
+            sectionName: string;
             title: string;
             chapter?: string;
             value: string;
@@ -22,8 +24,11 @@ export const useGetNostrSearchResults = (query: string) => {
         searchTimeout: false,
     });
 
-    // Create a ref to track unique results by a composite key
     const uniqueResultsRef = useRef<Set<string>>(new Set());
+    const latestResultsRef = useRef(searchResults);
+    const shouldCacheRef = useRef(false);
+
+    const { getCachedResults, setCachedResults } = useSearchCache();
 
     const hagahRelay = useHagahRelay();
 
@@ -39,9 +44,22 @@ export const useGetNostrSearchResults = (query: string) => {
     useEffect(() => {
         if (!queryString || !hagahRelay) return;
 
-        // Reset search state and unique results tracking
+        const cachedResults = getCachedResults<typeof searchResults>(trimmedQuery);
+        if (cachedResults) {
+            setSearchResults(cachedResults);
+            setSearchState((prev) => ({
+                ...prev,
+                isLoading: false,
+                isQueryEnabled: true,
+                searchTimeout: false,
+            }));
+            return;
+        }
+
         setSearchResults([]);
+
         uniqueResultsRef.current = new Set();
+
         setSearchState((prev) => ({
             ...prev,
             isLoading: true,
@@ -57,6 +75,8 @@ export const useGetNostrSearchResults = (query: string) => {
             }
 
             const title = event.tags[0]?.[1];
+            const section = getSectionByBookTitle(title);
+            const sectionName = section?.name;
             const content = JSON.parse(event.content);
 
             const filteredContent = content.filter((item: { type: string; value: string; verse: number }) => {
@@ -67,19 +87,17 @@ export const useGetNostrSearchResults = (query: string) => {
 
             if (!filteredContent) return;
 
-            // Create a unique key for this result
             const uniqueKey = `${title}-${filteredContent.verse}`;
 
-            // Skip if we've already seen this result
             if (uniqueResultsRef.current.has(uniqueKey)) {
                 return;
             }
 
-            // Add to our set of seen results
             uniqueResultsRef.current.add(uniqueKey);
 
             const result = {
                 title,
+                sectionName,
                 ...filteredContent,
                 isPerfectMatch: isPerfectMatch(filteredContent.value, trimmedQuery),
                 bookOrder: getBookOrder(title ?? ""),
@@ -91,22 +109,32 @@ export const useGetNostrSearchResults = (query: string) => {
                     if (!a.isPerfectMatch && b.isPerfectMatch) return 1;
                     return a.bookOrder - b.bookOrder;
                 });
+                latestResultsRef.current = newResults;
                 return newResults;
             });
         });
 
         subscription.on("eose", () => {
             setSearchState((prev) => ({ ...prev, isLoading: false }));
+            shouldCacheRef.current = true;
         });
 
         const timeout = setTimeout(() => {
             setSearchState((prev) => ({ ...prev, searchTimeout: true, isLoading: false }));
+            shouldCacheRef.current = true;
         }, 30000);
 
         return () => {
             clearTimeout(timeout);
         };
-    }, [queryString, hagahRelay, filters, trimmedQuery, searchingVerse, searchingTitle, searchingChapter]);
+    }, [queryString, hagahRelay, filters, trimmedQuery, searchingVerse, searchingTitle, searchingChapter, getCachedResults]);
+
+    useEffect(() => {
+        if (shouldCacheRef.current && searchResults.length > 0 && !searchState.isLoading) {
+            setCachedResults(trimmedQuery, searchResults);
+            shouldCacheRef.current = false;
+        }
+    }, [searchState.isLoading, trimmedQuery, setCachedResults, searchResults]);
 
     return {
         data: searchResults,
