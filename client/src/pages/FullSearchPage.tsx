@@ -5,7 +5,7 @@ import { Box, Button, Container, Loader } from "react-bulma-components";
 import styles from "./FullSearchPage.module.scss";
 import { ArrowLeft, ArrowRight } from "phosphor-react";
 import { PassageCard } from "../components/PassageCard";
-import { getDetailsByBookTitle } from "../utils/BookSectionMap";
+import { getDetailsByBookTitle, getSectionByBookTitle, BookSectionMap } from "../utils/BookSectionMap";
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/react";
 import Highlighter from "react-highlight-words";
 
@@ -88,9 +88,35 @@ const groupBy = <T extends { verse: string; chapter?: string; sectionName: strin
         {} as Record<string, T[]>
     );
 
+    // Get the section order from BookSectionMap
+    const getSectionOrder = (title: string) => {
+        const section = getSectionByBookTitle(title);
+        if (!section) return 999; // Default to end if not found
+        
+        // Find the index of the section in BookSectionMap.sections
+        const sectionIndex = BookSectionMap.sections.findIndex((s: { title: string }) => s.title === section.title);
+        return sectionIndex >= 0 ? sectionIndex : 999;
+    };
+
+    // Sort by Bible section order instead of by number of items
     const sortedGroupedItems = Object.entries(groupedItems).sort((a, b) => {
-        const lengthDiff = b[1].length - a[1].length;
-        if (lengthDiff !== 0) return lengthDiff;
+        // Get the first item from each group to determine the book
+        const firstItemA = a[1][0];
+        const firstItemB = b[1][0];
+        
+        if (!firstItemA || !firstItemB) {
+            return 0; // Handle empty groups
+        }
+        
+        // Compare by section order
+        const sectionOrderA = getSectionOrder(firstItemA.title);
+        const sectionOrderB = getSectionOrder(firstItemB.title);
+        
+        if (sectionOrderA !== sectionOrderB) {
+            return sectionOrderA - sectionOrderB;
+        }
+        
+        // If same section, sort by section name
         return a[0].localeCompare(b[0]);
     });
 

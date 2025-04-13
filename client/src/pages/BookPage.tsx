@@ -1,26 +1,26 @@
-import React, { useCallback, useEffect, useMemo, useRef, type MutableRefObject, useState } from "react";
-import "bulma/css/bulma.min.css";
-import styles from "./BookPage.module.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight, faShareFromSquare, faCheck } from "@fortawesome/free-solid-svg-icons";
-import { Link, useParams } from "react-router-dom";
-import { useCurrentBook, useCurrentSection } from "../hooks/BookMapHooks";
-import { Button, Container } from "react-bulma-components";
-import { formatChapterEvents } from "../utils/NostrUtils";
-import { useHagahStore } from "../HagahStore";
-import { findChaptersByBookTitle, normalizeBookTitle } from "../utils/BookSectionMap";
-import { useBookmarker } from "../hooks/Bookmarker";
-import { kinds } from "nostr-tools";
-import { HAGAH_PUBKEY, HAGAH_RELAY } from "../Constants";
-import { useSubscribe } from "nostr-hooks";
-import { AudioPlaybackBar } from "../components/AudioPlaybackBar";
-import { useTextSelection } from "../hooks/useTextSelection";
-import * as Selection from "selection-popover";
-import * as Toolbar from "@radix-ui/react-toolbar";
-import { shareContent } from "../utils/ShareHandler";
-import { isMobile } from "../utils/DeviceDetection";
-import { toast } from "react-toastify";
-import { useVerseNavigation } from "../hooks/useVerseNavigation";
+import React, { useCallback, useEffect, useMemo, useRef, type MutableRefObject, useState } from 'react';
+import 'bulma/css/bulma.min.css';
+import styles from './BookPage.module.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight, faShareFromSquare, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { Link, useParams } from 'react-router-dom';
+import { useCurrentBook, useCurrentSection } from '../hooks/BookMapHooks';
+import { Button, Container } from 'react-bulma-components';
+import { formatChapterEvents } from '../utils/NostrUtils';
+import { useHagahStore } from '../HagahStore';
+import { findChaptersByBookTitle, normalizeBookTitle } from '../utils/BookSectionMap';
+import { useBookmarker } from '../hooks/Bookmarker';
+import { kinds } from 'nostr-tools';
+import { HAGAH_PUBKEY, HAGAH_RELAY } from '../Constants';
+import { useSubscribe } from 'nostr-hooks';
+import { AudioPlaybackBar } from '../components/AudioPlaybackBar';
+import { useTextSelection } from '../hooks/useTextSelection';
+import * as Selection from 'selection-popover';
+import * as Toolbar from '@radix-ui/react-toolbar';
+import { shareContent } from '../utils/ShareHandler';
+import { isMobile } from '../utils/DeviceDetection';
+import { toast } from 'react-toastify';
+import { useVerseNavigation } from '../hooks/useVerseNavigation';
 
 function BookPage() {
     const { book } = useParams();
@@ -47,7 +47,10 @@ function BookPage() {
 
     const relays = useMemo(() => [HAGAH_RELAY], []);
     const [booksCache, setBooksCache] = useHagahStore((state) => [state.booksCache, state.setBooksCache]);
-    const isBookCached = useMemo(() => ids && book && booksCache?.[book]?.length && booksCache[book].length >= ids.length, [booksCache, ids?.length]);
+    const isBookCached = useMemo(
+        () => ids && book && booksCache?.[book]?.length && booksCache[book].length >= ids.length,
+        [booksCache, ids?.length]
+    );
     const { events } = useSubscribe({ filters, relays, enabled: !isBookCached });
 
     useEffect(() => {
@@ -66,14 +69,19 @@ function BookPage() {
         return book && isBookCached ? booksCache[book] : formatChapterEvents(events);
     }, [booksCache, book, events]);
 
-    if (chapters && ids && chapters?.length < ids?.length) return <div className="loader" />;
+    if (chapters && ids && chapters?.length < ids?.length) return <div className='loader' />;
 
     return (
         <div>
             <div className={styles.bookPageContainer}>
-                <Container className={styles.bookPageHeaderContainer} display="flex" flexDirection="row" alignItems="baseline">
+                <Container
+                    className={styles.bookPageHeaderContainer}
+                    display='flex'
+                    flexDirection='row'
+                    alignItems='baseline'
+                >
                     <h2 className={`${styles.header}`}>{currentBook?.title}</h2>
-                    {!chapters ? <div className="loader" /> : null}
+                    {!chapters ? <div className='loader' /> : null}
                 </Container>
                 {chapters && chapters.length > 0 ? (
                     <Container>
@@ -82,7 +90,7 @@ function BookPage() {
                                 <RenderScripture data={chapters} />
                             </div>
                         </div>
-                        <div className="has-text-centered mb-4">
+                        <div className='has-text-centered mb-4'>
                             {currentBook?.nextRoute ? (
                                 <Link to={currentBook.nextRoute}>
                                     <button className={`button is-large ${styles.button}`}>
@@ -108,7 +116,7 @@ function BookPage() {
 
 const RenderScripture = ({ data }: { data: string[] }) => {
     const currentBook = useCurrentBook();
-    const bookTitle = currentBook ? normalizeBookTitle(currentBook?.title) ?? "" : "";
+    const bookTitle = currentBook ? normalizeBookTitle(currentBook?.title) ?? '' : '';
     const chapters = useMemo(() => (data?.length > 0 ? data.map((d) => JSON.parse(d)) : null), [data]);
 
     useBookmarker();
@@ -117,7 +125,13 @@ const RenderScripture = ({ data }: { data: string[] }) => {
         currentBook && (
             <div onContextMenu={(e) => e.preventDefault()} className={`book ${normalizeBookTitle(currentBook.title)}`}>
                 {chapters?.map((chapterContent, index) => (
-                    <BookChapter currentBook={currentBook} bookTitle={bookTitle} chapterContent={chapterContent} key={index} index={index} />
+                    <BookChapter
+                        currentBook={currentBook}
+                        bookTitle={bookTitle}
+                        chapterContent={chapterContent}
+                        key={index}
+                        index={index}
+                    />
                 ))}
             </div>
         )
@@ -130,8 +144,18 @@ type ChapterItem = {
     value: string;
 };
 
-const BookChapter = ({ currentBook, bookTitle, chapterContent, index }: { currentBook: { route: string; title: string }; bookTitle: string; chapterContent: ChapterItem[]; index: number }) => {
-    const { textSelection } = useTextSelection(currentBook ?? "");
+const BookChapter = ({
+    currentBook,
+    bookTitle,
+    chapterContent,
+    index,
+}: {
+    currentBook: { route: string; title: string };
+    bookTitle: string;
+    chapterContent: ChapterItem[];
+    index: number;
+}) => {
+    const { textSelection } = useTextSelection(currentBook ?? '');
     const [copiedSuccess, setCopiedSuccess] = useState(false);
     const [showMobileToolbar, setShowMobileToolbar] = useState(false);
     const { selectedChapter, selectedVerse } = useParams();
@@ -141,8 +165,8 @@ const BookChapter = ({ currentBook, bookTitle, chapterContent, index }: { curren
 
     useVerseNavigation({
         bookTitle,
-        selectedChapter: selectedChapter ?? "",
-        selectedVerse: selectedVerse ?? "",
+        selectedChapter: selectedChapter ?? '',
+        selectedVerse: selectedVerse ?? '',
         verseRefs,
         bookmarkedElement,
     });
@@ -159,8 +183,8 @@ const BookChapter = ({ currentBook, bookTitle, chapterContent, index }: { curren
                 if (isMobile) setShowMobileToolbar(false);
             }, 1500);
         } catch (err) {
-            console.error("Share error:", err);
-            toast.error("Failed to share passage");
+            console.error('Share error:', err);
+            toast.error('Failed to share passage');
         }
     }, [textSelection]);
 
@@ -175,40 +199,14 @@ const BookChapter = ({ currentBook, bookTitle, chapterContent, index }: { curren
                 }
             };
 
-            document.addEventListener("selectionchange", handleSelectionChange);
-            return () => document.removeEventListener("selectionchange", handleSelectionChange);
+            document.addEventListener('selectionchange', handleSelectionChange);
+            return () => document.removeEventListener('selectionchange', handleSelectionChange);
         }
     }, []);
 
     const chapterNumber = index + 1;
 
-    const passages = useMemo(
-        () =>
-            chapterContent.reduce((acc: any[], content: ChapterItem) => {
-                // If we encounter a "start," we either close the previous passage or start a new one
-                if (content.type.includes("start")) {
-                    // If there's an open passage, mark it as complete
-                    if (acc.length > 0 && acc[acc.length - 1].length > 0) {
-                        acc.push([]); // Create a new empty passage for the new "start"
-                    } else {
-                        acc.push([content]); // Start new passage with the current "start" content
-                    }
-                } else if (content.type.includes("text") || content.type.includes("end")) {
-                    // If passage is open, add text or end to it
-                    if (acc.length === 0) {
-                        acc.push([]); // Create a new passage if none exists
-                    }
-                    acc[acc.length - 1].push(content);
-
-                    // If it's an "end," finalize the current passage
-                    if (content.type.includes("end")) {
-                        acc.push([]); // Prepare for the next potential passage
-                    }
-                }
-                return acc;
-            }, []),
-        [chapterContent]
-    );
+    const passages = useMemo(() => parseChapterContent(chapterContent), [chapterContent]);
 
     return (
         <>
@@ -221,7 +219,10 @@ const BookChapter = ({ currentBook, bookTitle, chapterContent, index }: { curren
                                     const verseId = `${bookTitle}-${chapterNumber}-${verse.verse}`;
                                     return verse?.value?.trim() ? (
                                         <div key={passageIndex}>
-                                            <span ref={(el) => (verseRefs.current[verseId] = el as HTMLElement)} className={`verse ${verseId}`}>
+                                            <span
+                                                ref={(el) => (verseRefs.current[verseId] = el as HTMLElement)}
+                                                className={`verse ${verseId}`}
+                                            >
                                                 {verse.value}
                                             </span>
                                         </div>
@@ -236,11 +237,15 @@ const BookChapter = ({ currentBook, bookTitle, chapterContent, index }: { curren
                                 <span className={styles.toolbarText}>{textSelection?.passage}</span>
 
                                 <Toolbar.Separator className={styles.toolbarSeparator} />
-                                <Toolbar.Button onClick={handleShare} style={{ border: "none", boxShadow: "none" }}>
-                                    <FontAwesomeIcon fontSize="14px" className={`${styles.toolbarIcon} ${copiedSuccess ? styles.success : ""}`} icon={copiedSuccess ? faCheck : faShareFromSquare} />
+                                <Toolbar.Button onClick={handleShare} style={{ border: 'none', boxShadow: 'none' }}>
+                                    <FontAwesomeIcon
+                                        fontSize='14px'
+                                        className={`${styles.toolbarIcon} ${copiedSuccess ? styles.success : ''}`}
+                                        icon={copiedSuccess ? faCheck : faShareFromSquare}
+                                    />
                                 </Toolbar.Button>
                             </Toolbar.Root>
-                            <Selection.Arrow style={{ fill: "white" }} />
+                            <Selection.Arrow style={{ fill: 'white' }} />
                         </Selection.Content>
                     </Selection.Portal>
                 </Selection.Root>
@@ -252,7 +257,10 @@ const BookChapter = ({ currentBook, bookTitle, chapterContent, index }: { curren
                                 const verseId = `${bookTitle}-${chapterNumber}-${verse.verse}`;
                                 return verse?.value?.trim() ? (
                                     <div key={passageIndex}>
-                                        <span ref={(el) => (verseRefs.current[verseId] = el as HTMLElement)} className={`verse ${verseId}`}>
+                                        <span
+                                            ref={(el) => (verseRefs.current[verseId] = el as HTMLElement)}
+                                            className={`verse ${verseId}`}
+                                        >
                                             {verse.value}
                                         </span>
                                     </div>
@@ -266,7 +274,10 @@ const BookChapter = ({ currentBook, bookTitle, chapterContent, index }: { curren
                         <div className={styles.mobileToolbar}>
                             <span className={styles.toolbarText}>{textSelection.passage}</span>
                             <button onClick={handleShare} className={styles.mobileShareButton}>
-                                <FontAwesomeIcon className={`${styles.toolbarIcon} ${copiedSuccess ? styles.success : ""}`} icon={copiedSuccess ? faCheck : faShareFromSquare} />
+                                <FontAwesomeIcon
+                                    className={`${styles.toolbarIcon} ${copiedSuccess ? styles.success : ''}`}
+                                    icon={copiedSuccess ? faCheck : faShareFromSquare}
+                                />
                             </button>
                         </div>
                     )}
@@ -275,5 +286,41 @@ const BookChapter = ({ currentBook, bookTitle, chapterContent, index }: { curren
         </>
     );
 };
+
+function parseChapterContent(chapterContent: ChapterItem[]): ChapterItem[][] {
+    const isStartMarker = (item: ChapterItem) => item.type.includes('start');
+    const isEndMarker = (item: ChapterItem) => item.type.includes('end');
+    const isTextItem = (item: ChapterItem) => item.type.includes('text');
+
+    const result: ChapterItem[][] = [];
+    let currentPassage: ChapterItem[] = [];
+
+    chapterContent.forEach((item) => {
+        if (isStartMarker(item)) {
+            if (currentPassage.length > 0) {
+                result.push([...currentPassage]);
+                currentPassage = [];
+            }
+            currentPassage.push(item);
+        } else if (isTextItem(item) || isEndMarker(item)) {
+            if (currentPassage.length === 0) {
+                currentPassage = [];
+            }
+
+            currentPassage.push(item);
+
+            if (isEndMarker(item)) {
+                result.push([...currentPassage]);
+                currentPassage = [];
+            }
+        }
+    });
+
+    if (currentPassage.length > 0) {
+        result.push([...currentPassage]);
+    }
+
+    return result;
+}
 
 export default BookPage;
