@@ -78,9 +78,10 @@ export const useGetNostrSearchResults = (query: string) => {
             const section = getSectionByBookTitle(title);
             const sectionName = section?.name;
             const content = JSON.parse(event.content);
+            const isText = (type: string) => type.includes("text") || type.includes("stanza");
 
             const filteredContent = content.filter((item: { type: string; value: string; verse: number }) => {
-                if (item.type !== "paragraph text") return false;
+                if (!isText(item.type)) return false;
                 if (!searchingVerse) return new RegExp(trimmedQuery, "i").test(item.value);
                 return item.verse.toString() === searchingVerse;
             })[0];
