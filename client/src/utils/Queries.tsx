@@ -4,6 +4,12 @@ import { BookSectionMap, getBookTitles, getSectionByBookTitle } from "./BookSect
 import { useHagahRelay } from "../hooks/useHagahRelay";
 import { useSearchCache } from "./SearchCache";
 
+type EventItem = {
+    type: string;
+    value: string;
+    verse: number;
+    chapter?: string;
+}
 export const useGetNostrSearchResults = (query: string) => {
     const trimmedQuery = query.trim();
     const { searchingTitle, searchingChapter, searchingVerse, queryString } = parseQuery(trimmedQuery);
@@ -70,9 +76,7 @@ export const useGetNostrSearchResults = (query: string) => {
         const subscription = hagahRelay.subscribe(filters, { closeOnEose: true });
 
         subscription.on("event", (event) => {
-            if (searchingTitle && searchingChapter && (event.tags[0]?.[1] !== searchingTitle || event.tags[2]?.[1] !== searchingChapter)) {
-                return;
-            }
+            if (searchingTitle && searchingChapter && (event.tags[0]?.[1] !== searchingTitle || event.tags[2]?.[1] !== searchingChapter)) return;
 
             const title = event.tags[0]?.[1];
             const section = getSectionByBookTitle(title);
@@ -80,38 +84,42 @@ export const useGetNostrSearchResults = (query: string) => {
             const content = JSON.parse(event.content);
             const isText = (type: string) => type.includes("text") || type.includes("stanza");
 
-            const filteredContent = content.filter((item: { type: string; value: string; verse: number }) => {
-                if (!isText(item.type)) return false;
-                if (!searchingVerse) return new RegExp(trimmedQuery, "i").test(item.value);
-                return item.verse.toString() === searchingVerse;
-            })[0];
+            const filteredContent = content.filter((item: EventItem) => {
+                if (searchingVerse) return item.verse.toString() === searchingVerse;
 
-            if (!filteredContent) return;
+                return new RegExp(trimmedQuery, "i").test(item.value);
+            });
 
-            const uniqueKey = `${title}-${filteredContent.verse}`;
+            if (!filteredContent.length) return;
 
-            if (uniqueResultsRef.current.has(uniqueKey)) {
-                return;
-            }
+            filteredContent.forEach((item: EventItem) => {
+                const uniqueKey = `${title}-${item.verse}`;
 
-            uniqueResultsRef.current.add(uniqueKey);
+                if (uniqueResultsRef.current.has(uniqueKey)) {
+                    return;
+                }
 
-            const result = {
-                title,
-                sectionName,
-                ...filteredContent,
-                isPerfectMatch: isPerfectMatch(filteredContent.value, trimmedQuery),
-                bookOrder: getBookOrder(title ?? ""),
-            };
+                uniqueResultsRef.current.add(uniqueKey);
 
-            setSearchResults((prev) => {
-                const newResults = [...prev, result].sort((a, b) => {
-                    if (a.isPerfectMatch && !b.isPerfectMatch) return -1;
-                    if (!a.isPerfectMatch && b.isPerfectMatch) return 1;
-                    return a.bookOrder - b.bookOrder;
+                const result = {
+                    title: title ?? "",
+                    sectionName: sectionName ?? "",
+                    chapter: item.chapter,
+                    value: String(item.value ?? ""),
+                    verse: String(item.verse ?? ""),
+                    isPerfectMatch: isPerfectMatch(item.value, trimmedQuery),
+                    bookOrder: getBookOrder(title ?? ""),
+                };
+
+                setSearchResults((prev) => {
+                    const newResults = [...prev, result].sort((a, b) => {
+                        if (a.isPerfectMatch && !b.isPerfectMatch) return -1;
+                        if (!a.isPerfectMatch && b.isPerfectMatch) return 1;
+                        return a.bookOrder - b.bookOrder;
+                    });
+                    latestResultsRef.current = newResults;
+                    return newResults;
                 });
-                latestResultsRef.current = newResults;
-                return newResults;
             });
         });
 
@@ -188,7 +196,7 @@ function parseQuery(query: string) {
         searchingTitle: null,
         searchingChapter: null,
         searchingVerse: null,
-        queryString: JSON.stringify({ text: query }),
+        queryString: query,
     };
 }
 
