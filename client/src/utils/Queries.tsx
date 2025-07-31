@@ -157,7 +157,6 @@ function parseQuery(query: string) {
     const bookNames = getBookTitles();
     const lowerQuery = query.toLowerCase().trim();
 
-    // Regex should match: "1 Timothy 1:1", "John 3:16", "2 Kings 4:5"
     const verseRefRegex = /^(\d*\s*[a-z]+)\s+(\d+):(\d+)$/i;
     const match = lowerQuery.match(verseRefRegex);
 
@@ -194,7 +193,20 @@ function parseQuery(query: string) {
 
 function getBookOrder(bookTitle: string): number {
     const bookOrder = BookSectionMap.sections.flatMap((section) => section.books.map((book) => book.title));
-    return bookOrder.indexOf(bookTitle);
+    
+    let index = bookOrder.indexOf(bookTitle);
+    
+    if (index === -1) {
+        const lowerBookTitle = bookTitle.toLowerCase();
+        index = bookOrder.findIndex(title => title.toLowerCase() === lowerBookTitle);
+    }
+    
+    if (index === -1) {
+        const normalizedBookTitle = bookTitle.toLowerCase().replace(/[-\s]/g, '');
+        index = bookOrder.findIndex(title => title.toLowerCase().replace(/[-\s]/g, '') === normalizedBookTitle);
+    }
+    
+    return index;
 }
 
 function isPerfectMatch(text: string, query: string): boolean {
