@@ -25,6 +25,7 @@ yarn-error.log*
 
 /api
 /initializesql.js
+/nostr-rs-relay
 
 amplify/*
 #amplify-do-not-edit-begin
