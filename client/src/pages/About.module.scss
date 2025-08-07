@@ -12,9 +12,8 @@
   width: 100% !important;
 }
 
-.ijnaLogo {
-  width: 86px !important;
-  height: 196px !important;
+.aboutCover {
+  max-width: 600px !important;
 }
 
 .content {
@@ -118,7 +117,7 @@
 }
 
 .aboutContainer .supportBtn {
-  width: 140px !important;
+  min-width: 124px !important;
 }
 
 .aboutContainer .supportBtn img {

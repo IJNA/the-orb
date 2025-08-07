@@ -67,7 +67,7 @@ export const FullSearchPage = () => {
     );
 };
 
-const groupBy = <T extends { verse: string; chapter?: string; sectionName: string; title: string; bookOrder: number }, K extends keyof T>(items: T[], key: K) => {
+const groupBy = <T extends { verse: string; chapter?: string; sectionName: string; title: string }, K extends keyof T>(items: T[], key: K) => {
     const uniqueItems = new Map<string, T>();
 
     items.forEach((item) => {
@@ -123,8 +123,12 @@ const groupBy = <T extends { verse: string; chapter?: string; sectionName: strin
     return sortedGroupedItems.map(([sectionName, items]) => [
         sectionName,
         items.sort((a, b) => {
-            const bookOrderDiff = a.bookOrder - b.bookOrder;
-            if (bookOrderDiff !== 0) return bookOrderDiff;
+            //sort by book title
+            const bookA = getDetailsByBookTitle(a.title);
+            const bookB = getDetailsByBookTitle(b.title);
+            if (bookA && bookB) {
+                return bookA.title.localeCompare(bookB.title);
+            }
 
             //sort by chapter
             const chapterA = parseInt(a.chapter || "0");

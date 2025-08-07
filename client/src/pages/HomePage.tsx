@@ -27,7 +27,7 @@ const HomePage = () => {
                     <div className={styles.paragraph}>
                         <p>A bible app designed to help you meditate on scripture.</p>
                         <Link to="about" className={styles.aboutLink}>
-                            ABOUT US
+                            LEARN MORE
                         </Link>
                     </div>
                 </div>
@@ -160,14 +160,14 @@ const HomePage = () => {
                         </div>
                     </div>
                 </div>
-                <Link to="about">
+                <a target="_blank" href="https://jbasallaje.github.io/me/">
                     <img
                         className={styles.ijnaLogo}
                         src="/images/IJNA_logo.png"
                         alt="IJNA logo which is a blue window with a star on the bottom right"
                         title="IJNA logo which is a blue window with a star on the bottom right"
                     />
-                </Link>
+                </a>
                 <p className={styles.openSourceParagraph}>
                     Open-source |&nbsp;
                     <span className={styles.gitHub}>
