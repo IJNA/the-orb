@@ -34,24 +34,30 @@ function About() {
             {/* <Navigation /> */}
             <div className={styles.aboutContainer}>
                 <img
-                    className={styles.ijnaLogo}
-                    src="/images/IJNA_logo.png"
-                    alt="IJNA logo which is a blue window with a star on the bottom right"
-                    title="IJNA logo which is a blue window with a star on the bottom right"
+                    className={styles.aboutCover}
+                    src="/images/aboutCover.png"
+                    alt="hagah.io logo which is a green square with white sound waves inside of it"
+                    title="hagah.io logo which is a green square with white sound waves inside of it"
                 />
                 <div className={styles.content}>
-                    <h4 className={styles.aboutHeader}>Who we are</h4>
+                    <h4 className={styles.aboutHeader}>What hagah means</h4>
                     <div className={styles.paragraphContainer}>
                         <div className={styles.paragraph}>
-                            <p>hagah.io is a product of IJNA Design based in Plano, TX.</p>
-                            {/* <p>
-                                The code is open-source and accessible on
-                                <a target="_blank" rel="noreferrer" href="https://github.com/IJNA/the-orb">
-                                &nbsp;<span className={styles.gitHubLink}>Github</span>
+                            <p>Hagah is a hebrew word which can be translated as 'meditate.' hagah.io was made to help you read and meditate on the scriptures.</p> <br/>
+                            <p>We use the World English Bible (WEB) because it is publicly available and free to use. You can find more information about it
+                                <a target="_blank" rel="noreferrer" href="https://ebible.org/find/show.php?id=eng-web">
+                                    &nbsp;<span className={styles.gitHubLink}>here</span>
                                 </a>
                                 .
                             </p>
-                            <p>If you're interested in getting in touch, please see our contact links below.</p> */}
+                            {<p> <br/>
+                                hagah.io open-source and accessible on
+                                <a target="_blank" rel="noreferrer" href="https://github.com/IJNA/the-orb">
+                                    &nbsp;<span className={styles.gitHubLink}>Github</span>
+                                </a>
+                                .
+                            </p>}
+                            <p>If you're interested in getting in touch, please see our contact links below.</p>
                         </div>
                     </div>
                     <h4 className={styles.aboutHeader}>Contact</h4>
@@ -115,7 +121,7 @@ function About() {
                             title="Open link in new tab icon, square with arrow comming out"
                         />
                     </div>
-                    <h4 className={styles.aboutHeader}>Support</h4>
+                    <h4 className={styles.aboutHeader}>Donate</h4>
                     <div className={styles.paragraphContainer}>
                         <div className={styles.paragraph}>
                             <p>
@@ -159,12 +165,12 @@ const SupportUs = ({ npub }) => {
                 />
             ) : null}
             <button className={styles.supportBtn} onClick={handleClick}>
-                SUPPORT
+                DONATE
                 <img
                     className={styles.contactButtonImg}
                     src={heartIcon}
-                    alt="Support button icon, heart"
-                    title="Support button icon, heart"
+                    alt="Donate button icon, heart"
+                    title="Donate button icon, heart"
                 />
             </button>
         </>
