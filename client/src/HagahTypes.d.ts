@@ -18,3 +18,12 @@ export type Section = {
 export interface NostrBookMapReference {
     sections: Section[];
 }
+export type BookSearchResult = {
+    title: string;
+    sectionName: string;
+    chapter?: string;
+    value?: string;
+    verse: string;
+    isPerfectMatch: boolean;
+    bookOrder: number;
+}

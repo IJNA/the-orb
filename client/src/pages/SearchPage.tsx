@@ -13,8 +13,10 @@ import { faTimes } from "../../node_modules/@fortawesome/free-solid-svg-icons/in
 import { BookSectionMap } from "../utils/BookSectionMap";
 import { useHagahStore } from "../HagahStore";
 import { ArrowRight } from "phosphor-react";
+import { orderBooks } from "../utils/NostrUtils";
 
 const SearchPage = () => {
+    const MAX_RESULTS = 10;
     const [searchInput, setSearchInput] = useState("");
     const [query, setQuery] = useState("");
     const location = useLocation();
@@ -22,8 +24,13 @@ const SearchPage = () => {
     const { data: searchResults, isLoading: isSearching, searchTimeout } = useGetNostrSearchResults(query);
     const { triggerSearchFocus, setSearchFocus } = useHagahStore();
     const searchInputRef = useRef<HTMLInputElement>(null);
-    const endSearch = useMemo(() => searchTimeout || searchResults?.length >= 10, [searchTimeout, searchResults]);
-    const truncatedResults = useMemo(() => searchResults?.slice(0, 10), [searchResults]);
+    const endSearch = useMemo(() => searchTimeout || searchResults?.length >= MAX_RESULTS, [searchTimeout, searchResults]);
+    const truncatedResults = useMemo(() => {
+        if (!searchResults) return [];
+        const orderedGroups = orderBooks(searchResults);
+        const flattenedResults = orderedGroups.flatMap(([sectionName, items]) => items);
+        return flattenedResults.slice(0, MAX_RESULTS);
+    }, [searchResults]);
 
     useEffect(() => {
         const searchParams = new URLSearchParams(location.search);
@@ -147,7 +154,7 @@ const SearchPage = () => {
                                         reference={`${book.title} ${item.chapter}:${item.verse}`}
                                         textElement={verseSummary[index]}
                                         route={`${book.route}/${item.chapter}/${item.verse}`}
-                                        text={item.value}
+                                        text={item?.value ?? ""}
                                     />
                                 );
                             })}
@@ -155,7 +162,7 @@ const SearchPage = () => {
                     )}
 
                     {query && !isSearching && bookResults?.length === 0 && truncatedResults?.length === 0 && <p className={`is-size-5 ${styles.noResult}`}>No results found.</p>}
-                    <Container>{endSearch && <p className="is-size-5 my-5">Showing top 10 results.</p>}</Container>
+                    <Container>{endSearch && <p className="is-size-5 my-5">Showing top {MAX_RESULTS} results.</p>}</Container>
 
                     {searchResults.length > 10 && !isSearching ? (
                         <Container className="my-5 ">
