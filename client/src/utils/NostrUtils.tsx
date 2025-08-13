@@ -62,11 +62,8 @@ export const orderBooks = (items: BookSearchResult[]) => {
     return sortedGroupedItems.map(([sectionName, items]) => [
         sectionName,
         items.sort((a, b) => {
-            const bookA = getDetailsByBookTitle(a.title);
-            const bookB = getDetailsByBookTitle(b.title);
-            if (bookA && bookB) {
-                return bookA.title.localeCompare(bookB.title);
-            }
+            const bookOrderDiff = a.bookOrder - b.bookOrder;
+            if (bookOrderDiff !== 0) return bookOrderDiff;
 
             const chapterA = parseInt(a.chapter || "0");
             const chapterB = parseInt(b.chapter || "0");
