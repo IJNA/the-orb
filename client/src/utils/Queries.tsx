@@ -165,7 +165,6 @@ function parseQuery(query: string) {
     const bookNames = getBookTitles();
     const lowerQuery = query.toLowerCase().trim();
 
-    // Regex should match: "1 Timothy 1:1", "John 3:16", "2 Kings 4:5"
     const verseRefRegex = /^(\d*\s*[a-z]+)\s+(\d+):(\d+)$/i;
     const match = lowerQuery.match(verseRefRegex);
 
