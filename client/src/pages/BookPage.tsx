@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, type MutableRefObject, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import 'bulma/css/bulma.min.css';
 import styles from './BookPage.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,7 +8,7 @@ import { useCurrentBook, useCurrentSection } from '../hooks/BookMapHooks';
 import { Button, Container } from 'react-bulma-components';
 import { formatChapterEvents } from '../utils/NostrUtils';
 import { useHagahStore } from '../HagahStore';
-import { findChaptersByBookTitle, normalizeBookTitle } from '../utils/BookSectionMap';
+import { findChaptersByBookTitle, normalizeBookTitle, PsalmsBooksVerseMarkers } from '../utils/BookSectionMap';
 import { useBookmarker } from '../hooks/Bookmarker';
 import { kinds } from 'nostr-tools';
 import { HAGAH_PUBKEY, HAGAH_RELAY } from '../Constants';
@@ -101,6 +101,9 @@ function BookPage() {
                                     </button>
                                 </Link>
                             ) : null}
+                            <p className="mt-5">The World English Bible is in the Public Domain. That means that it is not
+                                copyrighted. However,
+                                "World English Bible" is a Trademark of eBible.org.</p>
                         </div>
                     </Container>
                 ) : null}
@@ -206,30 +209,23 @@ const BookChapter = ({
 
     const chapterNumber = index + 1;
 
-    const passages = useMemo(() => parseChapterContent(chapterContent), [chapterContent]);
+    const chapters = useMemo(
+        () => parseChapterContent(chapterContent, { chapterNumber, bookTitle }),
+        [chapterContent, chapterNumber, bookTitle]
+    );
 
     return (
         <>
             {!isMobile ? (
                 <Selection.Root>
                     <Selection.Trigger>
-                        {passages.map((passage, index) => (
-                            <div className={styles.passage} key={index}>
-                                {passage.map((verse: { verse: string; value: string }, passageIndex: number) => {
-                                    const verseId = `${bookTitle}-${chapterNumber}-${verse.verse}`;
-                                    return verse?.value?.trim() ? (
-                                        <div key={passageIndex}>
-                                            <span
-                                                ref={(el) => (verseRefs.current[verseId] = el as HTMLElement)}
-                                                className={`verse ${verseId}`}
-                                            >
-                                                {verse.value}
-                                            </span>
-                                        </div>
-                                    ) : null;
-                                })}
-                            </div>
-                        ))}
+                        <ChapterListRenderer
+                            chapters={chapters}
+                            chapterNumber={chapterNumber}
+                            bookTitle={bookTitle}
+                            verseRefs={verseRefs}
+                            variant='desktop'
+                        />
                     </Selection.Trigger>
                     <Selection.Portal>
                         <Selection.Content className={styles.selectionContent}>
@@ -251,23 +247,13 @@ const BookChapter = ({
                 </Selection.Root>
             ) : (
                 <>
-                    {passages.map((passage, index) => (
-                        <div className={styles.passage} key={index}>
-                            {passage.map((verse: { verse: string; value: string }, passageIndex: number) => {
-                                const verseId = `${bookTitle}-${chapterNumber}-${verse.verse}`;
-                                return verse?.value?.trim() ? (
-                                    <div key={passageIndex}>
-                                        <span
-                                            ref={(el) => (verseRefs.current[verseId] = el as HTMLElement)}
-                                            className={`verse ${verseId}`}
-                                        >
-                                            {verse.value}
-                                        </span>
-                                    </div>
-                                ) : null;
-                            })}
-                        </div>
-                    ))}
+                    <ChapterListRenderer
+                        chapters={chapters}
+                        chapterNumber={chapterNumber}
+                        bookTitle={bookTitle}
+                        verseRefs={verseRefs}
+                        variant='mobile'
+                    />
 
                     {/* Mobile toolbar*/}
                     {showMobileToolbar && textSelection && (
@@ -287,20 +273,218 @@ const BookChapter = ({
     );
 };
 
-function parseChapterContent(chapterContent: ChapterItem[]): ChapterItem[][] {
-    const isStartMarker = (item: ChapterItem) => item.type.includes('start');
-    const isEndMarker = (item: ChapterItem) => item.type.includes('end');
-    const isTextItem = (item: ChapterItem) => item.type.includes('text');
+type ChapterListRendererProps = {
+    chapters: ChapterItem[][];
+    chapterNumber: number;
+    bookTitle: string;
+    verseRefs: React.MutableRefObject<{ [key: string]: HTMLElement }>;
+    variant: 'desktop' | 'mobile';
+};
 
-    const result: ChapterItem[][] = [];
+const ChapterListRenderer = ({ bookTitle, ...rest }: ChapterListRendererProps) => {
+    return bookTitle === 'psalms'
+        ? <PsalmChapterList bookTitle={bookTitle} {...rest} />
+        : <NormalChapterList bookTitle={bookTitle} {...rest} />;
+};
+
+const PsalmChapterList = ({ chapters, bookTitle, chapterNumber, verseRefs, variant }: ChapterListRendererProps) => {
+    const headingLocation = findPsalmHeadingLocation(chapters);
+
+    return (
+        <>
+            {chapters.map((chapter, index) => (
+                <PsalmChapter
+                    key={`psalm-chapter-${index}`}
+                    chapter={chapter}
+                    chapterIndex={index}
+                    bookTitle={bookTitle}
+                    chapterNumber={chapterNumber}
+                    verseRefs={verseRefs}
+                    variant={variant}
+                    headingLocation={headingLocation}
+                />
+            ))}
+        </>
+    );
+};
+
+type PsalmChapterProps = {
+    chapter: ChapterItem[];
+    chapterIndex: number;
+    chapterNumber: number;
+    bookTitle: string;
+    verseRefs: React.MutableRefObject<{ [key: string]: HTMLElement }>;
+    variant: 'desktop' | 'mobile';
+};
+
+const PsalmChapter = ({
+    chapter,
+    chapterIndex,
+    chapterNumber,
+    bookTitle,
+    verseRefs,
+    variant,
+    headingLocation,
+}: PsalmChapterProps & { headingLocation: { chapterIndex: number; passageIndex: number } | null }) => {
+
+    return (
+        <div className={styles.passage}>
+            {chapter.map((item, passageIndex) => {
+                const shouldShowPsalmHeading =
+                    headingLocation != null &&
+                    headingLocation.chapterIndex === chapterIndex &&
+                    headingLocation.passageIndex === passageIndex;
+
+                if (item?.type === 'book number') {
+                    return (
+                        <span key={`psalm-book-${chapterIndex}-${passageIndex}`} className='title is-2'>
+                            {item.value}
+                        </span>
+                    );
+                }
+
+                // subheadings
+                if (item?.type === 'header') {
+                    if (!item.value?.trim()) return null;
+                    return (
+                        <React.Fragment key={`psalm-header-${chapterIndex}-${passageIndex}`}>
+                            {shouldShowPsalmHeading && <PsalmHeading chapterNumber={chapterNumber} />}
+                            {variant === 'desktop' ? (
+                                <span className='title is-4'>{item.value}</span>
+                            ) : (
+                                <h2 className={`title is-4 has-text-centered ${styles.chapterTitle}`}>
+                                    {item.value}
+                                </h2>
+                            )}
+                        </React.Fragment>
+                    );
+                }
+
+                if (item?.value?.trim() === '') return null;
+
+                const verseId = `${bookTitle}-${chapterNumber}-${item.verse}`;
+                return (
+                    <div key={`psalm-verse-${chapterIndex}-${passageIndex}`}>
+                        {shouldShowPsalmHeading && <PsalmHeading chapterNumber={chapterNumber} />}
+                        <span
+                            ref={(el) => (verseRefs.current[verseId] = el as HTMLElement)}
+                            className={`verse ${verseId}`}
+                        >
+                            {item.value}
+                        </span>
+                    </div>
+                );
+            })}
+        </div>
+    );
+};
+
+type NormalChapterListProps = ChapterListRendererProps;
+
+const NormalChapterList = ({ chapters, bookTitle, chapterNumber, verseRefs, variant }: NormalChapterListProps) => (
+    <>
+        {chapters.map((chapter, index) => (
+            <NormalChapter
+                key={`normal-chapter-${index}`}
+                chapter={chapter}
+                chapterIndex={index}
+                chapterNumber={chapterNumber}
+                bookTitle={bookTitle}
+                verseRefs={verseRefs}
+                variant={variant}
+            />
+        ))}
+    </>
+);
+
+type NormalChapterProps = {
+    chapter: ChapterItem[];
+    chapterIndex: number;
+    chapterNumber: number;
+    bookTitle: string;
+    verseRefs: React.MutableRefObject<{ [key: string]: HTMLElement }>;
+    variant: 'desktop' | 'mobile';
+};
+
+const NormalChapter = ({
+    chapter,
+    chapterIndex,
+    chapterNumber,
+    bookTitle,
+    verseRefs,
+    variant,
+}: NormalChapterProps) => (
+    <div className={styles.passage}>
+        {chapter.map((item, passageIndex) => {
+            if (item?.type === 'book number') return null;
+
+            if (item?.type === 'header') {
+                if (!item.value?.trim()) return null;
+                const key = `normal-header-${chapterIndex}-${passageIndex}`;
+                return variant === 'desktop' ? (
+                    <h3 key={key} className='title is-4'>
+                        {item.value}
+                    </h3>
+                ) : (
+                    <h2 key={key} className={`title is-4 has-text-centered ${styles.chapterTitle}`}>
+                        {item.value}
+                    </h2>
+                );
+            }
+
+            if (item?.value?.trim() === '') return null;
+
+            const verseId = `${bookTitle}-${chapterNumber}-${item.verse}`;
+            return (
+                <div key={`normal-verse-${chapterIndex}-${passageIndex}`}>
+                    <span
+                        ref={(el) => (verseRefs.current[verseId] = el as HTMLElement)}
+                        className={`verse ${verseId}`}
+                    >
+                        {item.value}
+                    </span>
+                </div>
+            );
+        })}
+    </div>
+);
+
+const PsalmHeading = ({ chapterNumber }: { chapterNumber: number }) => (
+    <h3 className='title is-3'>Psalm {chapterNumber}</h3>
+);
+
+function findPsalmHeadingLocation(chapters: ChapterItem[][]): { chapterIndex: number; passageIndex: number } | null {
+    for (let chapterIndex = 0; chapterIndex < chapters.length; chapterIndex++) {
+        const chapter = chapters[chapterIndex];
+        if (!chapter) continue;
+        for (let passageIndex = 0; passageIndex < (chapter?.length || 0); passageIndex++) {
+            const item = chapter[passageIndex];
+            if (item && item.type !== 'book number' && item?.value?.trim()) {
+                return { chapterIndex, passageIndex };
+            }
+        }
+    }
+    return null;
+}
+
+function parseChapterContent(
+    chapterContent: ChapterItem[],
+    options?: { chapterNumber?: number; bookTitle?: string }
+): ChapterItem[][] {
+    const isStartMarker = (item: ChapterItem) => (item.type.includes('start') || item.type === 'header');
+    const isEndMarker = (item: ChapterItem) => (item.type.includes('end'));
+    const isTextItem = (item: ChapterItem) => (item.type.includes('text'));
+
+    const chapters: ChapterItem[][] = [];
     let currentPassage: ChapterItem[] = [];
 
     chapterContent.forEach((item) => {
         if (isStartMarker(item)) {
             if (currentPassage.length > 0) {
-                result.push([...currentPassage]);
+                chapters.push([...currentPassage]);
                 currentPassage = [];
             }
+
             currentPassage.push(item);
         } else if (isTextItem(item) || isEndMarker(item)) {
             if (currentPassage.length === 0) {
@@ -310,17 +494,32 @@ function parseChapterContent(chapterContent: ChapterItem[]): ChapterItem[][] {
             currentPassage.push(item);
 
             if (isEndMarker(item)) {
-                result.push([...currentPassage]);
+                chapters.push([...currentPassage]);
                 currentPassage = [];
             }
         }
     });
 
     if (currentPassage.length > 0) {
-        result.push([...currentPassage]);
+        chapters.push([...currentPassage]);
     }
 
-    return result;
+    const { chapterNumber, bookTitle } = options ?? {};
+    if (bookTitle === 'psalms' && typeof chapterNumber === 'number') {
+        const marker = PsalmsBooksVerseMarkers.find(([, startChapter]) => startChapter === chapterNumber);
+        if (marker) {
+            const [bookNumber] = marker;
+            chapters.unshift([
+                {
+                    type: 'book number',
+                    verse: `${bookNumber}`,
+                    value: `Book ${bookNumber}`,
+                },
+            ]);
+        }
+    }
+
+    return chapters;
 }
 
 export default BookPage;

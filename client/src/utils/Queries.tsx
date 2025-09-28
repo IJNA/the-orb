@@ -26,12 +26,10 @@ export const useGetNostrSearchResults = (query: string) => {
     >([]);
     const [searchState, setSearchState] = useState({
         isLoading: true,
-        isQueryEnabled: !!queryString && trimmedQuery?.length > 0,
         searchTimeout: false,
     });
 
     const uniqueResultsRef = useRef<Set<string>>(new Set());
-    const latestResultsRef = useRef(searchResults);
     const shouldCacheRef = useRef(false);
 
     const { getCachedResults, setCachedResults } = useSearchCache();
@@ -56,7 +54,6 @@ export const useGetNostrSearchResults = (query: string) => {
             setSearchState((prev) => ({
                 ...prev,
                 isLoading: false,
-                isQueryEnabled: true,
                 searchTimeout: false,
             }));
             return;
@@ -65,35 +62,43 @@ export const useGetNostrSearchResults = (query: string) => {
         setSearchResults([]);
 
         uniqueResultsRef.current = new Set();
+        shouldCacheRef.current = false;
 
         setSearchState((prev) => ({
             ...prev,
             isLoading: true,
-            isQueryEnabled: true,
             searchTimeout: false,
         }));
 
         const subscription = hagahRelay.subscribe(filters, { closeOnEose: true });
 
         subscription.on("event", (event) => {
-            if (searchingTitle && searchingChapter && (event.tags[0]?.[1] !== searchingTitle || event.tags[2]?.[1] !== searchingChapter)) return;
+            const norm = (s?: string | null) => s?.toLowerCase().replace(/-/g, " ").trim();
+            if (searchingTitle && searchingChapter) {
+                if (norm(event.tags?.[0]?.[1]) !== norm(searchingTitle) || norm(event.tags?.[2]?.[1]) !== norm(searchingChapter)) return;
+            }
 
             const title = event.tags[0]?.[1];
             const section = getSectionByBookTitle(title);
             const sectionName = section?.name;
-            const content = JSON.parse(event.content);
-            const isText = (type: string) => type.includes("text") || type.includes("stanza");
+            let content: EventItem[] = [];
+            try {
+                content = JSON.parse(event.content);
+            } catch {
+                return; 
+            }
+
+            const regex = searchingVerse ? null : new RegExp(escapeRegExp(trimmedQuery), "i");
 
             const filteredContent = content.filter((item: EventItem) => {
                 if (searchingVerse) return item.verse.toString() === searchingVerse;
-
-                return new RegExp(trimmedQuery, "i").test(item.value);
+                return regex!.test(item.value ?? "");
             });
 
             if (!filteredContent.length) return;
 
             filteredContent.forEach((item: EventItem) => {
-                const uniqueKey = `${title}-${item.verse}`;
+                const uniqueKey = `${title}-${item.chapter ?? ""}-${item.verse}`;
 
                 if (uniqueResultsRef.current.has(uniqueKey)) {
                     return;
@@ -107,7 +112,7 @@ export const useGetNostrSearchResults = (query: string) => {
                     chapter: item.chapter,
                     value: String(item.value ?? ""),
                     verse: String(item.verse ?? ""),
-                    isPerfectMatch: isPerfectMatch(item.value, trimmedQuery),
+                    isPerfectMatch: isPerfectMatch(String(item.value ?? ""), trimmedQuery),
                     bookOrder: getBookOrder(title ?? ""),
                 };
 
@@ -117,15 +122,15 @@ export const useGetNostrSearchResults = (query: string) => {
                         if (!a.isPerfectMatch && b.isPerfectMatch) return 1;
                         return a.bookOrder - b.bookOrder;
                     });
-                    latestResultsRef.current = newResults;
                     return newResults;
                 });
             });
         });
 
         subscription.on("eose", () => {
-            setSearchState((prev) => ({ ...prev, isLoading: false }));
+            setSearchState((prev) => ({ ...prev, isLoading: false, searchTimeout: false }));
             shouldCacheRef.current = true;
+            clearTimeout(timeout);
         });
 
         const timeout = setTimeout(() => {
@@ -135,8 +140,13 @@ export const useGetNostrSearchResults = (query: string) => {
 
         return () => {
             clearTimeout(timeout);
+            // best-effort cleanup if available in NDK version
+            // @ts-ignore
+            subscription?.stop?.();
+            // @ts-ignore
+            subscription?.close?.();
         };
-    }, [queryString, hagahRelay, filters, trimmedQuery, searchingVerse, searchingTitle, searchingChapter, getCachedResults]);
+    }, [queryString, hagahRelay, trimmedQuery, searchingVerse, searchingTitle, searchingChapter, getCachedResults]);
 
     useEffect(() => {
         if (shouldCacheRef.current && searchResults.length > 0 && !searchState.isLoading) {
@@ -172,7 +182,7 @@ function parseQuery(query: string) {
         const [_, bookPart, chapter, verse] = match;
         const normalizedBookName = bookPart?.replace(/^(\d+)\s*/, "$1 ").toLowerCase();
 
-        const matchedBook = bookNames.find((book) => book.toLowerCase().replace("-", " ") === normalizedBookName);
+        const matchedBook = bookNames.find((book) => book.toLowerCase().replace(/-/g, " ") === normalizedBookName);
 
         if (matchedBook) {
             return {
@@ -228,4 +238,8 @@ function isPerfectMatch(text: string, query: string): boolean {
     }
 
     return words.some((word) => word === normalizedQuery);
+}
+
+function escapeRegExp(s: string): string {
+    return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
