@@ -5277,6 +5277,8 @@ export const BookSectionMap = {
     ],
 };
 
+export const PsalmsBooksVerseMarkers = [[1,1], [2,42], [3,87], [4,90], [5,124]];
+
 export const normalizeBookTitle = (title: string) => {
     if (!title) return null;
     return title.toLowerCase().replace(/[^a-z0-9]/g, "-"); // Remove special characters and spaces
