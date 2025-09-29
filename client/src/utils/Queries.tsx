@@ -140,7 +140,6 @@ export const useGetNostrSearchResults = (query: string) => {
 
         return () => {
             clearTimeout(timeout);
-            // best-effort cleanup if available in NDK version
             // @ts-ignore
             subscription?.stop?.();
             // @ts-ignore
