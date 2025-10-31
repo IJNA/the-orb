@@ -36,7 +36,7 @@ export const orderBooks = (items: BookSearchResult[]) => {
     const getSectionOrder = (title: string) => {
         const section = getSectionByBookTitle(title);
         if (!section) return 999;
-        
+
         const sectionIndex = BookSectionMap.sections.findIndex((s: { title: string }) => s.title === section.title);
         return sectionIndex >= 0 ? sectionIndex : 999;
     };
@@ -44,18 +44,18 @@ export const orderBooks = (items: BookSearchResult[]) => {
     const sortedGroupedItems = Object.entries(groupedItems).sort((a, b) => {
         const firstItemA = a[1][0];
         const firstItemB = b[1][0];
-        
+
         if (!firstItemA || !firstItemB) {
             return 0;
         }
 
         const sectionOrderA = getSectionOrder(firstItemA.title);
         const sectionOrderB = getSectionOrder(firstItemB.title);
-        
+
         if (sectionOrderA !== sectionOrderB) {
             return sectionOrderA - sectionOrderB;
         }
-        
+
         return a[0].localeCompare(b[0]);
     });
 
