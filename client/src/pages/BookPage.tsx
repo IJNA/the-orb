@@ -349,7 +349,7 @@ const PsalmChapter = ({
                         <React.Fragment key={`psalm-header-${chapterIndex}-${passageIndex}`}>
                             {shouldShowPsalmHeading && <PsalmHeading chapterNumber={chapterNumber} />}
                             {variant === 'desktop' ? (
-                                <span className='title is-4'>{item.value} header</span>
+                                <span className='title is-4'>{item.value}</span>
                             ) : (
                                 <h2 className={`title is-4 has-text-centered ${styles.chapterTitle}`}>
                                     {item.value}
