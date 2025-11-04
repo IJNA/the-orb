@@ -343,9 +343,8 @@ const PsalmChapter = ({
                     );
                 }
 
-                // subheadings
-                if (item?.type === 'header') {
-                    if (!item.value?.trim()) return null;
+                if (item?.type.includes('header')) {
+
                     return (
                         <React.Fragment key={`psalm-header-${chapterIndex}-${passageIndex}`}>
                             {shouldShowPsalmHeading && <PsalmHeading chapterNumber={chapterNumber} />}
@@ -471,14 +470,22 @@ function parseChapterContent(
     chapterContent: ChapterItem[],
     options?: { chapterNumber?: number; bookTitle?: string }
 ): ChapterItem[][] {
-    const isStartMarker = (item: ChapterItem) => (item.type.includes('start') || item.type === 'header');
+    const isHeader = (item: ChapterItem) => item.type === 'header';
+    const isStartMarker = (item: ChapterItem) => (item.type.includes('start'));
     const isEndMarker = (item: ChapterItem) => (item.type.includes('end'));
     const isTextItem = (item: ChapterItem) => (item.type.includes('text'));
 
     const chapters: ChapterItem[][] = [];
     let currentPassage: ChapterItem[] = [];
 
-    chapterContent.forEach((item) => {
+    chapterContent.forEach((item, index) => {
+        if (isHeader(item)) {
+            if (currentPassage.length > 0) {
+                chapters.push([...currentPassage]);
+                currentPassage = [];
+            }
+            currentPassage.push({ ...item });
+        }
         if (isStartMarker(item)) {
             if (currentPassage.length > 0) {
                 chapters.push([...currentPassage]);
