@@ -348,13 +348,7 @@ const PsalmChapter = ({
                     return (
                         <React.Fragment key={`psalm-header-${chapterIndex}-${passageIndex}`}>
                             {shouldShowPsalmHeading && <PsalmHeading chapterNumber={chapterNumber} />}
-                            {variant === 'desktop' ? (
-                                <span className='title is-4'>{item.value}</span>
-                            ) : (
-                                <h2 className={`title is-4 has-text-centered ${styles.chapterTitle}`}>
-                                    {item.value}
-                                </h2>
-                            )}
+                            <span className='title is-4'>{item.value}</span>
                         </React.Fragment>
                     );
                 }
@@ -420,15 +414,10 @@ const NormalChapter = ({
             if (item?.type === 'header') {
                 if (!item.value?.trim()) return null;
                 const key = `normal-header-${chapterIndex}-${passageIndex}`;
-                return variant === 'desktop' ? (
-                    <h3 key={key} className='title is-4'>
-                        {item.value}
-                    </h3>
-                ) : (
-                    <h2 key={key} className={`title is-4 has-text-centered ${styles.chapterTitle}`}>
-                        {item.value}
-                    </h2>
-                );
+                return <h2 key={key} className={`title is-4 ${styles.chapterTitle}`}>
+                    {item.value}
+                </h2>
+
             }
 
             if (item?.value?.trim() === '') return null;
